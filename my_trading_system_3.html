@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Trading System</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0d0f14;
+  color: #e8eaf0;
+  min-height: 100vh;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  background: #161920;
+  border-bottom: 1px solid #1f2330;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  max-width: 100%;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 16px 10px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4b5268;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-btn.active { color: #fff; border-bottom-color: #60a5fa; }
+
+/* LAYOUT */
+.page { display: none; padding: 32px 40px 60px; max-width: 1200px; margin: 0 auto; }
+.page.active { display: block; }
+
+.page-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.page-sub { font-size: 14px; color: #6b7280; margin-bottom: 32px; }
+
+/* TWO COLUMN */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+
+/* CARDS */
+.card {
+  background: #161920;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #1f2330;
+}
+
+.card-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.card-sub { font-size: 12px; color: #6b7280; margin-bottom: 20px; }
+
+/* SECTION NUMBERS */
+.sec-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; flex-shrink: 0;
+}
+
+.sec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+
+/* CHECK ITEMS */
+.check-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid #1f2330; cursor: pointer;
+}
+.check-item:last-child { border-bottom: none; padding-bottom: 0; }
+.check-item:first-child { padding-top: 0; }
+
+.checkbox {
+  width: 24px; height: 24px; border-radius: 7px;
+  border: 2px solid #2d3348; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: all 0.2s; background: #0d0f14;
+}
+.checkbox svg { display: none; }
+.checkbox.checked { border-color: transparent; }
+.checkbox.checked svg { display: block; }
+
+.check-text { font-size: 14px; line-height: 1.5; color: #c9cdd8; }
+.check-item.done .check-text { color: #3a4060; text-decoration: line-through; }
+.check-note { font-size: 12px; color: #4b5268; margin-top: 3px; }
+
+/* COLORS */
+.s1 .sec-num { background: #1a2a4a; color: #60a5fa; }
+.s1 .checkbox.checked { background: #60a5fa; }
+.s2 .sec-num { background: #1a3a2a; color: #34d399; }
+.s2 .checkbox.checked { background: #34d399; }
+.s3 .sec-num { background: #2a1a3a; color: #a78bfa; }
+.s3 .checkbox.checked { background: #a78bfa; }
+.s4 .sec-num { background: #3a2a1a; color: #fb923c; }
+.s4 .checkbox.checked { background: #fb923c; }
+.s5 .sec-num { background: #3a1a1a; color: #f87171; }
+.s5 .checkbox.checked { background: #f87171; }
+
+/* PROGRESS */
+.progress-wrap { background: #1f2330; border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+.progress-bar { height: 100%; border-radius: 100px; background: linear-gradient(90deg,#60a5fa,#a78bfa); transition: width 0.4s; width: 0%; }
+.progress-label { font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+
+/* READY */
+.ready-banner {
+  display: none; background: linear-gradient(135deg,#0f2a1a,#0a1f2e);
+  border: 1px solid #34d399; border-radius: 16px; padding: 24px;
+  text-align: center; margin-bottom: 24px;
+}
+.ready-banner.show { display: block; }
+.ready-banner h2 { color: #34d399; font-size: 22px; margin-bottom: 6px; }
+.ready-banner p { color: #9ca3af; font-size: 14px; }
+
+/* INPUTS */
+.trade-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 8px; }
+.input-group label { font-size: 11px; color: #6b7280; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.input-group input {
+  width: 100%; background: #0d0f14; border: 1px solid #2d3348;
+  border-radius: 10px; padding: 10px 12px; color: #fff;
+  font-size: 16px; font-weight: 600; outline: none; transition: border-color 0.2s;
+}
+.input-group input:focus { border-color: #60a5fa; }
+
+.rr-display {
+  margin-top: 14px; background: #0d0f14; border-radius: 12px; padding: 16px;
+  border: 1px solid #1f2330; text-align: center; min-height: 56px;
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px;
+}
+.rr-label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+.rr-value { font-size: 24px; font-weight: 800; }
+.rr-good { color: #34d399; } .rr-warn { color: #fbbf24; } .rr-bad { color: #f87171; }
+.rr-note { font-size: 12px; color: #6b7280; }
+
+/* DIRECTION */
+.direction-toggle { display: flex; gap: 10px; margin-top: 8px; }
+.dir-btn {
+  flex: 1; padding: 12px; border-radius: 10px; border: 2px solid #2d3348;
+  background: #0d0f14; color: #6b7280; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.dir-btn.active-long { border-color: #34d399; background: #0f2a1a; color: #34d399; }
+.dir-btn.active-short { border-color: #f87171; background: #2a0f0f; color: #f87171; }
+
+/* NO TRADE */
+.no-trade-box { background: #1a0f0f; border: 1px solid #3a1a1a; border-radius: 12px; padding: 18px; margin-top: 14px; }
+.no-trade-title { font-size: 12px; font-weight: 700; color: #f87171; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.no-trade-item { font-size: 14px; color: #9ca3af; padding: 5px 0; display: flex; align-items: flex-start; gap: 10px; }
+.no-trade-item::before { content: '✕'; color: #f87171; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+/* RESET */
+.reset-btn {
+  display: block; width: 100%; margin-top: 20px; padding: 16px;
+  background: #161920; border: 1px solid #2d3348; border-radius: 12px;
+  color: #6b7280; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.reset-btn:hover { background: #1f2330; color: #e8eaf0; }
+
+/* TABS (inner) */
+.inner-tabs { display: flex; gap: 8px; margin-bottom: 20px; background: #0d0f14; padding: 6px; border-radius: 12px; }
+.inner-tab { flex: 1; text-align: center; padding: 10px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: #6b7280; transition: all 0.2s; }
+.inner-tab.up.active { background: #0f2a1a; color: #34d399; }
+.inner-tab.down.active { background: #2a0f0f; color: #f87171; }
+.inner-tab.real.active { background: #1a1a2a; color: #a78bfa; }
+.inner-tab.wait.active { background: #1a1a2a; color: #a78bfa; }
+.inner-tab.sell.active { background: #2a0f0f; color: #f87171; }
+.inner-tab.buy.active { background: #0f2a1a; color: #34d399; }
+.inner-tab.slbuy.active { background: #0f2a1a; color: #34d399; }
+.inner-tab.slsell.active { background: #2a0f0f; color: #f87171; }
+.inner-tab.rr.active { background: #1a1a2a; color: #a78bfa; }
+
+.subpage { display: none; } .subpage.active { display: block; }
+
+/* CHART */
+.chart-box { background: #0d0f14; border-radius: 12px; padding: 20px; border: 1px solid #1f2330; margin-bottom: 20px; }
+canvas { display: block; }
+
+/* PHASE CARDS */
+.phase-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.phase-card { background: #0d0f14; border-radius: 12px; padding: 16px; border: 1px solid #1f2330; text-align: center; cursor: pointer; transition: all 0.2s; }
+.phase-num { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.phase-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.phase-desc { font-size: 12px; color: #6b7280; line-height: 1.5; }
+.up-1{color:#34d399;} .up-2{color:#fbbf24;} .up-3{color:#60a5fa;}
+.dn-1{color:#f87171;} .dn-2{color:#fbbf24;} .dn-3{color:#a78bfa;}
+.phase-card.p1.active{background:#0f2a1a;border-color:#34d399;}
+.phase-card.p2.active{background:#2a2010;border-color:#fbbf24;}
+.phase-card.p3.active{background:#0a1f2e;border-color:#60a5fa;}
+.phase-card.p1d.active{background:#2a0f0f;border-color:#f87171;}
+.phase-card.p2d.active{background:#2a2010;border-color:#fbbf24;}
+.phase-card.p3d.active{background:#1a0f2a;border-color:#a78bfa;}
+
+/* INFO BOXES */
+.info-box { border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid; }
+.info-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.info-text { font-size: 14px; line-height: 1.7; color: #c9cdd8; }
+.info-text strong { color: #fff; }
+
+.fear-box { background: #1a1410; border: 1px solid #92400e; border-radius: 12px; padding: 18px; }
+.fear-title { font-size: 12px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.fear-text { font-size: 14px; color: #9ca3af; line-height: 1.7; }
+.fear-text strong { color: #fbbf24; }
+
+.watch-box { background: #0d0f14; border-radius: 12px; padding: 18px; border: 1px solid #1f2330; margin-bottom: 14px; }
+.watch-title { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+.watch-item { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid #1f2330; font-size: 14px; color: #c9cdd8; line-height: 1.5; }
+.watch-item:last-child { border-bottom: none; }
+.watch-dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+
+/* RULE CARDS */
+.rule-card { background: #0d0f14; border-radius: 12px; padding: 18px; border: 1px solid #1f2330; margin-bottom: 12px; }
+.rule-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.rule-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.rule-text { font-size: 14px; color: #9ca3af; line-height: 1.7; }
+.rule-text strong { color: #e8eaf0; }
+
+.example-box { background: #161920; border-radius: 10px; padding: 16px; margin-top: 14px; border: 1px solid #1f2330; }
+.example-title { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+.example-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #1f2330; font-size: 14px; }
+.example-row:last-child { border-bottom: none; }
+.example-label { color: #6b7280; }
+.example-val { font-weight: 700; }
+
+/* RR CALC */
+.rr-calc { background: #0d0f14; border-radius: 12px; padding: 20px; border: 1px solid #1f2330; margin-bottom: 16px; }
+.rr-calc-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.rr-calc-sub { font-size: 13px; color: #6b7280; margin-bottom: 18px; }
+.rr-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.rr-result { background: #161920; border-radius: 10px; padding: 20px; text-align: center; border: 1px solid #1f2330; }
+.rr-big { font-size: 40px; font-weight: 800; margin-bottom: 6px; }
+.rr-sub { font-size: 13px; color: #6b7280; }
+.rr-verdict { font-size: 14px; font-weight: 600; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-btn active" onclick="switchPage('checklist',this)">✓ Checklist</div>
+  <div class="nav-btn" onclick="switchPage('icc',this)">📈 Structure</div>
+  <div class="nav-btn" onclick="switchPage('range',this)">🎯 Where To Trade</div>
+  <div class="nav-btn" onclick="switchPage('stoploss',this)">🛡 Stop Loss</div>
+</div>
+
+<!-- ======= CHECKLIST ======= -->
+<div class="page active" id="page-checklist">
+  <div class="page-title">My Trade Checklist</div>
+  <div class="page-sub">Run this before every single trade on MNQ</div>
+
+  <div class="progress-label" id="progressLabel">0 of 12 complete</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <div class="ready-banner" id="readyBanner">
+    <h2>You are ready to enter.</h2>
+    <p>Trust your plan. Close the 1 minute chart. Let it work.</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="card s1" style="margin-bottom:20px">
+        <div class="sec-header">
+          <div class="sec-num">1</div>
+          <div><div class="card-title">Read the Big Picture First</div><div style="font-size:12px;color:#6b7280">1 hour chart — what is the market trying to do?</div></div>
+        </div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I looked at the 1 hour chart and I know which direction price is moving</div><div class="check-note">Up, down, or sideways — just name it</div></div></div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I drew my trend lines on the 1 hour and they clearly show the direction</div></div></div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I confirmed the same direction on the 15 minute chart</div><div class="check-note">If they disagree — no trade yet</div></div></div>
+      </div>
+
+      <div class="card s2" style="margin-bottom:20px">
+        <div class="sec-header">
+          <div class="sec-num">2</div>
+          <div><div class="card-title">Find the Setup on the 15 Minute</div><div style="font-size:12px;color:#6b7280">Mark your levels</div></div>
+        </div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I marked the last clear high and the last clear low</div></div></div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">Price broke through one of those levels and pulled back to retest it</div><div class="check-note">Do not enter during the first big move — wait for the pullback</div></div></div>
+        <div class="check-item" onclick="toggle(this)">
+          <div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+          <div><div class="check-text">I chose my direction</div>
+          <div class="direction-toggle" style="margin-top:10px">
+            <div class="dir-btn" id="longBtn" onclick="setDir('long',event)">BUYING (Long)</div>
+            <div class="dir-btn" id="shortBtn" onclick="setDir('short',event)">SELLING (Short)</div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="card s4">
+        <div class="sec-header">
+          <div class="sec-num">4</div>
+          <div><div class="card-title">While You Are In the Trade</div><div style="font-size:12px;color:#6b7280">Read this every single time</div></div>
+        </div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I closed the 1 minute chart. Only watching the 15 minute.</div><div class="check-note">The 1 minute will lie to you. Close it.</div></div></div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I will not move my target or stop unless the 15 minute completely changes</div></div></div>
+        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">If I feel like getting out early — has anything changed on the 15 minute?</div><div class="check-note">If the answer is no — hands off.</div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card s3" style="margin-bottom:20px">
+        <div class="sec-header">
+          <div class="sec-num">3</div>
+          <div><div class="card-title">Plan the Trade Before You Enter</div><div style="font-size:12px;color:#6b7280">Fill this in before you touch anything</div></div>
+        </div>
+        <div class="trade-inputs">
+          <div class="input-group"><label>Entry Price</label><input type="number" id="entryPrice" placeholder="00000" oninput="calcRR()"></div>
+          <div class="input-group"><label>My Target</label><input type="number" id="targetPrice" placeholder="00000" oninput="calcRR()"></div>
+          <div class="input-group"><label>My Stop</label><input type="number" id="stopPrice" placeholder="00000" oninput="calcRR()"></div>
+        </div>
+        <div class="rr-display" id="rrDisplay">
+          <div class="rr-label">Risk / Reward Ratio</div>
+          <div class="rr-note">Fill in your prices above</div>
+        </div>
+        <div style="margin-top:16px">
+          <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">My target is at least twice as far as my stop</div><div class="check-note">Stop 20 points = target at least 40 points</div></div></div>
+          <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">My stop is 10–15 points beyond the last high or low</div><div class="check-note">Buying = stop below the last low. Selling = stop above the last high.</div></div></div>
+          <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I used the 5 minute to time my entry — not the 1 minute</div></div></div>
+        </div>
+      </div>
+
+      <div class="card s5">
+        <div class="sec-header">
+          <div class="sec-num">5</div>
+          <div><div class="card-title">Do Not Take a Trade If...</div><div style="font-size:12px;color:#6b7280">Any one of these = walk away</div></div>
+        </div>
+        <div class="no-trade-box">
+          <div class="no-trade-title">No Trade Conditions</div>
+          <div class="no-trade-item">Price is chopping sideways with no clear direction</div>
+          <div class="no-trade-item">The 1 hour and 15 minute are pointing different ways</div>
+          <div class="no-trade-item">It is between 11am and 1pm Eastern — lunch hour is a trap</div>
+          <div class="no-trade-item">Price is in the middle of the range — not at a key level</div>
+          <div class="no-trade-item">You already had two losing trades today</div>
+          <div class="no-trade-item">You feel rushed, angry, or emotional</div>
+          <div class="no-trade-item">Your risk reward is less than 2 to 1</div>
+        </div>
+        <button class="reset-btn" onclick="resetAll()">Reset for Next Trade</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= ICC STRUCTURE ======= -->
+<div class="page" id="page-icc">
+  <div class="page-title">The Structure I'm Looking For</div>
+  <div class="page-sub">Tap each phase to highlight it on the chart</div>
+
+  <div class="inner-tabs">
+    <div class="inner-tab up active" onclick="switchICC('up',this)">Going Up (Buy)</div>
+    <div class="inner-tab down" onclick="switchICC('down',this)">Going Down (Sell)</div>
+    <div class="inner-tab real" onclick="switchICC('real',this)">My Trade Today</div>
+  </div>
+
+  <div class="subpage active" id="icc-up">
+    <div class="two-col">
+      <div>
+        <div class="chart-box"><canvas id="canvasUp" height="320"></canvas></div>
+        <div class="phase-cards">
+          <div class="phase-card p1 active" onclick="hPhase('up',1)"><div class="phase-num up-1">1</div><div class="phase-name up-1">The Push</div><div class="phase-desc">Price breaks above the last high. Big move up. Already happened — don't chase.</div></div>
+          <div class="phase-card p2" onclick="hPhase('up',2)"><div class="phase-num up-2">2</div><div class="phase-name up-2">The Pullback</div><div class="phase-desc">Price comes back to the level. Feels scary. This is your entry zone.</div></div>
+          <div class="phase-card p3" onclick="hPhase('up',3)"><div class="phase-num up-3">3</div><div class="phase-name up-3">The Continue</div><div class="phase-desc">Price bounces and pushes up again. This is your profit.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="info-box" style="background:#0a1f2e;border-color:#60a5fa;margin-bottom:16px">
+          <div class="info-title" style="color:#60a5fa">Where You Enter on a Buy</div>
+          <div class="info-text">Wait for <strong>The Pullback</strong> — when price comes back down to the level it just broke above. That broken ceiling is now a floor. When price touches it and starts to bounce, that is your entry. Target is the next high. Stop is 10–15 points below that floor.</div>
+        </div>
+        <div class="fear-box">
+          <div class="fear-title">The Moment Fear Shows Up</div>
+          <div class="fear-text">During The Pullback, price is going against you temporarily. The 1 minute looks terrible. <strong>This is normal. This is the setup working exactly as it should.</strong> The pullback is supposed to happen. Stay in it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subpage" id="icc-down">
+    <div class="two-col">
+      <div>
+        <div class="chart-box"><canvas id="canvasDn" height="320"></canvas></div>
+        <div class="phase-cards">
+          <div class="phase-card p1d active" onclick="hPhase('dn',1)"><div class="phase-num dn-1">1</div><div class="phase-name dn-1">The Drop</div><div class="phase-desc">Price breaks below the last low. Big move down. Already happened — don't chase.</div></div>
+          <div class="phase-card p2d" onclick="hPhase('dn',2)"><div class="phase-num dn-2">2</div><div class="phase-name dn-2">The Bounce</div><div class="phase-desc">Price bounces back up to retest the level. Feels like a reversal. This is your entry zone.</div></div>
+          <div class="phase-card p3d" onclick="hPhase('dn',3)"><div class="phase-num dn-3">3</div><div class="phase-name dn-3">The Continue</div><div class="phase-desc">Price gets rejected and drops again. This is your profit.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="info-box" style="background:#1a0f2a;border-color:#a78bfa;margin-bottom:16px">
+          <div class="info-title" style="color:#a78bfa">Where You Enter on a Sell</div>
+          <div class="info-text">Wait for <strong>The Bounce</strong> — when price comes back up to the level it just broke below. That broken floor is now a ceiling. When price touches it and gets rejected, that is your entry. Target is the next low. Stop is 10–15 points above that ceiling.</div>
+        </div>
+        <div class="fear-box">
+          <div class="fear-title">The Moment Fear Shows Up</div>
+          <div class="fear-text">During The Bounce, price is going against your sell temporarily. Looks like a full reversal. <strong>This is the setup. The 15 minute plan has not changed. Stay in it.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subpage" id="icc-real">
+    <div class="two-col">
+      <div>
+        <div class="chart-box"><canvas id="canvasReal" height="320"></canvas></div>
+      </div>
+      <div>
+        <div class="watch-box" style="margin-bottom:16px">
+          <div class="watch-title">What Happened on Your Chart Today</div>
+          <div class="watch-item"><div class="watch-dot" style="background:#f87171"></div>Price pushed to your HIGH and got rejected — that was the drop starting</div>
+          <div class="watch-item"><div class="watch-dot" style="background:#fbbf24"></div>It got choppy in the middle — that was 1 minute noise that scared you out</div>
+          <div class="watch-item"><div class="watch-dot" style="background:#a78bfa"></div>Price hit your LOW exactly where you planned — the full continuation happened</div>
+          <div class="watch-item"><div class="watch-dot" style="background:#34d399"></div>The 15 minute never changed. Your plan was right the whole time.</div>
+        </div>
+        <div class="fear-box">
+          <div class="fear-title">What to Remember</div>
+          <div class="fear-text">You read it correctly. You entered correctly. <strong>The only thing that went wrong was letting the 1 minute override a 15 minute trade.</strong> The structure worked. You just didn't let it finish.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= WHERE TO TRADE ======= -->
+<div class="page" id="page-range">
+  <div class="page-title">Where Do I Trade?</div>
+  <div class="page-sub">You only trade when price reaches one of the walls — not in the middle</div>
+
+  <div class="inner-tabs">
+    <div class="inner-tab wait active" onclick="switchRange('wait',this)">Right Now — No Trade</div>
+    <div class="inner-tab sell" onclick="switchRange('sell',this)">Sell Setup</div>
+    <div class="inner-tab buy" onclick="switchRange('buy',this)">Buy Setup</div>
+  </div>
+
+  <div class="subpage active" id="range-wait">
+    <div class="two-col">
+      <div><div class="chart-box"><canvas id="cWait" height="320"></canvas></div></div>
+      <div>
+        <div class="info-box" style="background:#1a1a2a;border-color:#a78bfa;margin-bottom:16px">
+          <div class="info-title" style="color:#a78bfa">Right Now — No Trade</div>
+          <div class="info-text">Price is floating in the <strong>middle of the range</strong>. Not at the top, not at the bottom. There is nothing to trade off of. You are just watching and waiting for price to reach one of the walls.</div>
+        </div>
+        <div class="fear-box">
+          <div class="fear-title">What You're Waiting For</div>
+          <div class="fear-text">Price to travel all the way up to the <strong>HIGH line</strong> for a sell setup, or all the way back down to the <strong>LOW line</strong> for a buy setup. Until it reaches one of those two levels — you do nothing. Waiting is a position.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subpage" id="range-sell">
+    <div class="two-col">
+      <div><div class="chart-box"><canvas id="cSell" height="320"></canvas></div></div>
+      <div>
+        <div class="info-box" style="background:#2a0f0f;border-color:#f87171;margin-bottom:16px">
+          <div class="info-title" style="color:#f87171">Sell Setup — Trade From the Top</div>
+          <div class="info-text">Price travels back up to the <strong>HIGH line</strong>, touches it, and gets pushed back down. That rejection at the top is your signal. You sell there. Your target is the LOW at the bottom.</div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num" style="color:#f87171">Your Stop</div>
+          <div class="rule-title">10–15 points above the HIGH</div>
+          <div class="rule-text">If price pushes above that HIGH, your trade idea is wrong. Get out. But give it a little room so a small fake move doesn't knock you out before the real drop starts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subpage" id="range-buy">
+    <div class="two-col">
+      <div><div class="chart-box"><canvas id="cBuy" height="320"></canvas></div></div>
+      <div>
+        <div class="info-box" style="background:#0f2a1a;border-color:#34d399;margin-bottom:16px">
+          <div class="info-title" style="color:#34d399">Buy Setup — Trade From the Bottom</div>
+          <div class="info-text">Price comes back down to the <strong>LOW line</strong> where the trendline is also sitting. Two levels meeting at the same spot. Price bounces off both — that is your signal. You buy there. Your target is the HIGH at the top.</div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num" style="color:#34d399">Your Stop</div>
+          <div class="rule-title">10–15 points below the LOW</div>
+          <div class="rule-text">If price breaks below that LOW, your trade idea is wrong. Get out. But give it a little room so a small dip doesn't take you out before the real bounce starts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= STOP LOSS ======= -->
+<div class="page" id="page-stoploss">
+  <div class="page-title">Stop Loss Rules</div>
+  <div class="page-sub">Where to get out — and why it matters</div>
+
+  <div class="inner-tabs">
+    <div class="inner-tab slbuy active" onclick="switchSL('buy',this)">On a Buy</div>
+    <div class="inner-tab slsell" onclick="switchSL('sell',this)">On a Sell</div>
+    <div class="inner-tab rr" onclick="switchSL('rr',this)">Risk / Reward Calculator</div>
+  </div>
+
+  <div class="subpage active" id="sl-buy">
+    <div class="two-col">
+      <div><div class="chart-box"><canvas id="cSLBuy" height="320"></canvas></div></div>
+      <div>
+        <div class="rule-card" style="margin-bottom:14px">
+          <div class="rule-num" style="color:#34d399">The Rule</div>
+          <div class="rule-title">Put your stop below the last low</div>
+          <div class="rule-text">When you are buying, the trade is only valid as long as price stays above that last low. If price breaks below it, the reason you took the trade is gone. That is your exit.</div>
+        </div>
+        <div class="rule-card" style="margin-bottom:14px">
+          <div class="rule-num" style="color:#fbbf24">Give It Room</div>
+          <div class="rule-title">Go 10–15 points below the low</div>
+          <div class="rule-text">Do not put your stop right on the exact number. Price will sometimes dip just below a low to knock people out, then reverse back up. <strong>Give it 10 to 15 points of breathing room on MNQ.</strong></div>
+        </div>
+        <div class="example-box">
+          <div class="example-title">Example</div>
+          <div class="example-row"><span class="example-label">Last low was at</span><span class="example-val">20,000</span></div>
+          <div class="example-row"><span class="example-label">Your stop goes at</span><span class="example-val" style="color:#f87171">19,985 – 19,990</span></div>
+          <div class="example-row"><span class="example-label">Not right at</span><span class="example-val" style="color:#4b5268">20,000 ✕</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subpage" id="sl-sell">
+    <div class="two-col">
+      <div><div class="chart-box"><canvas id="cSLSell" height="320"></canvas></div></div>
+      <div>
+        <div class="rule-card" style="margin-bottom:14px">
+          <div class="rule-num" style="color:#f87171">The Rule</div>
+          <div class="rule-title">Put your stop above the last high</div>
+          <div class="rule-text">When you are selling, the trade is only valid as long as price stays below that last high. If price pushes above it, the reason you took the trade is gone. Get out.</div>
+        </div>
+        <div class="rule-card" style="margin-bottom:14px">
+          <div class="rule-num" style="color:#fbbf24">Give It Room</div>
+          <div class="rule-title">Go 10–15 points above the high</div>
+          <div class="rule-text">Price will sometimes push just above a high to grab stops before reversing back down. <strong>Put your stop 10 to 15 points above the high on MNQ</strong> so you don't get knocked out on a fake move.</div>
+        </div>
+        <div class="example-box">
+          <div class="example-title">Example</div>
+          <div class="example-row"><span class="example-label">Last high was at</span><span class="example-val">20,000</span></div>
+          <div class="example-row"><span class="example-label">Your stop goes at</span><span class="example-val" style="color:#f87171">20,010 – 20,015</span></div>
+          <div class="example-row"><span class="example-label">Not right at</span><span class="example-val" style="color:#4b5268">20,000 ✕</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subpage" id="sl-rr">
+    <div class="two-col">
+      <div>
+        <div class="rr-calc">
+          <div class="rr-calc-title">Risk / Reward Calculator</div>
+          <div class="rr-calc-sub">Your target should always be at least 2x your stop distance</div>
+          <div class="rr-inputs">
+            <div class="input-group"><label>Entry</label><input type="number" id="rrEntry" placeholder="00000" oninput="calcSLRR()"></div>
+            <div class="input-group"><label>Target</label><input type="number" id="rrTarget" placeholder="00000" oninput="calcSLRR()"></div>
+            <div class="input-group"><label>Stop</label><input type="number" id="rrStop" placeholder="00000" oninput="calcSLRR()"></div>
+          </div>
+          <div class="rr-result" id="rrResult"><div class="rr-sub">Enter your prices above</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="rule-card" style="margin-bottom:14px">
+          <div class="rule-num" style="color:#a78bfa">Why This Matters</div>
+          <div class="rule-title">You can be wrong half the time and still make money</div>
+          <div class="rule-text">If your target is always at least twice your stop, then even if you lose 5 trades and win 5 trades you still come out ahead. One winner pays for two losers. <strong>This is how you stay in the game long term.</strong></div>
+        </div>
+        <div class="example-box">
+          <div class="example-title">What 2 to 1 looks like in dollars on MNQ</div>
+          <div class="example-row"><span class="example-label">Stop = 20 points</span><span class="example-val" style="color:#f87171">Risk $40</span></div>
+          <div class="example-row"><span class="example-label">Target = 40 points</span><span class="example-val" style="color:#34d399">Make $80</span></div>
+          <div class="example-row"><span class="example-label">Win 5, Lose 5</span><span class="example-val" style="color:#34d399">+$200 profit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- PAGE NAV ----
+function switchPage(page, el) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('page-' + page).classList.add('active');
+  setTimeout(drawAll, 80);
+}
+
+// ---- CHECKLIST ----
+let checked = 0;
+function toggle(el) {
+  const box = el.querySelector('.checkbox');
+  if (el.classList.contains('done')) { el.classList.remove('done'); box.classList.remove('checked'); checked = Math.max(0, checked-1); }
+  else { el.classList.add('done'); box.classList.add('checked'); checked++; }
+  const pct = Math.round(checked/12*100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = checked + ' of 12 complete';
+  document.getElementById('readyBanner').classList.toggle('show', checked >= 12);
+}
+function setDir(dir, e) {
+  if (e) e.stopPropagation();
+  document.getElementById('longBtn').className = 'dir-btn' + (dir==='long'?' active-long':'');
+  document.getElementById('shortBtn').className = 'dir-btn' + (dir==='short'?' active-short':'');
+}
+function calcRR() {
+  const e = parseFloat(document.getElementById('entryPrice').value);
+  const t = parseFloat(document.getElementById('targetPrice').value);
+  const s = parseFloat(document.getElementById('stopPrice').value);
+  const el = document.getElementById('rrDisplay');
+  if (!e||!t||!s) { el.innerHTML='<div class="rr-label">Risk / Reward Ratio</div><div class="rr-note">Fill in your prices above</div>'; return; }
+  const risk = Math.abs(e-s), reward = Math.abs(t-e);
+  if (!risk) return;
+  const r = (reward/risk).toFixed(1);
+  const cls = r>=2?'rr-good':r>=1.5?'rr-warn':'rr-bad';
+  const msg = r>=2?'Good — take this trade':r>=1.5?'Acceptable but tight':'Do not take this trade';
+  el.innerHTML = `<div class="rr-label">Risk / Reward</div><div class="rr-value ${cls}">${r} : 1</div><div class="rr-note">${msg}</div>`;
+}
+function calcSLRR() {
+  const e = parseFloat(document.getElementById('rrEntry').value);
+  const t = parseFloat(document.getElementById('rrTarget').value);
+  const s = parseFloat(document.getElementById('rrStop').value);
+  const el = document.getElementById('rrResult');
+  if (!e||!t||!s) { el.innerHTML='<div class="rr-sub">Enter your prices above</div>'; return; }
+  const risk = Math.abs(e-s), reward = Math.abs(t-e);
+  if (!risk) return;
+  const r = (reward/risk).toFixed(1);
+  const rd = (risk*2).toFixed(0), rw = (reward*2).toFixed(0);
+  const cls = r>=2?'rr-good':r>=1.5?'rr-warn':'rr-bad';
+  const vc = r>=2?'#34d399':r>=1.5?'#fbbf24':'#f87171';
+  const msg = r>=2?'✓ Good setup — take this trade':r>=1.5?'⚠ Acceptable but tight':'✕ Do not take this trade';
+  el.innerHTML = `<div class="rr-big ${cls}">${r} : 1</div><div class="rr-sub">Risk $${rd} · Make $${rw} per contract</div><div class="rr-verdict" style="color:${vc}">${msg}</div>`;
+}
+function resetAll() {
+  document.querySelectorAll('.check-item').forEach(el => { el.classList.remove('done'); el.querySelector('.checkbox').classList.remove('checked'); });
+  ['entryPrice','targetPrice','stopPrice'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('longBtn').className='dir-btn';
+  document.getElementById('shortBtn').className='dir-btn';
+  document.getElementById('rrDisplay').innerHTML='<div class="rr-label">Risk / Reward Ratio</div><div class="rr-note">Fill in your prices above</div>';
+  checked=0;
+  document.getElementById('progressBar').style.width='0%';
+  document.getElementById('progressLabel').textContent='0 of 12 complete';
+  document.getElementById('readyBanner').classList.remove('show');
+}
+
+// ---- ICC TABS ----
+let activeICC='up', activePhase={up:1,dn:1};
+function switchICC(tab, el) {
+  document.querySelectorAll('#page-icc .inner-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#page-icc .subpage').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('icc-'+tab).classList.add('active');
+  activeICC=tab; setTimeout(drawAll,60);
+}
+function hPhase(chart, phase) {
+  activePhase[chart]=phase;
+  const pid = chart==='up'?'icc-up':'icc-down';
+  const sfx = chart==='up'?'':'d';
+  document.querySelectorAll('#'+pid+' .phase-card').forEach(c=>c.classList.remove('active'));
+  document.querySelector('#'+pid+' .p'+phase+sfx).classList.add('active');
+  drawAll();
+}
+
+// ---- RANGE TABS ----
+let activeRange='wait';
+function switchRange(tab, el) {
+  document.querySelectorAll('#page-range .inner-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#page-range .subpage').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('range-'+tab).classList.add('active');
+  activeRange=tab; setTimeout(drawAll,60);
+}
+
+// ---- SL TABS ----
+let activeSL='buy';
+function switchSL(tab, el) {
+  document.querySelectorAll('#page-stoploss .inner-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#page-stoploss .subpage').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sl-'+tab).classList.add('active');
+  activeSL=tab; setTimeout(drawAll,60);
+}
+
+// ---- CANVAS ----
+function setupCanvas(id, h) {
+  const c = document.getElementById(id);
+  if (!c || !c.parentElement) return null;
+  const dpr = window.devicePixelRatio||1;
+  const w = c.parentElement.clientWidth - 40;
+  if (w <= 0) return null;
+  c.width = w*dpr; c.height = h*dpr;
+  c.style.width = w+'px'; c.style.height = h+'px';
+  const ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return {ctx, w, h};
+}
+
+function cdl(ctx, list, x0, cw, gap) {
+  list.forEach((c,i) => {
+    const x = x0 + i*(cw+gap);
+    const bull = c.c <= c.o;
+    ctx.strokeStyle = bull?'#34d399':'#f87171';
+    ctx.fillStyle = bull?'#34d399':'#f87171';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x+cw/2,c.h); ctx.lineTo(x+cw/2,c.l); ctx.stroke();
+    ctx.fillRect(x, Math.min(c.o,c.c), cw, Math.max(2,Math.abs(c.c-c.o)));
+  });
+}
+
+function hl(ctx, y, w, color, dash) {
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=2;
+  ctx.setLineDash(dash||[]); ctx.beginPath(); ctx.moveTo(20,y); ctx.lineTo(w-20,y); ctx.stroke(); ctx.restore();
+}
+
+function lbl(ctx, text, x, y, color, align) {
+  ctx.font='bold 12px Segoe UI,system-ui'; ctx.fillStyle=color; ctx.textAlign=align||'center'; ctx.fillText(text,x,y);
+}
+
+// ICC UP
+function drawUp() {
+  const s = setupCanvas('canvasUp',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const ph=activePhase.up, pad=20;
+  const BL=h*0.50, TL=h*0.14, BY=h-24;
+  const cw=14,gap=5; let x=pad+8;
+
+  hl(ctx,BL,w,ph>=2?'#34d399':'#2d3348',[6,4]);
+  lbl(ctx,'BROKEN LEVEL → NOW SUPPORT',w-pad-4,BL-8,'#34d399','right');
+  if(ph===3){hl(ctx,TL,w,'#60a5fa',[6,4]); lbl(ctx,'YOUR TARGET',w-pad-4,TL-8,'#60a5fa','right');}
+
+  const pre=[{o:BY-8,c:BY-18,h:BY-16,l:BY-10},{o:BY-18,c:BY-12,h:BY-10,l:BY-22},{o:BY-12,c:BY-20,h:BY-8,l:BY-26}];
+  ctx.globalAlpha=0.3; cdl(ctx,pre,x,cw,gap); ctx.globalAlpha=1; x+=pre.length*(cw+gap);
+
+  const imp=[{o:BY-20,c:BY-60,h:BY-58,l:BY-22},{o:BY-60,c:BY-100,h:BY-98,l:BY-62},{o:BY-100,c:BL-28,h:BL-26,l:BY-102},{o:BL-28,c:BL-55,h:BL-53,l:BL-30}];
+  ctx.globalAlpha=ph===1?1:0.4; cdl(ctx,imp,x,cw,gap); ctx.globalAlpha=1;
+  if(ph===1) lbl(ctx,'1. THE PUSH ↑',x+imp.length*(cw+gap)/2,h-6,'#34d399');
+  x+=imp.length*(cw+gap);
+
+  const pull=[{o:BL-55,c:BL-30,h:BL-28,l:BL-57},{o:BL-30,c:BL+8,h:BL+12,l:BL-32},{o:BL+8,c:BL-5,h:BL+14,l:BL-9},{o:BL-5,c:BL+4,h:BL+8,l:BL-11}];
+  ctx.globalAlpha=ph>=2?1:0.15; cdl(ctx,pull,x,cw,gap); ctx.globalAlpha=1;
+  if(ph===2){ctx.fillStyle='rgba(52,211,153,0.08)'; ctx.fillRect(x-4,BL-18,pull.length*(cw+gap)+8,34); lbl(ctx,'2. PULLBACK → YOUR ENTRY ZONE',x+pull.length*(cw+gap)/2,h-6,'#fbbf24');}
+  x+=pull.length*(cw+gap);
+
+  const cont=[{o:BL+4,c:BL-35,h:BL-33,l:BL+6},{o:BL-35,c:BL-75,h:BL-73,l:BL-37},{o:BL-75,c:BL-115,h:BL-113,l:BL-77},{o:BL-115,c:TL+26,h:TL+24,l:BL-118}];
+  ctx.globalAlpha=ph===3?1:0.15; cdl(ctx,cont,x,cw,gap); ctx.globalAlpha=1;
+  if(ph===3) lbl(ctx,'3. THE CONTINUE → YOUR PROFIT ↑',x+cont.length*(cw+gap)/2,h-6,'#60a5fa');
+}
+
+// ICC DOWN
+function drawDown() {
+  const s=setupCanvas('canvasDn',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const ph=activePhase.dn, pad=20;
+  const BL=h*0.42, TL=h-24, TY=24;
+  const cw=14,gap=5; let x=pad+8;
+
+  hl(ctx,BL,w,ph>=2?'#f87171':'#2d3348',[6,4]);
+  lbl(ctx,'BROKEN LEVEL → NOW RESISTANCE',w-pad-4,BL-8,'#f87171','right');
+  if(ph===3){hl(ctx,TL,w,'#a78bfa',[6,4]); lbl(ctx,'YOUR TARGET',w-pad-4,TL-8,'#a78bfa','right');}
+
+  const pre=[{o:TY+8,c:TY+18,h:TY+5,l:TY+20},{o:TY+18,c:TY+12,h:TY+8,l:TY+22},{o:TY+12,c:TY+20,h:TY+6,l:TY+26}];
+  ctx.globalAlpha=0.3; cdl(ctx,pre,x,cw,gap); ctx.globalAlpha=1; x+=pre.length*(cw+gap);
+
+  const imp=[{o:TY+20,c:TY+60,h:TY+18,l:TY+62},{o:TY+60,c:TY+100,h:TY+58,l:TY+102},{o:TY+100,c:BL+28,h:TY+98,l:BL+30},{o:BL+28,c:BL+55,h:BL+26,l:BL+57}];
+  ctx.globalAlpha=ph===1?1:0.4; cdl(ctx,imp,x,cw,gap); ctx.globalAlpha=1;
+  if(ph===1) lbl(ctx,'1. THE DROP ↓',x+imp.length*(cw+gap)/2,h-6,'#f87171');
+  x+=imp.length*(cw+gap);
+
+  const bounce=[{o:BL+55,c:BL+30,h:BL+28,l:BL+57},{o:BL+30,c:BL-6,h:BL-10,l:BL+32},{o:BL-6,c:BL+8,h:BL-10,l:BL+12},{o:BL+8,c:BL-2,h:BL-5,l:BL+14}];
+  ctx.globalAlpha=ph>=2?1:0.15; cdl(ctx,bounce,x,cw,gap); ctx.globalAlpha=1;
+  if(ph===2){ctx.fillStyle='rgba(248,113,113,0.08)'; ctx.fillRect(x-4,BL-18,bounce.length*(cw+gap)+8,34); lbl(ctx,'2. THE BOUNCE → YOUR ENTRY ZONE',x+bounce.length*(cw+gap)/2,h-6,'#fbbf24');}
+  x+=bounce.length*(cw+gap);
+
+  const cont=[{o:BL-2,c:BL+35,h:BL-4,l:BL+37},{o:BL+35,c:BL+75,h:BL+33,l:BL+77},{o:BL+75,c:BL+115,h:BL+73,l:BL+117},{o:BL+115,c:TL-20,h:BL+113,l:TL-18}];
+  ctx.globalAlpha=ph===3?1:0.15; cdl(ctx,cont,x,cw,gap); ctx.globalAlpha=1;
+  if(ph===3) lbl(ctx,'3. THE CONTINUE → YOUR PROFIT ↓',x+cont.length*(cw+gap)/2,h-6,'#a78bfa');
+}
+
+// ICC REAL
+function drawReal() {
+  const s=setupCanvas('canvasReal',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const HL=h*0.13, LL=h*0.82, cw=14,gap=5; let x=20;
+
+  hl(ctx,HL,w,'#f87171'); lbl(ctx,'YOUR HIGH',w-24,HL-8,'#f87171','right');
+  hl(ctx,LL,w,'#34d399'); lbl(ctx,'YOUR TARGET (LOW)',w-24,LL-8,'#34d399','right');
+
+  const app=[{o:LL-35,c:LL-60,h:LL-58,l:LL-37},{o:LL-60,c:LL-95,h:LL-93,l:LL-62},{o:LL-95,c:HL+55,h:HL+52,l:LL-98}];
+  cdl(ctx,app,x,cw,gap); x+=app.length*(cw+gap);
+
+  const rej=[{o:HL+55,c:HL+30,h:HL+22,l:HL+57},{o:HL+30,c:HL+44,h:HL+18,l:HL+48}];
+  cdl(ctx,rej,x,cw,gap);
+  lbl(ctx,'ENTRY ↓',x+cw,HL+12,'#f87171');
+  x+=rej.length*(cw+gap);
+
+  const chop=[{o:HL+44,c:HL+68,h:HL+66,l:HL+46},{o:HL+68,c:HL+50,h:HL+48,l:HL+70},{o:HL+50,c:HL+78,h:HL+76,l:HL+52},{o:HL+78,c:HL+58,h:HL+56,l:HL+80},{o:HL+58,c:HL+86,h:HL+84,l:HL+60}];
+  ctx.fillStyle='rgba(251,191,36,0.06)'; ctx.fillRect(x-2,HL+38,chop.length*(cw+gap)+4,58);
+  cdl(ctx,chop,x,cw,gap);
+  lbl(ctx,'⚠ FEAR ZONE',x+chop.length*(cw+gap)/2,HL+30,'#fbbf24');
+  lbl(ctx,'(1min looked bad)',x+chop.length*(cw+gap)/2,HL+44,'#4b5268');
+  lbl(ctx,'YOU GOT OUT HERE',x+chop.length*(cw+gap)/2,h-8,'#fbbf24');
+  x+=chop.length*(cw+gap);
+
+  const cont=[{o:HL+86,c:HL+120,h:HL+118,l:HL+88},{o:HL+120,c:HL+158,h:HL+156,l:HL+122},{o:HL+158,c:LL-12,h:LL-10,l:HL+160}];
+  cdl(ctx,cont,x,cw,gap);
+  lbl(ctx,'✓ PLAN HIT',x+cont.length*(cw+gap)/2,LL+16,'#34d399');
+}
+
+// RANGE WAIT
+function drawWait() {
+  const s=setupCanvas('cWait',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const HL=h*0.12, LL=h-30, MID=(HL+LL)/2, cw=14,gap=5;
+
+  ctx.fillStyle='rgba(248,113,113,0.06)'; ctx.fillRect(20,HL,w-40,32);
+  ctx.fillStyle='rgba(52,211,153,0.06)'; ctx.fillRect(20,LL-32,w-40,32);
+  ctx.fillStyle='rgba(167,139,250,0.03)'; ctx.fillRect(20,HL+32,w-40,LL-HL-64);
+
+  hl(ctx,HL,w,'#f87171');
+  hl(ctx,LL,w,'#34d399');
+  lbl(ctx,'HIGH — SELL ZONE',w-24,HL-8,'#f87171','right');
+  lbl(ctx,'LOW — BUY ZONE',w-24,LL+18,'#34d399','right');
+  lbl(ctx,'NO TRADE ZONE — PRICE IS HERE',w/2,MID+5,'#3a4060');
+
+  const cs=[{o:MID-8,c:MID-22,h:MID-20,l:MID-10},{o:MID-22,c:MID-14,h:MID-12,l:MID-26},{o:MID-14,c:MID-28,h:MID-26,l:MID-16},{o:MID-28,c:MID-16,h:MID-14,l:MID-30},{o:MID-16,c:MID-26,h:MID-24,l:MID-18},{o:MID-26,c:MID-14,h:MID-12,l:MID-28}];
+  cdl(ctx,cs,28,cw,gap);
+
+  ctx.font='bold 32px Segoe UI'; ctx.fillStyle='#2d3348'; ctx.textAlign='center';
+  ctx.fillText('?',w/2,MID-14);
+}
+
+// RANGE SELL
+function drawSell() {
+  const s=setupCanvas('cSell',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const HL=h*0.12, LL=h-30, cw=14,gap=5; let x=20;
+
+  ctx.fillStyle='rgba(248,113,113,0.08)'; ctx.fillRect(20,HL,w-40,32);
+  ctx.fillStyle='rgba(52,211,153,0.06)'; ctx.fillRect(20,LL-32,w-40,32);
+  hl(ctx,HL,w,'#f87171'); hl(ctx,LL,w,'#34d399');
+  lbl(ctx,'HIGH',w-24,HL-8,'#f87171','right');
+  lbl(ctx,'LOW = YOUR TARGET',w-24,LL+18,'#34d399','right');
+
+  const rise=[{o:LL-10,c:LL-40,h:LL-38,l:LL-12},{o:LL-40,c:LL-80,h:LL-78,l:LL-42},{o:LL-80,c:HL+60,h:HL+58,l:LL-82},{o:HL+60,c:HL+36,h:HL+32,l:HL+62}];
+  cdl(ctx,rise,x,cw,gap); x+=rise.length*(cw+gap);
+
+  const rej=[{o:HL+36,c:HL+20,h:HL+10,l:HL+38},{o:HL+20,c:HL+32,h:HL+8,l:HL+36}];
+  cdl(ctx,rej,x,cw,gap);
+  lbl(ctx,'↓ SELL HERE',x+cw,HL-10,'#f87171');
+
+  ctx.strokeStyle='#f87171'; ctx.lineWidth=2; ctx.setLineDash([5,4]);
+  ctx.beginPath(); ctx.moveTo(x+cw,HL+32); ctx.lineTo(x+cw,LL-34); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#f87171'; ctx.beginPath(); ctx.moveTo(x+cw,LL-32); ctx.lineTo(x+cw-7,LL-44); ctx.lineTo(x+cw+7,LL-44); ctx.closePath(); ctx.fill();
+
+  x+=rej.length*(cw+gap)+10;
+  const drop=[{o:HL+32,c:HL+65,h:HL+30,l:HL+67},{o:HL+65,c:HL+105,h:HL+63,l:HL+107},{o:HL+105,c:LL-14,h:LL-12,l:HL+108}];
+  cdl(ctx,drop,x,cw,gap);
+  lbl(ctx,'✓ PROFIT',x+drop.length*(cw+gap)/2,LL+18,'#34d399');
+}
+
+// RANGE BUY
+function drawBuy() {
+  const s=setupCanvas('cBuy',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const HL=h*0.12, LL=h-30, cw=14,gap=5; let x=20;
+
+  ctx.fillStyle='rgba(248,113,113,0.06)'; ctx.fillRect(20,HL,w-40,32);
+  ctx.fillStyle='rgba(52,211,153,0.08)'; ctx.fillRect(20,LL-32,w-40,32);
+  hl(ctx,HL,w,'#f87171'); hl(ctx,LL,w,'#34d399');
+  lbl(ctx,'HIGH = YOUR TARGET',w-24,HL-8,'#f87171','right');
+  lbl(ctx,'LOW',w-24,LL+18,'#34d399','right');
+
+  ctx.strokeStyle='#60a5fa'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(20,h); ctx.lineTo(w-20,LL-50); ctx.stroke();
+  lbl(ctx,'TRENDLINE',w-80,LL-58,'#60a5fa','right');
+
+  const drop=[{o:HL+30,c:HL+65,h:HL+28,l:HL+67},{o:HL+65,c:HL+105,h:HL+63,l:HL+107},{o:HL+105,c:LL-12,h:LL-10,l:HL+108}];
+  cdl(ctx,drop,x,cw,gap); x+=drop.length*(cw+gap);
+
+  const bounce=[{o:LL-12,c:LL+10,h:LL+12,l:LL-14},{o:LL+10,c:LL-4,h:LL+14,l:LL+8}];
+  cdl(ctx,bounce,x,cw,gap);
+  lbl(ctx,'LOW + TRENDLINE',x+cw,LL-16,'#fbbf24');
+  lbl(ctx,'↑ BUY HERE',x+cw,LL+26,'#34d399');
+
+  ctx.strokeStyle='#34d399'; ctx.lineWidth=2; ctx.setLineDash([5,4]);
+  ctx.beginPath(); ctx.moveTo(x+cw*4,LL-16); ctx.lineTo(x+cw*4,HL+34); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#34d399'; ctx.beginPath(); ctx.moveTo(x+cw*4,HL+32); ctx.lineTo(x+cw*4-7,HL+44); ctx.lineTo(x+cw*4+7,HL+44); ctx.closePath(); ctx.fill();
+
+  x+=bounce.length*(cw+gap)+10;
+  const rise=[{o:LL-4,c:LL-40,h:LL-38,l:LL-6},{o:LL-40,c:LL-82,h:LL-80,l:LL-42},{o:LL-82,c:HL+28,h:HL+26,l:LL-84}];
+  cdl(ctx,rise,x,cw,gap);
+  lbl(ctx,'✓ PROFIT',x+rise.length*(cw+gap)/2,HL-8,'#f87171');
+}
+
+// SL BUY
+function drawSLBuy() {
+  const s=setupCanvas('cSLBuy',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const EY=h*0.35, SY=h*0.72, LLY=h*0.60, TY=h*0.10, cw=14,gap=5; let x=20;
+
+  hl(ctx,TY,w,'#34d399'); lbl(ctx,'TARGET',w-24,TY-8,'#34d399','right');
+  hl(ctx,EY,w,'#60a5fa'); lbl(ctx,'YOUR ENTRY',w-24,EY-8,'#60a5fa','right');
+  hl(ctx,LLY,w,'#fbbf24',[6,4]); lbl(ctx,'LAST LOW',w-24,LLY-8,'#fbbf24','right');
+  hl(ctx,SY,w,'#f87171',[6,4]); lbl(ctx,'STOP (10-15pts below)',w-24,SY+16,'#f87171','right');
+
+  ctx.fillStyle='rgba(248,113,113,0.06)'; ctx.fillRect(20,LLY,w-40,SY-LLY);
+
+  const app=[{o:h-18,c:h-45,h:h-43,l:h-20},{o:h-45,c:h-80,h:h-78,l:h-47},{o:h-80,c:LLY+22,h:LLY+20,l:h-82},{o:LLY+22,c:LLY-8,h:LLY-6,l:LLY+24},{o:LLY-8,c:EY+22,h:EY+20,l:LLY-10},{o:EY+22,c:EY-8,h:EY-6,l:EY+24}];
+  cdl(ctx,app,x,cw,gap); x+=app.length*(cw+gap);
+
+  const up=[{o:EY-8,c:EY-42,h:EY-40,l:EY-10},{o:EY-42,c:EY-80,h:EY-78,l:EY-44},{o:EY-80,c:TY+22,h:TY+20,l:EY-82}];
+  ctx.fillStyle='rgba(52,211,153,0.06)'; ctx.fillRect(x-2,TY,up.length*(cw+gap)+4,EY-TY);
+  cdl(ctx,up,x,cw,gap);
+  lbl(ctx,'↑ PROFIT ZONE',x+up.length*(cw+gap)/2,(TY+EY)/2,'#34d399');
+}
+
+// SL SELL
+function drawSLSell() {
+  const s=setupCanvas('cSLSell',320); if(!s)return;
+  const {ctx,w,h}=s; ctx.clearRect(0,0,w,h);
+  const EY=h*0.62, SY=h*0.22, HHY=h*0.34, TY=h-24, cw=14,gap=5; let x=20;
+
+  hl(ctx,SY,w,'#f87171',[6,4]); lbl(ctx,'STOP (10-15pts above)',w-24,SY-8,'#f87171','right');
+  hl(ctx,HHY,w,'#fbbf24',[6,4]); lbl(ctx,'LAST HIGH',w-24,HHY-8,'#fbbf24','right');
+  hl(ctx,EY,w,'#a78bfa'); lbl(ctx,'YOUR ENTRY',w-24,EY-8,'#a78bfa','right');
+  hl(ctx,TY,w,'#34d399'); lbl(ctx,'TARGET',w-24,TY-8,'#34d399','right');
+
+  ctx.fillStyle='rgba(248,113,113,0.06)'; ctx.fillRect(20,SY,w-40,HHY-SY);
+
+  const app=[{o:18,c:45,h:16,l:47},{o:45,c:80,h:43,l:82},{o:80,c:HHY+12,h:78,l:HHY+14},{o:HHY+12,c:HHY-6,h:HHY-4,l:HHY+14},{o:HHY-6,c:EY-20,h:HHY-8,l:EY-18},{o:EY-20,c:EY+10,h:EY-22,l:EY+12}];
+  cdl(ctx,app,x,cw,gap); x+=app.length*(cw+gap);
+
+  const down=[{o:EY+10,c:EY+44,h:EY+8,l:EY+46},{o:EY+44,c:EY+82,h:EY+42,l:EY+84},{o:EY+82,c:TY-14,h:EY+80,l:TY-12}];
+  ctx.fillStyle='rgba(167,139,250,0.06)'; ctx.fillRect(x-2,EY,down.length*(cw+gap)+4,TY-EY);
+  cdl(ctx,down,x,cw,gap);
+  lbl(ctx,'↓ PROFIT ZONE',x+down.length*(cw+gap)/2,(EY+TY)/2,'#a78bfa');
+}
+
+function drawAll() {
+  const active = document.querySelector('.page.active');
+  if (!active) return;
+  const id = active.id;
+  if (id==='page-icc') {
+    if (activeICC==='up') drawUp();
+    else if (activeICC==='down') drawDown();
+    else drawReal();
+  } else if (id==='page-range') {
+    if (activeRange==='wait') drawWait();
+    else if (activeRange==='sell') drawSell();
+    else drawBuy();
+  } else if (id==='page-stoploss') {
+    if (activeSL==='buy') drawSLBuy();
+    else if (activeSL==='sell') drawSLSell();
+  }
+}
+
+window.addEventListener('resize', drawAll);
+setTimeout(drawAll, 150);
+</script>
+</body>
+</html>
