@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A++ Setup</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -232,6 +233,8 @@ canvas { display:block; }
   <div class="nav-btn" onclick="switchPage('stoploss',this)">🛡 Stop Loss</div>
   <div class="nav-btn" onclick="switchPage('journal',this)">📓 Journal</div>
   <div class="nav-btn" onclick="switchPage('swing',this)">🚀 Swing</div>
+  <div class="nav-btn" onclick="switchPage('sessions',this)">🕐 Sessions</div>
+  <div class="nav-btn" onclick="switchPage('ticks',this)">💰 Ticks</div>
 </div>
 
 <!-- MARKUP -->
@@ -284,7 +287,7 @@ canvas { display:block; }
     <div>
       <div class="card">
         <div class="card-title" style="margin-bottom:3px">Your 5 Step Process</div>
-        <div class="card-sub">What you did June 1st. What you repeat every day.</div>
+        
         <div class="step"><div class="step-num">1</div><div><div class="step-title">Read Higher Timeframes — Set Your Bias</div><div class="step-text">4H → 1H → 15M → 5M every morning. After that — <strong>buying or selling today. Pick one. Stay in it all day.</strong></div></div></div>
         <div class="step"><div class="step-num">2</div><div><div class="step-title">Mark Your Order Block Zone on the 15 Minute</div><div class="step-text">Find the <strong>last candle before the big move</strong> in your bias direction. Box it. This is where price will come back.</div></div></div>
         <div class="step"><div class="step-num">3</div><div><div class="step-title">Wait for the Break of Structure</div><div class="step-text">Price breaks through a key level. <strong>Do not enter yet.</strong> This just tells you the setup is forming.</div></div></div>
@@ -607,9 +610,7 @@ canvas { display:block; }
         <div class="markup-step"><div class="markup-badge" style="background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.3)">04</div><div><div class="markup-title">When TP1 Hits — Move Stop to Entry</div><div class="markup-text">Position drops from 2 to 1 contract. <strong>Drag stop line to entry price immediately.</strong></div></div></div>
         <div class="markup-step"><div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">05</div><div><div class="markup-title">Close at TP2</div><div class="markup-text">When price hits the last high — <strong>click flatten.</strong></div></div></div>
       </div>
-      <div class="info-box" style="background:rgba(251,191,36,0.05);border-color:rgba(251,191,36,0.2)">
-        <div class="info-title" style="color:var(--gold)">Practice on Sim First</div>
-        <div class="info-text">Do this at least 5 to 10 times on paper trading before real money. Enter 2 contracts, set stop, watch TP1 hit, move stop, close TP2. Do it until it feels automatic.</div>
+      
       </div>
     </div>
   </div>
@@ -752,7 +753,7 @@ canvas { display:block; }
     <div>
       <div class="card">
         <div class="card-title" style="margin-bottom:3px">Same Strategy Zoomed Out</div>
-        <div class="card-sub">Everything you already do — just bigger targets</div>
+        
         <div class="swing-step"><div class="swing-num">1</div><div><div class="swing-title">Mark Your Zone on the 4 Hour or 1 Hour</div><div class="swing-text">Same process. Find the order block zone on the higher timeframe. The move could be 200 to 500+ points.</div></div></div>
         <div class="swing-step"><div class="swing-num">2</div><div><div class="swing-title">Set a Price Alert at Your Zone on TradingView</div><div class="swing-text">Right click on your zone line and set an alert. Your phone buzzes when price gets close. You do not have to watch all day.</div></div></div>
         <div class="swing-step"><div class="swing-num">3</div><div><div class="swing-title">Drop to 15 Minute When Alerted</div><div class="swing-text">When the alert fires switch to the 15 minute. Wait for the tap back and your 3 candle confirmation on the 5 minute. Same entry process.</div></div></div>
@@ -765,11 +766,7 @@ canvas { display:block; }
         <div class="rule-title">Bigger moves, bigger stops, more patience</div>
         <div class="rule-text">A 4 hour swing might run 300 points but your stop might be 60 points wide. Same 2 to 1 ratio — just larger dollar amounts. You may hold overnight.</div>
       </div>
-      <div class="rule-card" style="margin-bottom:10px">
-        <div class="rule-label" style="color:var(--gold)">When to Start This</div>
-        <div class="rule-title">After day trades are consistently hitting targets</div>
-        <div class="rule-text">Get consistent on the 15 minute for a few weeks first. Once it feels routine — then add swing setups.</div>
-      </div>
+      
       <div class="example-box">
         <div class="example-title">Day vs Swing — Same Setup</div>
         <div class="example-row"><span class="example-label">Day trade target</span><span class="example-val" style="color:var(--green)">40–100 points</span></div>
@@ -779,6 +776,176 @@ canvas { display:block; }
     </div>
   </div>
 </div>
+
+
+<!-- SESSIONS -->
+<div class="page" id="page-sessions">
+  <div class="page-title">Trading <span>Sessions</span></div>
+  <div class="page-sub">Know what session you are in before you trade</div>
+
+  <!-- LIVE CLOCK -->
+  <div class="card" style="margin-bottom:20px;text-align:center">
+    <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Current Time — New York (Eastern)</div>
+    <div id="liveClock" style="font-size:42px;font-weight:900;color:var(--text);margin-bottom:8px;letter-spacing:2px">--:--:--</div>
+    <div id="liveSession" style="font-size:16px;font-weight:800;padding:8px 24px;border-radius:20px;display:inline-block">Loading...</div>
+    <div id="sessionDesc" style="font-size:13px;color:#8a93b0;margin-top:10px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6"></div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">MNQ Session Guide</div>
+
+        <div class="markup-step" id="sess-asia">
+          <div class="markup-badge" style="background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.3)">ASIA</div>
+          <div>
+            <div class="markup-title">Asia Session — 6PM to 3AM Eastern</div>
+            <div class="markup-text">Lower volume. Price tends to drift or make slow moves. Can set up zones for the next day. <strong>Trades are valid but moves are less clean.</strong> Only take the setup if it is very clear.</div>
+          </div>
+        </div>
+
+        <div class="markup-step" id="sess-london">
+          <div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">LON</div>
+          <div>
+            <div class="markup-title">London Session — 3AM to 9:30AM Eastern</div>
+            <div class="markup-text">Volume picks up. Price starts making bigger moves. <strong>Good setups can form here.</strong> This is where the overnight direction often gets established before New York opens.</div>
+          </div>
+        </div>
+
+        <div class="markup-step" id="sess-ny">
+          <div class="markup-badge" style="background:rgba(0,229,160,0.15);color:var(--green);border:1px solid rgba(0,229,160,0.3)">NY</div>
+          <div>
+            <div class="markup-title">New York Open — 9:30AM to 11AM Eastern</div>
+            <div class="markup-text"><strong>Highest volume of the day. Your best trading window.</strong> Cleanest moves, strongest trends. This is where the A++ Setup works best. Be ready at the charts before 9:30.</div>
+          </div>
+        </div>
+
+        <div class="markup-step" id="sess-lunch">
+          <div class="markup-badge" style="background:rgba(251,191,36,0.15);color:var(--gold);border:1px solid rgba(251,191,36,0.3)">LUNCH</div>
+          <div>
+            <div class="markup-title">Lunch Hour — 11AM to 1PM Eastern</div>
+            <div class="markup-text"><strong>Avoid trading here.</strong> Volume drops off, price chops sideways and fakes out. Even clean setups tend to fail during this window. Step away from the screen.</div>
+          </div>
+        </div>
+
+        <div class="markup-step" id="sess-afternoon">
+          <div class="markup-badge" style="background:rgba(0,229,160,0.15);color:var(--green);border:1px solid rgba(0,229,160,0.3)">PM</div>
+          <div>
+            <div class="markup-title">Afternoon Session — 1PM to 3:30PM Eastern</div>
+            <div class="markup-text"><strong>Second best window of the day.</strong> Volume returns. Often a continuation or reversal of the morning trend. Good setups appear here. Stay alert.</div>
+          </div>
+        </div>
+
+        <div class="markup-step" id="sess-close">
+          <div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">CLOSE</div>
+          <div>
+            <div class="markup-title">Market Close — 3:30PM to 6PM Eastern</div>
+            <div class="markup-text">End of day profit taking. Moves can be erratic. <strong>Be cautious.</strong> This is a good time to close positions and review your trades rather than opening new ones.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- TICKS & POINTS -->
+<div class="page" id="page-ticks">
+  <div class="page-title">Ticks <span>& Points</span></div>
+  <div class="page-sub">What they mean and what they are worth on MNQ</div>
+
+  <div class="two-col">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title" style="margin-bottom:14px">What is a Tick?</div>
+
+        <div class="step" style="padding:12px 0">
+          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.25)">1</div>
+          <div>
+            <div class="step-title">A Tick is the Smallest Move Price Can Make</div>
+            <div class="step-text">On MNQ price moves in increments of <strong>0.25 points.</strong> That smallest increment is called one tick. Price cannot move by 0.1 or 0.15 — it jumps by 0.25 at a time.</div>
+          </div>
+        </div>
+
+        <div class="step" style="padding:12px 0">
+          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(0,229,160,0.15);color:var(--green);border:1px solid rgba(0,229,160,0.25)">2</div>
+          <div>
+            <div class="step-title">Each Tick is Worth $0.50</div>
+            <div class="step-text">Every time MNQ moves 0.25 points in your direction — you make <strong>$0.50 per contract.</strong> Every time it moves against you by 0.25 — you lose $0.50 per contract.</div>
+          </div>
+        </div>
+
+        <div class="step" style="padding:12px 0">
+          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.25)">3</div>
+          <div>
+            <div class="step-title">A Point = 4 Ticks = $2.00</div>
+            <div class="step-text">One full point on MNQ is made up of 4 ticks. So 1 point = 4 x $0.50 = <strong>$2.00 per contract.</strong> When you say price moved 50 points — that means you made or lost $100 per contract.</div>
+          </div>
+        </div>
+
+        <div class="step" style="padding:12px 0;border-bottom:none">
+          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(251,191,36,0.15);color:var(--gold);border:1px solid rgba(251,191,36,0.25)">4</div>
+          <div>
+            <div class="step-title">More Contracts = More Per Tick</div>
+            <div class="step-text">If you are trading 2 contracts — each tick is worth $1.00, each point is worth $4.00. If you are trading 3 contracts — each tick is $1.50, each point is $6.00.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Quick Reference — 1 Contract</div>
+        <div class="example-row"><span class="example-label">1 Tick (0.25 points)</span><span class="example-val" style="color:var(--green)">$0.50</span></div>
+        <div class="example-row"><span class="example-label">1 Point (4 ticks)</span><span class="example-val" style="color:var(--green)">$2.00</span></div>
+        <div class="example-row"><span class="example-label">10 Points</span><span class="example-val" style="color:var(--green)">$20.00</span></div>
+        <div class="example-row"><span class="example-label">50 Points</span><span class="example-val" style="color:var(--green)">$100.00</span></div>
+        <div class="example-row"><span class="example-label">100 Points</span><span class="example-val" style="color:var(--green)">$200.00</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:4px">Tick & Point Calculator</div>
+        <div class="card-sub">Type in your numbers and see the dollar value instantly</div>
+
+        <div style="margin-bottom:16px">
+          <div class="input-group" style="margin-bottom:10px">
+            <label>Number of Contracts</label>
+            <input type="number" id="calcContracts" placeholder="1" value="1" oninput="calcTicks()">
+          </div>
+          <div class="input-group" style="margin-bottom:10px">
+            <label>Points Moved</label>
+            <input type="number" id="calcPoints" placeholder="0" oninput="calcTicks()">
+          </div>
+          <div class="input-group" style="margin-bottom:10px">
+            <label>Ticks Moved (optional)</label>
+            <input type="number" id="calcTicksInput" placeholder="0" oninput="calcTicks()">
+          </div>
+        </div>
+
+        <div id="tickResult" style="background:var(--bg);border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Dollar Value</div>
+          <div style="font-size:13px;color:var(--muted)">Fill in your numbers above</div>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Per Contract Value</div>
+          <div style="background:var(--bg);border-radius:10px;padding:14px;border:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">1 Tick</span><span style="font-weight:800;color:var(--text)">$0.50</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">1 Point</span><span style="font-weight:800;color:var(--text)">$2.00</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">4 Ticks = 1 Point</span><span style="font-weight:800;color:var(--text)">$2.00</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px"><span style="color:var(--muted)">Tick Size</span><span style="font-weight:800;color:var(--text)">0.25 points</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
 // QUOTES
@@ -1375,6 +1542,91 @@ function drawAll(){
 
 window.addEventListener('resize',drawAll);
 setTimeout(drawAll,150);
+
+// TICK CALCULATOR
+function calcTicks(){
+  const contracts = parseFloat(document.getElementById('calcContracts').value) || 1;
+  const points = parseFloat(document.getElementById('calcPoints').value) || 0;
+  const ticks = parseFloat(document.getElementById('calcTicksInput').value) || 0;
+  const totalPoints = points + (ticks * 0.25);
+  const dollarValue = totalPoints * 2 * contracts;
+  const el = document.getElementById('tickResult');
+  if(totalPoints === 0){
+    el.innerHTML = '<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Dollar Value</div><div style="font-size:13px;color:var(--muted)">Fill in your numbers above</div>';
+    return;
+  }
+  const color = dollarValue >= 0 ? 'var(--green)' : 'var(--pink)';
+  el.innerHTML = `
+    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Dollar Value</div>
+    <div style="font-size:40px;font-weight:900;color:${color};margin-bottom:6px">$${Math.abs(dollarValue).toFixed(2)}</div>
+    <div style="font-size:12px;color:var(--muted)">${contracts} contract${contracts>1?'s':''} · ${totalPoints} points · ${totalPoints*4} ticks</div>
+  `;
+}
+
+// LIVE SESSION CLOCK
+function getEasternTime() {
+  const now = new Date();
+  const et = new Date(now.toLocaleString('en-US', {timeZone: 'America/New_York'}));
+  return et;
+}
+
+function getSession(et) {
+  const h = et.getHours();
+  const m = et.getMinutes();
+  const total = h * 60 + m;
+
+  if (total >= 18*60 || total < 3*60) return {
+    name: 'Asia Session', color: '#b06bff',
+    bg: 'rgba(176,107,255,0.12)', border: 'rgba(176,107,255,0.3)',
+    desc: 'Lower volume. Slower moves. Only trade if the setup is very clean.'
+  };
+  if (total >= 3*60 && total < 9*60+30) return {
+    name: 'London Session', color: '#ff6b9d',
+    bg: 'rgba(255,107,157,0.12)', border: 'rgba(255,107,157,0.3)',
+    desc: 'Volume picking up. Bigger moves forming. Good setups can appear here.'
+  };
+  if (total >= 9*60+30 && total < 11*60) return {
+    name: '🔥 New York Open — Best Window', color: '#00e5a0',
+    bg: 'rgba(0,229,160,0.12)', border: 'rgba(0,229,160,0.3)',
+    desc: 'Highest volume of the day. Cleanest moves. Be at the charts. This is your best trading window.'
+  };
+  if (total >= 11*60 && total < 13*60) return {
+    name: '⚠ Lunch Hour — Avoid Trading', color: '#fbbf24',
+    bg: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.3)',
+    desc: 'Volume drops. Price chops and fakes out. Step away from the screen until 1PM.'
+  };
+  if (total >= 13*60 && total < 15*60+30) return {
+    name: 'Afternoon Session', color: '#00e5a0',
+    bg: 'rgba(0,229,160,0.12)', border: 'rgba(0,229,160,0.3)',
+    desc: 'Second best window. Volume returns. Good setups appear. Stay alert.'
+  };
+  return {
+    name: 'Market Close — Be Cautious', color: '#ff6b9d',
+    bg: 'rgba(255,107,157,0.12)', border: 'rgba(255,107,157,0.3)',
+    desc: 'End of day. Erratic moves. Good time to review trades rather than open new ones.'
+  };
+}
+
+function updateClock() {
+  const et = getEasternTime();
+  const h = String(et.getHours()).padStart(2,'0');
+  const m = String(et.getMinutes()).padStart(2,'0');
+  const s = String(et.getSeconds()).padStart(2,'0');
+  const clockEl = document.getElementById('liveClock');
+  const sessEl = document.getElementById('liveSession');
+  const descEl = document.getElementById('sessionDesc');
+  if (!clockEl) return;
+  clockEl.textContent = h+':'+m+':'+s;
+  const sess = getSession(et);
+  sessEl.textContent = sess.name;
+  sessEl.style.background = sess.bg;
+  sessEl.style.border = '1px solid '+sess.border;
+  sessEl.style.color = sess.color;
+  descEl.textContent = sess.desc;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
 </script>
 </body>
 </html>
