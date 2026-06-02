@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A++ Setup</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='22' fill='%2300e5a0'/%3E%3Cline x1='50' y1='5' x2='50' y2='20' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='50' y1='80' x2='50' y2='95' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='5' y1='50' x2='20' y2='50' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='80' y1='50' x2='95' y2='50' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='18' y1='18' x2='29' y2='29' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='71' y1='71' x2='82' y2='82' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='82' y1='18' x2='71' y2='29' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='18' y1='82' x2='29' y2='71' stroke='%2300e5a0' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -235,6 +236,7 @@ canvas { display:block; }
   <div class="nav-btn" onclick="switchPage('swing',this)">🚀 Swing</div>
   <div class="nav-btn" onclick="switchPage('sessions',this)">🕐 Sessions</div>
   <div class="nav-btn" onclick="switchPage('ticks',this)">💰 Ticks</div>
+  <div class="nav-btn" onclick="switchPage('projection',this)">📊 Projection</div>
 </div>
 
 <!-- MARKUP -->
@@ -947,6 +949,98 @@ canvas { display:block; }
 </div>
 
 
+
+<!-- PROJECTION -->
+<div class="page" id="page-projection">
+  <div class="page-title">Projection <span>Calculator</span></div>
+  <div class="page-sub">Know your numbers before you sit down at the charts</div>
+
+  <div class="three-col" style="margin-bottom:24px">
+
+    <!-- DAILY GOAL -->
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title" style="margin-bottom:4px">Daily Goal</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">How many trades to hit your target</div>
+
+      <div class="input-group" style="margin-bottom:10px">
+        <label>Daily Goal ($)</label>
+        <input type="number" id="dgGoal" placeholder="500" oninput="calcDailyGoal()">
+      </div>
+      <div class="input-group" style="margin-bottom:10px">
+        <label>Average Win Per Trade ($)</label>
+        <input type="number" id="dgWin" placeholder="200" oninput="calcDailyGoal()">
+      </div>
+      <div class="input-group" style="margin-bottom:14px">
+        <label>Win Rate (%)</label>
+        <input type="number" id="dgWinRate" placeholder="60" oninput="calcDailyGoal()">
+      </div>
+
+      <div id="dgResult" style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Trades Needed</div>
+        <div style="font-size:13px;color:var(--muted)">Fill in above</div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT GROWTH -->
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title" style="margin-bottom:4px">Account Growth</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Where your account goes over time</div>
+
+      <div class="input-group" style="margin-bottom:10px">
+        <label>Starting Balance ($)</label>
+        <input type="number" id="agBalance" placeholder="5000" oninput="calcGrowth()">
+      </div>
+      <div class="input-group" style="margin-bottom:10px">
+        <label>Daily Profit ($)</label>
+        <input type="number" id="agDaily" placeholder="300" oninput="calcGrowth()">
+      </div>
+      <div class="input-group" style="margin-bottom:14px">
+        <label>Trading Days Per Week</label>
+        <input type="number" id="agDays" placeholder="5" oninput="calcGrowth()">
+      </div>
+
+      <div id="agResult" style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Projected Balance</div>
+        <div style="font-size:13px;color:var(--muted)">Fill in above</div>
+      </div>
+    </div>
+
+    <!-- POSITION SIZING -->
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title" style="margin-bottom:4px">Position Sizing</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">How many contracts to trade</div>
+
+      <div class="input-group" style="margin-bottom:10px">
+        <label>Account Balance ($)</label>
+        <input type="number" id="psBalance" placeholder="5000" oninput="calcPosition()">
+      </div>
+      <div class="input-group" style="margin-bottom:10px">
+        <label>Risk Per Trade (%)</label>
+        <input type="number" id="psRisk" placeholder="2" oninput="calcPosition()">
+      </div>
+      <div class="input-group" style="margin-bottom:14px">
+        <label>Stop Loss (Points)</label>
+        <input type="number" id="psStop" placeholder="20" oninput="calcPosition()">
+      </div>
+
+      <div id="psResult" style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Contracts to Trade</div>
+        <div style="font-size:13px;color:var(--muted)">Fill in above</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROWTH TABLE -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom:4px">Growth Projection Table</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Based on your account growth inputs above</div>
+    <div id="growthTable">
+      <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Fill in the Account Growth calculator above to see your projection table</div>
+    </div>
+  </div>
+</div>
+
+
 <script>
 // QUOTES
 const quotes = [
@@ -1542,6 +1636,104 @@ function drawAll(){
 
 window.addEventListener('resize',drawAll);
 setTimeout(drawAll,150);
+
+// DAILY GOAL
+function calcDailyGoal(){
+  const goal = parseFloat(document.getElementById('dgGoal').value);
+  const win = parseFloat(document.getElementById('dgWin').value);
+  const wr = parseFloat(document.getElementById('dgWinRate').value) / 100;
+  const el = document.getElementById('dgResult');
+  if(!goal||!win||!wr){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Trades Needed</div><div style="font-size:13px;color:var(--muted)">Fill in above</div>';
+    return;
+  }
+  const avgLoss = win * 0.5;
+  const netPerTrade = (win * wr) - (avgLoss * (1 - wr));
+  if(netPerTrade <= 0){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Trades Needed</div><div style="font-size:13px;color:var(--pink)">Adjust your win rate or average win</div>';
+    return;
+  }
+  const trades = Math.ceil(goal / netPerTrade);
+  const winTrades = Math.ceil(trades * wr);
+  const lossTrades = trades - winTrades;
+  el.innerHTML=`
+    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Trades Needed</div>
+    <div style="font-size:36px;font-weight:900;color:var(--green)">${trades}</div>
+    <div style="font-size:11px;color:var(--muted)">${winTrades} wins · ${lossTrades} losses · $${netPerTrade.toFixed(0)} avg net/trade</div>
+  `;
+}
+
+// ACCOUNT GROWTH
+function calcGrowth(){
+  const balance = parseFloat(document.getElementById('agBalance').value);
+  const daily = parseFloat(document.getElementById('agDaily').value);
+  const days = parseFloat(document.getElementById('agDays').value) || 5;
+  const el = document.getElementById('agResult');
+  const tableEl = document.getElementById('growthTable');
+  if(!balance||!daily){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Projected Balance</div><div style="font-size:13px;color:var(--muted)">Fill in above</div>';
+    tableEl.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Fill in the Account Growth calculator above to see your projection table</div>';
+    return;
+  }
+  const monthly = daily * days * 4.33;
+  const m1 = balance + monthly;
+  const m3 = balance + monthly * 3;
+  const m6 = balance + monthly * 6;
+  const m12 = balance + monthly * 12;
+
+  el.innerHTML=`
+    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Monthly Projection</div>
+    <div style="font-size:32px;font-weight:900;color:var(--green)">+$${monthly.toFixed(0)}</div>
+    <div style="font-size:11px;color:var(--muted)">${days} days/week · $${daily}/day</div>
+  `;
+
+  tableEl.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">1 Month</div>
+        <div style="font-size:20px;font-weight:900;color:var(--green)">$${m1.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${monthly.toFixed(0)}</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">3 Months</div>
+        <div style="font-size:20px;font-weight:900;color:var(--green)">$${m3.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${(monthly*3).toFixed(0)}</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">6 Months</div>
+        <div style="font-size:20px;font-weight:900;color:var(--purple)">$${m6.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${(monthly*6).toFixed(0)}</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">12 Months</div>
+        <div style="font-size:20px;font-weight:900;color:var(--pink)">$${m12.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${(monthly*12).toFixed(0)}</div>
+      </div>
+    </div>
+  `;
+}
+
+// POSITION SIZING
+function calcPosition(){
+  const balance = parseFloat(document.getElementById('psBalance').value);
+  const riskPct = parseFloat(document.getElementById('psRisk').value) / 100;
+  const stopPoints = parseFloat(document.getElementById('psStop').value);
+  const el = document.getElementById('psResult');
+  if(!balance||!riskPct||!stopPoints){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Contracts to Trade</div><div style="font-size:13px;color:var(--muted)">Fill in above</div>';
+    return;
+  }
+  const riskDollars = balance * riskPct;
+  const stopValuePerContract = stopPoints * 2;
+  const contracts = Math.floor(riskDollars / stopValuePerContract);
+  const actualRisk = contracts * stopValuePerContract;
+  const safeContracts = Math.max(1, contracts);
+  el.innerHTML=`
+    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Contracts to Trade</div>
+    <div style="font-size:36px;font-weight:900;color:var(--purple)">${safeContracts}</div>
+    <div style="font-size:11px;color:var(--muted)">Risk $${actualRisk.toFixed(0)} · ${riskPct*100}% of $${balance.toLocaleString()}</div>
+  `;
+}
 
 // TICK CALCULATOR
 function calcTicks(){
