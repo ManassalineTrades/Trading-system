@@ -3,1822 +3,354 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A++ Setup</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='20' fill='%2300e5a0'/><line x1='50' y1='2' x2='50' y2='22' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='50' y1='78' x2='50' y2='98' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='2' y1='50' x2='22' y2='50' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='78' y1='50' x2='98' y2='50' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='15' y1='15' x2='30' y2='30' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='70' y1='70' x2='85' y2='85' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='85' y1='15' x2='70' y2='30' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/><line x1='15' y1='85' x2='30' y2='70' stroke='%2300e5a0' stroke-width='8' stroke-linecap='round'/></svg>">
-
+<title>ICC Trading System</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --pink: #ff6b9d; --green: #00e5a0; --purple: #b06bff; --gold: #fbbf24;
-  --bg: #080a10; --surface: #0f1218; --surface2: #161b24; --border: #1e2535;
-  --text: #f0f2f8; --muted: #5a6480;
-}
-body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-.header { background: linear-gradient(135deg,#1a0828,#0a1628,#081820); padding:20px 32px 18px; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
-.header::before { content:''; position:absolute; top:-60px; left:-60px; width:280px; height:280px; background:radial-gradient(circle,rgba(176,107,255,0.15) 0%,transparent 70%); pointer-events:none; }
-.header::after { content:''; position:absolute; bottom:-40px; right:-40px; width:220px; height:220px; background:radial-gradient(circle,rgba(0,229,160,0.12) 0%,transparent 70%); pointer-events:none; }
-.header-inner { position:relative; z-index:1; }
-.logo { font-size:26px; font-weight:900; background:linear-gradient(135deg,#ff6b9d,#b06bff,#00e5a0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.tagline { font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
-
-.quote-bar { background:linear-gradient(135deg,rgba(176,107,255,0.06),rgba(0,229,160,0.04)); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; gap:12px; }
-.quote-mark { font-size:22px; color:var(--purple); opacity:0.5; flex-shrink:0; line-height:1; }
-.quote-text { font-size:13px; color:#8a93b0; font-style:italic; line-height:1.5; flex:1; }
-
-.nav { display:flex; background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; overflow-x:auto; }
-.nav::-webkit-scrollbar { display:none; }
-.nav-btn { flex:1; min-width:80px; padding:13px 6px; text-align:center; font-size:10px; font-weight:800; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; transition:all 0.2s; text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; user-select:none; }
-.nav-btn:hover { color:var(--text); background:rgba(255,255,255,0.03); }
-.nav-btn:active { background:rgba(255,107,157,0.1); }
-.nav-btn.active { color:var(--text); border-bottom-color:var(--pink); background:rgba(255,107,157,0.04); }
-
-.page { display:none; padding:24px 32px 60px; max-width:1300px; margin:0 auto; }
-.page.active { display:block; }
-.page-title { font-size:22px; font-weight:900; color:var(--text); margin-bottom:3px; }
-.page-title span { background:linear-gradient(135deg,var(--pink),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.page-sub { font-size:13px; color:var(--muted); margin-bottom:24px; }
-
-.two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:16px; }
-.three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:14px; }
-
-.card { background:var(--surface); border-radius:14px; padding:20px; border:1px solid var(--border); margin-bottom:16px; }
-.card-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:3px; }
-.card-sub { font-size:12px; color:var(--muted); margin-bottom:14px; }
-
-.step { display:flex; gap:14px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--border); }
-.step:last-child { border-bottom:none; padding-bottom:0; }
-.step:first-child { padding-top:0; }
-.step-num { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; flex-shrink:0; background:linear-gradient(135deg,rgba(255,107,157,0.15),rgba(176,107,255,0.15)); color:var(--pink); border:1px solid rgba(255,107,157,0.25); }
-.step-title { font-size:13px; font-weight:800; color:var(--text); margin-bottom:4px; }
-.step-text { font-size:12px; color:#8a93b0; line-height:1.7; }
-.step-text strong { color:var(--text); }
-
-.markup-step { display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:10px; margin-bottom:8px; border:1px solid var(--border); background:var(--surface2); }
-.markup-step:last-child { margin-bottom:0; }
-.markup-badge { padding:3px 8px; border-radius:20px; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; flex-shrink:0; margin-top:2px; }
-.markup-title { font-size:12px; font-weight:800; color:var(--text); margin-bottom:3px; }
-.markup-text { font-size:12px; color:#8a93b0; line-height:1.6; }
-.markup-text strong { color:var(--text); }
-
-.caution-box { background:rgba(251,191,36,0.04); border:1px solid rgba(251,191,36,0.2); border-radius:12px; padding:16px; margin-bottom:12px; }
-.caution-title { font-size:11px; font-weight:800; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
-.caution-item { display:flex; align-items:flex-start; gap:8px; padding:6px 0; border-bottom:1px solid rgba(251,191,36,0.08); font-size:12px; color:#8a93b0; line-height:1.5; }
-.caution-item:last-child { border-bottom:none; padding-bottom:0; }
-.caution-dot { color:var(--gold); font-weight:800; flex-shrink:0; margin-top:1px; }
-
-.check-item { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(--border); cursor:pointer; user-select:none; }
-.check-item:last-child { border-bottom:none; padding-bottom:0; }
-.check-item:first-child { padding-top:0; }
-.checkbox { width:22px; height:22px; border-radius:6px; border:2px solid var(--border); flex-shrink:0; display:flex; align-items:center; justify-content:center; margin-top:1px; transition:all 0.2s; background:var(--bg); }
-.checkbox svg { display:none; }
-.checkbox.checked { border-color:transparent; background:linear-gradient(135deg,var(--pink),var(--purple)); }
-.checkbox.checked svg { display:block; }
-.check-text { font-size:13px; line-height:1.5; color:#8a93b0; }
-.check-item.done .check-text { color:var(--muted); text-decoration:line-through; }
-.check-note { font-size:11px; color:var(--muted); margin-top:3px; }
-
-.progress-wrap { background:var(--border); border-radius:100px; height:5px; overflow:hidden; margin-bottom:6px; }
-.progress-bar { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--pink),var(--purple),var(--green)); transition:width 0.4s; width:0%; }
-.progress-label { font-size:12px; color:var(--muted); margin-bottom:20px; }
-
-.ready-banner { display:none; background:linear-gradient(135deg,rgba(0,229,160,0.06),rgba(176,107,255,0.06)); border:1px solid var(--green); border-radius:14px; padding:18px; text-align:center; margin-bottom:18px; }
-.ready-banner.show { display:block; }
-.ready-banner h2 { font-size:18px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
-.ready-banner p { color:var(--muted); font-size:12px; }
-
-.trade-inputs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0; }
-.input-group label { font-size:10px; color:var(--muted); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
-.input-group input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text); font-size:15px; font-weight:700; outline:none; transition:border-color 0.2s; }
-.input-group input:focus { border-color:var(--pink); }
-
-.rr-display { background:var(--bg); border-radius:10px; padding:12px; border:1px solid var(--border); text-align:center; min-height:48px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:3px; }
-.rr-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
-.rr-value { font-size:22px; font-weight:900; }
-.rr-good{color:var(--green);} .rr-warn{color:var(--gold);} .rr-bad{color:var(--pink);}
-.rr-note { font-size:11px; color:var(--muted); }
-
-.tp-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0; }
-.tp-box { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px; }
-.tp-box label { font-size:10px; color:var(--muted); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
-.tp-box input { width:100%; background:transparent; border:none; color:var(--text); font-size:14px; font-weight:700; outline:none; }
-.tp-num { font-size:10px; font-weight:800; margin-bottom:3px; }
-
-.direction-toggle { display:flex; gap:8px; margin-top:8px; }
-.dir-btn { flex:1; padding:10px; border-radius:8px; border:2px solid var(--border); background:var(--bg); color:var(--muted); font-size:12px; font-weight:800; cursor:pointer; transition:all 0.2s; text-align:center; user-select:none; }
-.dir-btn:hover { border-color:rgba(255,255,255,0.1); color:var(--text); }
-.dir-btn.active-long { border-color:var(--green); background:rgba(0,229,160,0.08); color:var(--green); }
-.dir-btn.active-short { border-color:var(--pink); background:rgba(255,107,157,0.08); color:var(--pink); }
-
-.reset-btn { display:block; width:100%; margin-top:14px; padding:12px; background:var(--surface2); border:1px solid var(--border); border-radius:10px; color:var(--muted); font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; }
-.reset-btn:hover { border-color:var(--pink); color:var(--text); }
-
-.inner-tabs { display:flex; gap:6px; margin-bottom:18px; background:var(--surface2); padding:4px; border-radius:10px; }
-.inner-tab { flex:1; text-align:center; padding:8px 6px; border-radius:7px; font-size:10px; font-weight:800; cursor:pointer; color:var(--muted); transition:all 0.2s; text-transform:uppercase; letter-spacing:0.5px; user-select:none; }
-.inner-tab:hover { color:var(--text); background:rgba(255,255,255,0.04); }
-.inner-tab.pink.active { background:rgba(255,107,157,0.12); color:var(--pink); box-shadow:inset 0 -2px 0 var(--pink); }
-.inner-tab.green.active { background:rgba(0,229,160,0.1); color:var(--green); box-shadow:inset 0 -2px 0 var(--green); }
-.inner-tab.purple.active { background:rgba(176,107,255,0.12); color:var(--purple); box-shadow:inset 0 -2px 0 var(--purple); }
-.inner-tab.gold.active { background:rgba(251,191,36,0.1); color:var(--gold); box-shadow:inset 0 -2px 0 var(--gold); }
-
-
-
-.subpage { display:none; } .subpage.active { display:block; }
-
-.chart-box { background:var(--surface2); border-radius:12px; padding:16px; border:1px solid var(--border); margin-bottom:14px; }
-canvas { display:block; }
-
-.info-box { border-radius:12px; padding:14px 16px; margin-bottom:10px; border:1px solid; }
-.info-title { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.info-text { font-size:12px; line-height:1.7; color:#8a93b0; }
-.info-text strong { color:var(--text); }
-
-.rule-card { background:var(--surface2); border-radius:10px; padding:14px; border:1px solid var(--border); margin-bottom:10px; }
-.rule-card.clickable { cursor:pointer; transition:all 0.2s; }
-.rule-card.clickable:hover { border-color:rgba(255,107,157,0.4); background:#1a2030; transform:translateY(-1px); }
-.rule-card.clickable:active { transform:translateY(0); }
-.tap-hint { font-size:10px; color:var(--muted); text-align:center; margin-bottom:12px; letter-spacing:0.5px; }
-.tap-hint span { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:3px 10px; }
-.rule-label { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-.rule-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:6px; }
-.rule-text { font-size:12px; color:#8a93b0; line-height:1.7; }
-.rule-text strong { color:var(--text); }
-
-.example-box { background:var(--bg); border-radius:8px; padding:12px; margin-top:10px; border:1px solid var(--border); }
-.example-title { font-size:10px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
-.example-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid var(--border); font-size:12px; }
-.example-row:last-child { border-bottom:none; }
-.example-label { color:var(--muted); }
-.example-val { font-weight:800; }
-
-.rr-calc { background:var(--surface2); border-radius:12px; padding:18px; border:1px solid var(--border); margin-bottom:12px; }
-.rr-calc-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:3px; }
-.rr-calc-sub { font-size:11px; color:var(--muted); margin-bottom:14px; }
-.rr-inputs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px; }
-.rr-result { background:var(--bg); border-radius:8px; padding:16px; text-align:center; border:1px solid var(--border); }
-.rr-big { font-size:36px; font-weight:900; margin-bottom:4px; }
-.rr-sub-t { font-size:11px; color:var(--muted); }
-.rr-verdict { font-size:12px; font-weight:700; margin-top:6px; }
-
-.gdiv { height:1px; background:linear-gradient(90deg,transparent,var(--pink),var(--purple),var(--green),transparent); border-radius:100px; margin:16px 0; opacity:0.25; }
-
-.swing-step { display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--border); }
-.swing-step:last-child { border-bottom:none; }
-.swing-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; flex-shrink:0; background:linear-gradient(135deg,rgba(176,107,255,0.2),rgba(0,229,160,0.2)); color:var(--purple); border:1px solid rgba(176,107,255,0.3); }
-.swing-title { font-size:13px; font-weight:800; color:var(--text); margin-bottom:3px; }
-.swing-text { font-size:12px; color:#8a93b0; line-height:1.6; }
-
-/* TRADE JOURNAL */
-.journal-form { background:var(--surface2); border-radius:12px; padding:18px; border:1px solid var(--border); margin-bottom:16px; }
-.journal-row { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:10px; }
-.journal-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
-.journal-field label { font-size:10px; color:var(--muted); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
-.journal-field input, .journal-field select, .journal-field textarea {
-  width:100%; background:var(--bg); border:1px solid var(--border);
-  border-radius:8px; padding:8px 10px; color:var(--text); font-size:13px;
-  font-weight:600; outline:none; transition:border-color 0.2s; font-family:inherit;
-}
-.journal-field input:focus, .journal-field select:focus, .journal-field textarea:focus { border-color:var(--pink); }
-.journal-field textarea { resize:none; height:60px; }
-.journal-field select option { background:var(--surface2); }
-
-.save-btn { display:block; width:100%; padding:12px; background:linear-gradient(135deg,rgba(255,107,157,0.2),rgba(176,107,255,0.2)); border:1px solid rgba(255,107,157,0.3); border-radius:10px; color:var(--pink); font-size:13px; font-weight:800; cursor:pointer; transition:all 0.2s; text-align:center; }
-.save-btn:hover { background:linear-gradient(135deg,rgba(255,107,157,0.3),rgba(176,107,255,0.3)); }
-
-.trade-log { margin-top:16px; }
-.trade-log-title { font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px; }
-.trade-entry { background:var(--surface2); border-radius:10px; padding:14px; border:1px solid var(--border); margin-bottom:8px; display:flex; align-items:center; gap:14px; }
-.trade-dir { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; flex-shrink:0; }
-.trade-dir.long { background:rgba(0,229,160,0.12); color:var(--green); border:1px solid rgba(0,229,160,0.25); }
-.trade-dir.short { background:rgba(255,107,157,0.12); color:var(--pink); border:1px solid rgba(255,107,157,0.25); }
-.trade-info { flex:1; }
-.trade-date { font-size:10px; color:var(--muted); margin-bottom:3px; }
-.trade-detail { font-size:12px; color:var(--text); font-weight:600; }
-.trade-result { font-size:14px; font-weight:900; flex-shrink:0; }
-.trade-result.win { color:var(--green); }
-.trade-result.loss { color:var(--pink); }
-.trade-result.be { color:var(--gold); }
-.delete-btn { background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; padding:4px; transition:color 0.2s; flex-shrink:0; }
-.delete-btn:hover { color:var(--pink); }
-
-.stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
-.stat-box { background:var(--surface2); border-radius:10px; padding:14px; border:1px solid var(--border); text-align:center; }
-.stat-num { font-size:24px; font-weight:900; margin-bottom:3px; }
-.stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
-
-.empty-state { text-align:center; padding:40px 20px; color:var(--muted); font-size:13px; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080a10;--s:#0f1218;--s2:#161b24;--bd:#1e2535;--tx:#f0f2f8;--mt:#5a6480;--pk:#ff6b9d;--gn:#00e5a0;--pu:#b06bff;--go:#fbbf24;--bl:#38bdf8}
+body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif}
+.hdr{background:#090c16;padding:14px 20px 12px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--bl),var(--pu),var(--gn));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tagline{font-size:10px;color:var(--mt);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
+.nav{display:flex;background:var(--s);border-bottom:1px solid var(--bd);overflow-x:auto}
+.nav::-webkit-scrollbar{display:none}
+.nb{flex:1;min-width:60px;padding:13px 4px;text-align:center;font-size:10px;font-weight:800;color:var(--mt);cursor:pointer;border-bottom:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;user-select:none;transition:all .15s}
+.nb:hover{color:var(--tx)}
+.nb.on{color:var(--tx);border-bottom-color:var(--pk);background:rgba(255,107,157,.04)}
+.pg{display:none;padding:20px 20px 60px;max-width:900px;margin:0 auto}
+.pg.on{display:block}
+.ptitle{font-size:22px;font-weight:900;margin-bottom:4px}
+.ptitle em{background:linear-gradient(135deg,var(--pk),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.psub{font-size:13px;color:var(--mt);margin-bottom:22px;line-height:1.5}
+.phase-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px}
+.phase{border-radius:14px;padding:20px;text-align:center}
+.phase.i{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25)}
+.phase.c{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25)}
+.phase.k{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.25)}
+.phase-letter{font-size:44px;font-weight:900;margin-bottom:6px;line-height:1}
+.phase.i .phase-letter{color:var(--bl)}
+.phase.c .phase-letter{color:var(--go)}
+.phase.k .phase-letter{color:var(--gn)}
+.phase-name{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.phase.i .phase-name{color:var(--bl)}.phase.c .phase-name{color:var(--go)}.phase.k .phase-name{color:var(--gn)}
+.phase-desc{font-size:12px;color:#8a93b0;line-height:1.6}
+.phase-desc strong{color:var(--tx)}
+.arrow-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px}
+.ap-box{border-radius:10px;padding:10px 16px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.ap-box.i{background:rgba(56,189,248,.1);color:var(--bl);border:1px solid rgba(56,189,248,.3)}
+.ap-box.c{background:rgba(251,191,36,.1);color:var(--go);border:1px solid rgba(251,191,36,.3)}
+.ap-box.k{background:rgba(0,229,160,.1);color:var(--gn);border:1px solid rgba(0,229,160,.3)}
+.arr{font-size:20px;color:var(--mt)}
+.loop-badge{background:rgba(176,107,255,.1);color:var(--pu);border:1px solid rgba(176,107,255,.3);border-radius:10px;padding:8px 14px;font-size:11px;font-weight:800;margin-left:6px}
+.rule-list{background:var(--s2);border-radius:12px;padding:16px;border:1px solid var(--bd);margin-bottom:14px}
+.rule{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px;color:#8a93b0;line-height:1.5}
+.rule:last-child{border-bottom:none;padding-bottom:0}
+.rule:first-child{padding-top:0}
+.rule strong{color:var(--tx)}
+.rdot{font-size:16px;font-weight:900;flex-shrink:0;margin-top:1px}
+.rdot.bl{color:var(--bl)}.rdot.go{color:var(--go)}.rdot.gn{color:var(--gn)}.rdot.pk{color:var(--pk)}.rdot.pu{color:var(--pu)}
+.big-rule{border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
+.big-rule.warn{background:rgba(255,107,157,.07);border:2px solid rgba(255,107,157,.4)}
+.big-rule.info{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.25)}
+.big-rule.success{background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.25)}
+.big-rule.gold{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25)}
+.brt{font-size:16px;font-weight:900;margin-bottom:6px}
+.big-rule.warn .brt{color:var(--pk)}.big-rule.info .brt{color:var(--bl)}.big-rule.success .brt{color:var(--gn)}.big-rule.gold .brt{color:var(--go)}
+.brs{font-size:13px;color:#8a93b0;line-height:1.6}
+.brs strong{color:var(--tx)}
+.tf-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tf{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.tf.h4{background:rgba(176,107,255,.15);color:var(--pu);border:1px solid rgba(176,107,255,.3)}
+.tf.h1{background:rgba(255,107,157,.15);color:var(--pk);border:1px solid rgba(255,107,157,.3)}
+.tf.m15{background:rgba(251,191,36,.12);color:var(--go);border:1px solid rgba(251,191,36,.25)}
+.tf.m5{background:rgba(0,229,160,.1);color:var(--gn);border:1px solid rgba(0,229,160,.25)}
+.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--s2);border-radius:12px;padding:14px;border:1px solid var(--bd)}
+.step-n{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0}
+.step-title{font-size:13px;font-weight:800;color:var(--tx);margin-bottom:3px}
+.step-text{font-size:12px;color:#8a93b0;line-height:1.6}
+.step-text strong{color:var(--tx)}
+.chk-list{display:flex;flex-direction:column;gap:0}
+.chk{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.chk:last-child{border-bottom:none;padding-bottom:0}
+.chk:first-child{padding-top:0}
+.cbox{width:24px;height:24px;border-radius:7px;border:2px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s;background:var(--bg)}
+.cbox svg{display:none}
+.cbox.on{border-color:transparent;background:linear-gradient(135deg,var(--pk),var(--pu))}
+.cbox.on svg{display:block}
+.chk.dn .clabel{color:var(--mt);text-decoration:line-through}
+.clabel{font-size:13px;line-height:1.5;color:#8a93b0}
+.clabel strong{color:var(--tx)}
+.cnote{font-size:11px;color:var(--mt);margin-top:3px}
+.prog-wrap{background:var(--bd);border-radius:100px;height:6px;overflow:hidden;margin-bottom:6px}
+.prog{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--pk),var(--pu),var(--gn));transition:width .4s;width:0%}
+.prog-label{font-size:12px;color:var(--mt);margin-bottom:18px}
+.ready{display:none;background:linear-gradient(135deg,rgba(0,229,160,.07),rgba(176,107,255,.07));border:1px solid var(--gn);border-radius:12px;padding:16px;text-align:center;margin-bottom:18px}
+.ready.on{display:block}
+.ready h3{font-size:17px;font-weight:900;background:linear-gradient(135deg,var(--gn),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px}
+.ready p{color:var(--mt);font-size:12px}
+.dir-pick{display:flex;gap:10px;margin-top:8px}
+.dp{flex:1;padding:10px;border-radius:10px;border:2px solid var(--bd);background:var(--bg);color:var(--mt);font-size:13px;font-weight:800;cursor:pointer;text-align:center;user-select:none;transition:all .2s}
+.dp.long{border-color:var(--gn);background:rgba(0,229,160,.08);color:var(--gn)}
+.dp.short{border-color:var(--pk);background:rgba(255,107,157,.08);color:var(--pk)}
+.rst-btn{display:block;width:100%;margin-top:16px;padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:10px;color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.rst-btn:hover{border-color:var(--pk);color:var(--tx)}
+.ses-clock{background:var(--s);border-radius:16px;padding:24px;border:1px solid var(--bd);text-align:center;margin-bottom:18px}
+.ses-label{font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.ses-time{font-size:52px;font-weight:900;color:var(--tx);letter-spacing:3px;margin-bottom:10px;font-variant-numeric:tabular-nums}
+.ses-badge{font-size:15px;font-weight:800;padding:8px 24px;border-radius:30px;display:inline-block;margin-bottom:10px}
+.ses-desc{font-size:13px;color:#8a93b0;max-width:400px;margin:0 auto;line-height:1.6}
+.ses-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ses-item{background:var(--s2);border-radius:12px;padding:14px;border:1px solid var(--bd)}
+.ses-item.best{border-color:rgba(0,229,160,.35)}
+.ses-item.avoid{border-color:rgba(251,191,36,.3)}
+.si-time{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.si-name{font-size:14px;font-weight:800;color:var(--tx);margin-bottom:4px}
+.si-desc{font-size:12px;color:#8a93b0;line-height:1.5}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="logo">A++ Setup</div>
-    <div class="tagline">MNQ · Order Block + Break of Structure</div>
+<div class="hdr">
+  <div>
+    <div class="logo">ICC Trading System</div>
+    <div class="tagline">MNQ &middot; Indication &middot; Correction &middot; Continuation</div>
   </div>
-</div>
-
-<div class="quote-bar">
-  <div class="quote-mark">"</div>
-  <div class="quote-text" id="quoteText">Loading...</div>
 </div>
 
 <div class="nav">
-  <div class="nav-btn active" onclick="switchPage('markup',this)">📋 Markup</div>
-  <div class="nav-btn" onclick="switchPage('strategy',this)">⚡ Strategy</div>
-  <div class="nav-btn" onclick="switchPage('checklist',this)">✓ Checklist</div>
-  <div class="nav-btn" onclick="switchPage('visual',this)">📈 Visual</div>
-  <div class="nav-btn" onclick="switchPage('entry',this)">🕯 Entry</div>
-  <div class="nav-btn" onclick="switchPage('zones',this)">🗺 Zones</div>
-  <div class="nav-btn" onclick="switchPage('exit',this)">🚪 Exit</div>
-  <div class="nav-btn" onclick="switchPage('stoploss',this)">🛡 Stop Loss</div>
-  <div class="nav-btn" onclick="switchPage('journal',this)">📓 Journal</div>
-  <div class="nav-btn" onclick="switchPage('swing',this)">🚀 Swing</div>
-  <div class="nav-btn" onclick="switchPage('sessions',this)">🕐 Sessions</div>
-  <div class="nav-btn" onclick="switchPage('ticks',this)">💰 Ticks</div>
-  <div class="nav-btn" onclick="switchPage('projection',this)">📊 Projection</div>
+  <div class="nb on" onclick="go('icc',this)">ICC</div>
+  <div class="nb" onclick="go('ind',this)">Indication</div>
+  <div class="nb" onclick="go('cor',this)">Correction</div>
+  <div class="nb" onclick="go('con',this)">Continuation</div>
+  <div class="nb" onclick="go('chk',this)">Checklist</div>
+  <div class="nb" onclick="go('ses',this)">Sessions</div>
 </div>
 
-<!-- MARKUP -->
-<div class="page active" id="page-markup">
-  <div class="page-title">Daily <span>Chart Markup</span></div>
-  <div class="page-sub">Every morning. Same sequence. Do not skip steps.</div>
-  <div class="two-col">
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px">Morning Sequence — In This Order</div>
-        <div class="markup-step">
-          <div class="markup-badge" style="background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.3)">4H</div>
-          <div><div class="markup-title">Start on the 4 Hour</div><div class="markup-text"><strong>What is the overall trend?</strong> Mark the last major high and low. Draw trend lines. This sets your direction for the day.</div></div>
-        </div>
-        <div class="markup-step">
-          <div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">1H</div>
-          <div><div class="markup-title">Move to the 1 Hour</div><div class="markup-text">Confirm the same direction. Mark last high and low. Adjust trend lines. <strong>If 1H disagrees with 4H — wait. No trade.</strong></div></div>
-        </div>
-        <div class="markup-step">
-          <div class="markup-badge" style="background:rgba(0,229,160,0.12);color:var(--green);border:1px solid rgba(0,229,160,0.25)">15M</div>
-          <div><div class="markup-title">Drop to the 15 Minute</div><div class="markup-text">This is where your setup lives. Mark last high and low. Find the <strong>last candle before the big move</strong> in your bias direction — draw a box around it. That is your order block zone.</div></div>
-        </div>
-        <div class="markup-step">
-          <div class="markup-badge" style="background:rgba(251,191,36,0.12);color:var(--gold);border:1px solid rgba(251,191,36,0.25)">5M</div>
-          <div><div class="markup-title">5 Minute — Entry Timing Only</div><div class="markup-text">Do not look for new levels here. <strong>This is where you watch for your 3 candle confirmation and pull the trigger.</strong></div></div>
-        </div>
-      </div>
+<!-- ICC OVERVIEW -->
+<div class="pg on" id="pg-icc">
+  <div class="ptitle">The <em>ICC</em> System</div>
+  <div class="psub">Three steps. In order. Every time. You do not skip ahead.</div>
+  <div class="phase-row">
+    <div class="phase i">
+      <div class="phase-letter">I</div>
+      <div class="phase-name">Indication</div>
+      <div class="phase-desc">Price breaks a swing high or low on <strong>1H or 4H</strong>. Creates a new high or new low. This is your <strong>blueprint, not your entry.</strong> Set an alert. Walk away.</div>
     </div>
-    <div>
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title" style="margin-bottom:12px">What to Mark on Every Timeframe</div>
-        <div class="step" style="padding:10px 0"><div style="width:7px;height:7px;border-radius:50%;background:var(--pink);flex-shrink:0;margin-top:5px"></div><div><div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px">Last High</div><div style="font-size:11px;color:#8a93b0">Most recent swing high before a pullback. Draw a horizontal line.</div></div></div>
-        <div class="step" style="padding:10px 0"><div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px"></div><div><div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px">Last Low</div><div style="font-size:11px;color:#8a93b0">Most recent swing low before a bounce. Draw a horizontal line.</div></div></div>
-        <div class="step" style="padding:10px 0"><div style="width:7px;height:7px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:5px"></div><div><div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px">Trend Lines</div><div style="font-size:11px;color:#8a93b0">Connect swing lows for uptrend. Connect swing highs for downtrend.</div></div></div>
-        <div class="step" style="padding:10px 0"><div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px"></div><div><div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px">Order Block Zone</div><div style="font-size:11px;color:#8a93b0">Last candle before the big move. Box it from top to bottom. This is where you wait for price to return.</div></div></div>
-      </div>
-      <div class="info-box" style="background:rgba(251,191,36,0.05);border-color:rgba(251,191,36,0.25)">
-        <div class="info-title" style="color:var(--gold)">Which Candle is the Order Block?</div>
-        <div class="info-text">For a <strong>buy setup</strong> — the last pink candle right before price made a big move up. Box it.<br><br>For a <strong>sell setup</strong> — the last green candle right before price made a big drop down. Box it.<br><br>When price comes back and taps into that box — watch for your 3 candle entry.</div>
-      </div>
+    <div class="phase c">
+      <div class="phase-letter">C</div>
+      <div class="phase-name">Correction</div>
+      <div class="phase-desc">Price pulls back. Grabs liquidity from FOMO traders. Watch it on <strong>15M.</strong> Track the highs and lows. <strong>Do not enter.</strong> Wait for it to end.</div>
     </div>
+    <div class="phase k">
+      <div class="phase-letter">C</div>
+      <div class="phase-name">Continuation</div>
+      <div class="phase-desc">Price returns to the 1H level. On <strong>5M</strong> a lower high forms and price pushes through it. <strong>That is your entry.</strong> Stop behind the level. TP at indication origin.</div>
+    </div>
+  </div>
+  <div class="arrow-row">
+    <div class="ap-box i">Indication</div>
+    <div class="arr">&rarr;</div>
+    <div class="ap-box c">Correction</div>
+    <div class="arr">&rarr;</div>
+    <div class="ap-box k">Continuation</div>
+    <div class="arr">&rarr;</div>
+    <div class="loop-badge">&#8635; Repeats</div>
+  </div>
+  <div class="big-rule warn">
+    <div class="brt">The one rule that saves you every time</div>
+    <div class="brs">Wait for the <strong>second time around.</strong> The first break is the indication &mdash; FOMO traders get in, market takes their money, they get wiped. The second push through the level is yours. Never the first. Always the second.</div>
+  </div>
+  <div class="rule-list">
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>Indications can <strong>only</strong> happen when price breaks a swing high or swing low. No swing break = no indication = no trade.</div></div>
+    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not trade consolidation. Price ranging with no new highs or lows = wait. Nothing to trade yet.</div></div>
+    <div class="rule"><div class="rdot gn">&rarr;</div><div>Mark your levels on <span style="background:rgba(255,107,157,.15);color:var(--pk);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">1H</span> or <span style="background:rgba(176,107,255,.15);color:var(--pu);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">4H</span>. Find entries on <span style="background:rgba(0,229,160,.1);color:var(--gn);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">5M</span> or <span style="background:rgba(251,191,36,.12);color:var(--go);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">15M</span>.</div></div>
+    <div class="rule"><div class="rdot pu">&rarr;</div><div>Only look back <strong>3&ndash;4 days</strong> for your swing levels. You do not need years of history.</div></div>
+    <div class="rule"><div class="rdot pk">&rarr;</div><div>If price is trending it will <strong>not break structure.</strong> Hold as long as structure holds.</div></div>
   </div>
 </div>
 
-<!-- STRATEGY -->
-<div class="page" id="page-strategy">
-  <div class="page-title">The <span>A++ Setup</span></div>
-  <div class="page-sub">One strategy. Repeatable every single day.</div>
-  <div class="two-col">
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:3px">Your 5 Step Process</div>
-        
-        <div class="step"><div class="step-num">1</div><div><div class="step-title">Read Higher Timeframes — Set Your Bias</div><div class="step-text">4H → 1H → 15M → 5M every morning. After that — <strong>buying or selling today. Pick one. Stay in it all day.</strong></div></div></div>
-        <div class="step"><div class="step-num">2</div><div><div class="step-title">Mark Your Order Block Zone on the 15 Minute</div><div class="step-text">Find the <strong>last candle before the big move</strong> in your bias direction. Box it. This is where price will come back.</div></div></div>
-        <div class="step"><div class="step-num">3</div><div><div class="step-title">Wait for the Break of Structure</div><div class="step-text">Price breaks through a key level. <strong>Do not enter yet.</strong> This just tells you the setup is forming.</div></div></div>
-        <div class="step"><div class="step-num">4</div><div><div class="step-title">Wait for Price to Tap Back Into the Zone</div><div class="step-text">After the break, price pulls back and returns to your zone. <strong>This feels like it is going against you. It is not. This is the setup.</strong></div></div></div>
-        <div class="step"><div class="step-num">5</div><div><div class="step-title">Enter on the 3 Candle Confirmation — on the 5 Minute</div><div class="step-text">Watch the 5 minute. Wait for the <strong>3 candle sequence</strong> to confirm direction inside your zone. That is your entry. See the Entry tab for the full visual.</div></div></div>
-      </div>
+<!-- INDICATION -->
+<div class="pg" id="pg-ind">
+  <div class="ptitle"><em>Indication</em></div>
+  <div class="psub">The blueprint. Not your entry. Information only.</div>
+  <div class="big-rule info">
+    <div class="brt">What is an indication?</div>
+    <div class="brs">Price breaks a <strong>swing high or swing low</strong> on the 1H or 4H. It creates a new high or a new low. This is the starting point of a trend. It answers the question: <strong>which direction is price headed?</strong></div>
+  </div>
+  <div class="tf-row">
+    <div class="tf h1">1H &mdash; primary</div>
+    <div class="tf h4">4H &mdash; if 1H is choppy</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">1</div>
+      <div><div class="step-title">You are in consolidation &mdash; no swing levels broken</div><div class="step-text">Price is ranging. Highs and lows are equal. <strong>You do not trade this.</strong> You wait. Watch for a swing to break.</div></div>
     </div>
-    <div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="card-title" style="margin-bottom:12px">Your Bias System</div>
-        <div style="background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:10px;padding:14px;margin-bottom:8px">
-          <div style="font-size:11px;font-weight:800;color:var(--green);margin-bottom:5px">📈 BULLISH DAY — BUYING ONLY</div>
-          <div style="font-size:12px;color:#8a93b0">Higher timeframes show upward structure. Only looking for buy setups. Ignore any urge to sell.</div>
-        </div>
-        <div style="background:rgba(255,107,157,0.05);border:1px solid rgba(255,107,157,0.2);border-radius:10px;padding:14px">
-          <div style="font-size:11px;font-weight:800;color:var(--pink);margin-bottom:5px">📉 BEARISH DAY — SELLING ONLY</div>
-          <div style="font-size:12px;color:#8a93b0">Higher timeframes show downward structure. Only looking for sell setups. Ignore any urge to buy.</div>
-        </div>
-      </div>
-      <div class="gdiv"></div>
-      <div class="caution-box">
-        <div class="caution-title">Be Mindful Of</div>
-        <div class="caution-item"><div class="caution-dot">→</div>Entering on the first big move — that is chasing. Wait for the tap back.</div>
-        <div class="caution-item"><div class="caution-dot">→</div>Flipping your bias mid day because price moved against you temporarily</div>
-        <div class="caution-item"><div class="caution-dot">→</div>Lunch hour 11am–1pm Eastern tends to be choppy — only trade if the setup is very clean</div>
-        <div class="caution-item"><div class="caution-dot">→</div>Watching the 1 minute while in a trade — it will make you want to exit every time</div>
-        <div class="caution-item"><div class="caution-dot">→</div>Trading when price is in the middle of a range — wait for a key level</div>
-        <div class="caution-item"><div class="caution-dot">→</div>After big losses that shake you — step back, reset, come back clear</div>
-        <div class="caution-item"><div class="caution-dot">→</div>Risk reward below 2 to 1 — the math does not work in your favor</div>
-      </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">2</div>
+      <div><div class="step-title">Price breaks a swing high or low &mdash; indication fires</div><div class="step-text">A new high or new low is created. <strong>Do not enter here.</strong> Set a price alert at this level. This level is now your entry zone and your future TP origin.</div></div>
     </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">3</div>
+      <div><div class="step-title">The indication gives you two things immediately</div><div class="step-text"><strong>Entry zone</strong> &mdash; when continuation comes, price returns to this level. That is where you enter.<br><br><strong>TP level</strong> &mdash; the level where the indication started is your take profit. You know your whole trade plan before you ever enter.</div></div>
+    </div>
+  </div>
+  <div class="big-rule warn">
+    <div class="brt">Do NOT trade the indication</div>
+    <div class="brs">When the indication fires everyone FOMOs in. They buy the top or sell the bottom. The market then grabs all of them. <strong>You are not one of those people.</strong> Use the indication as information only. Set your alert. Walk away. Come back for the continuation.</div>
+  </div>
+  <div class="rule-list">
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>Swings getting higher? <strong>Bullish.</strong> Getting lower? <strong>Bearish.</strong> Not moving either way? Consolidation. No trade.</div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>The 1H is your primary. If it is too choppy to see clear swings &mdash; move to the <strong>4H.</strong></div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>These levels <strong>cost money to break.</strong> That is why they hold so strong on higher timeframes. Once broken they have momentum.</div></div>
+  </div>
+</div>
+
+<!-- CORRECTION -->
+<div class="pg" id="pg-cor">
+  <div class="ptitle"><em>Correction</em></div>
+  <div class="psub">Price grabs liquidity. FOMO traders get wiped. You watch on 15M and wait.</div>
+  <div class="big-rule gold">
+    <div class="brt">Why corrections happen</div>
+    <div class="brs">After the indication everyone FOMOs in. They have positions. They have stop losses. The market sees all of that money stacked up. <strong>It goes to grab it.</strong> Price pulls back, hits their stops, takes their money. Then the real move starts. That is the correction.</div>
+  </div>
+  <div class="tf-row">
+    <div class="tf m15">Monitor on 15M</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">1</div>
+      <div><div class="step-title">Switch to 15M when the correction starts</div><div class="step-text">On the 1H the correction looks like one or two candles. The <strong>15M shows you the structure inside</strong> the correction so you actually know when it ends.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">2</div>
+      <div><div class="step-title">Track the highs and lows on 15M</div><div class="step-text">Mark them as they form. If the correction is building <strong>higher highs and higher lows</strong> (on a bearish pullback) &mdash; it is <strong>still correcting. It is not over.</strong> Do not enter.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">3</div>
+      <div><div class="step-title">Watch for structure to break on the 15M</div><div class="step-text">When the correction structure breaks &mdash; when price stops making those correction highs and lows &mdash; <strong>that is when you start looking for the continuation.</strong> Drop to 5M.</div></div>
+    </div>
+  </div>
+  <div class="rule-list">
+    <div class="rule"><div class="rdot go">&rarr;</div><div>The correction does not always go far. Sometimes it is subtle. <strong>That does not matter.</strong> What matters is whether the structure has broken.</div></div>
+    <div class="rule"><div class="rdot go">&rarr;</div><div>The correction is <strong>not a reversal.</strong> The 1H level has not changed. The trend is still intact.</div></div>
+    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not try to trade the correction itself. Watch it. Track it. <strong>Wait for it to end.</strong></div></div>
+  </div>
+</div>
+
+<!-- CONTINUATION -->
+<div class="pg" id="pg-con">
+  <div class="ptitle"><em>Continuation</em></div>
+  <div class="psub">Your entry. The second time around. This is where the money is.</div>
+  <div class="big-rule warn">
+    <div class="brt">The second time around &mdash; every single time</div>
+    <div class="brs">The first break was the indication. FOMO traders got in. They got wiped. Now price comes back to that same level a <strong>second time.</strong> The weak hands are gone. This is your entry.</div>
+  </div>
+  <div class="tf-row">
+    <div class="tf h1">1H &mdash; your entry zone</div>
+    <div class="tf m5">5M &mdash; entry trigger</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">1</div>
+      <div><div class="step-title">Price returns to the 1H indication level</div><div class="step-text">The same level that caused the new high or new low. Your entry zone. <strong>This level has the strongest momentum</strong> because it is what started the move in the first place.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">2</div>
+      <div><div class="step-title">Drop to 5M &mdash; watch for a lower high to form</div><div class="step-text">Near the 1H level on the 5M you are watching for a <strong>lower high to form.</strong> This tells you the correction bounce is done. Price is trying to resume the original direction.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">3</div>
+      <div><div class="step-title">Price pushes through that lower high &mdash; enter</div><div class="step-text">When price breaks through the lower high in the direction of your trend &mdash; <strong>that is your entry.</strong> You do not have to wait for the candle to fully close. When the direction is clear, enter.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(255,107,157,.15);color:var(--pk);border:1px solid rgba(255,107,157,.3)">SL</div>
+      <div><div class="step-title">Stop loss &mdash; behind the 1H level</div><div class="step-text">Above the 1H level on a sell, below it on a buy. <strong>Give it room.</strong> Do not put it right at the level. If you are wrong, take the loss and move on.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">TP</div>
+      <div><div class="step-title">Take profit &mdash; where the indication started</div><div class="step-text">The 1H level that created the new high or new low is your TP. That is where buyers or sellers are waiting. <strong>If price blows through it &mdash; that is a new indication. You can hold longer.</strong></div></div>
+    </div>
+  </div>
+  <div class="big-rule success">
+    <div class="brt">Set it. Do not touch it.</div>
+    <div class="brs">Set your stop and TP before you enter. <strong>Then put your hands in your lap.</strong> The plan you made with a clear head is smarter than the fear you feel while you are in the trade. Every loss came from interfering with the exit.</div>
   </div>
 </div>
 
 <!-- CHECKLIST -->
-<div class="page" id="page-checklist">
-  <div class="page-title">Pre-Trade <span>Checklist</span></div>
-  <div class="page-sub">Run this before every single trade.</div>
-  <div class="progress-label" id="progressLabel">0 of 12 complete</div>
-  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-  <div class="ready-banner" id="readyBanner"><h2>You are ready to enter.</h2><p>Trust the plan. Close the 1 minute. Let it work.</p></div>
-  <div class="two-col">
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:12px">Morning Markup Done</div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I read the 4H, 1H, 15M, and 5M charts</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I marked last high and last low on each timeframe</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I drew my trend lines</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I marked my order block zone on the 15 minute</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">My bias is set</div><div class="direction-toggle"><div class="dir-btn" id="longBtn" onclick="setDir('long',event)">BUYING</div><div class="dir-btn" id="shortBtn" onclick="setDir('short',event)">SELLING</div></div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:12px">Setup Is Here</div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">Price broke through a key level on the 15 minute</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">Price tapped back into my order block zone</div><div class="check-note">Do not enter before this happens</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I see the 3 candle confirmation forming on the 5 minute</div><div class="check-note">See Entry tab if unsure what to look for</div></div></div>
-      </div>
-    </div>
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:12px">Plan the Trade</div>
-        <div class="trade-inputs">
-          <div class="input-group"><label>Entry</label><input type="number" id="entryPrice" placeholder="00000" oninput="calcRR()"></div>
-          <div class="input-group"><label>Stop</label><input type="number" id="stopPrice" placeholder="00000" oninput="calcRR()"></div>
-          <div class="input-group"><label>Last High</label><input type="number" id="targetPrice" placeholder="00000" oninput="calcRR()"></div>
-        </div>
-        <div class="tp-grid">
-          <div class="tp-box"><div class="tp-num" style="color:var(--green)">TP1 — Halfway</div><label>First Target</label><input type="number" placeholder="00000" id="tp1"></div>
-          <div class="tp-box"><div class="tp-num" style="color:var(--purple)">TP2 — Last High</div><label>Final Target</label><input type="number" placeholder="00000" id="tp2"></div>
-        </div>
-        <div class="rr-display" id="rrDisplay"><div class="rr-label">Risk / Reward</div><div class="rr-note">Fill in entry, stop, and last high</div></div>
-        <div style="margin-top:12px">
-          <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">Risk reward is at least 2 to 1</div></div></div>
-          <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">Stop is 10–15 points beyond the zone</div></div></div>
-          <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">Quantity set to 2 contracts. Both TPs entered.</div></div></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:12px">Once You Are In</div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I closed the 1 minute — watching 15 minute only</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">When TP1 hits I move stop to entry price immediately</div><div class="check-note">Second contract is now risk free</div></div></div>
-        <div class="check-item" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="check-text">I let TP2 hit without touching anything</div></div></div>
-        <button class="reset-btn" onclick="resetAll()">Reset for Next Trade</button>
-      </div>
+<div class="pg" id="pg-chk">
+  <div class="ptitle">Pre-Trade <em>Checklist</em></div>
+  <div class="psub">All three phases confirmed before you enter. No shortcuts.</div>
+  <div class="prog-label" id="plabel">0 of 8 complete</div>
+  <div class="prog-wrap"><div class="prog" id="progbar"></div></div>
+  <div class="ready" id="rdy"><h3>All phases confirmed. Enter the trade.</h3><p>Stop set. TP set. Hands in your lap.</p></div>
+  <div style="background:var(--s);border-radius:14px;padding:18px;border:1px solid var(--bd)">
+    <div class="chk-list">
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Indication:</strong> A new high or new low was made on the 1H or 4H</div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Correction:</strong> Price pulled back and grabbed liquidity</div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Second time around:</strong> Price is back at the 1H indication level</div><div class="cnote">Never the first touch. Always the second.</div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>5M structure:</strong> A lower high has formed near the 1H level</div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Continuation confirmed:</strong> Price is pushing through that lower high</div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel">Direction is set</div><div class="dir-pick"><div class="dp" id="dbuy" onclick="setD('buy',event)">Buying</div><div class="dp" id="dsell" onclick="setD('sell',event)">Selling</div></div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Stop is set</strong> beyond the 1H level with room</div></div></div>
+      <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>TP is set</strong> at the indication origin on the 1H</div></div></div>
     </div>
   </div>
+  <button class="rst-btn" onclick="rstChk()">Reset checklist</button>
 </div>
-
-<!-- VISUAL -->
-<div class="page" id="page-visual">
-  <div class="page-title">The <span>Visual</span></div>
-  <div class="page-sub">Tap each phase to see exactly what you are looking for</div>
-  <div class="inner-tabs">
-    <div class="inner-tab green active" onclick="switchVisual('buy',this)">Buy Setup</div>
-    <div class="inner-tab pink" onclick="switchVisual('sell',this)">Sell Setup</div>
-    <div class="inner-tab purple" onclick="switchVisual('range',this)">No Trade Zone</div>
-  </div>
-  <div class="subpage active" id="visual-buy">
-    <div class="two-col">
-      <div>
-        <div class="chart-box"><canvas id="cVBuy" height="300"></canvas></div>
-        <div class="tap-hint"><span>👆 Tap each phase to highlight it on the chart</span></div>
-        <div class="three-col">
-          <div class="rule-card clickable" style="text-align:center" onclick="setVPhase('buy',1)"><div style="font-size:18px;font-weight:900;color:var(--pink);margin-bottom:3px">1</div><div style="font-size:10px;font-weight:800;color:var(--pink);text-transform:uppercase;margin-bottom:4px">Break</div><div style="font-size:11px;color:var(--muted)">Price breaks above a key level. Big move. Do not chase.</div></div>
-          <div class="rule-card clickable" style="text-align:center" onclick="setVPhase('buy',2)"><div style="font-size:18px;font-weight:900;color:var(--gold);margin-bottom:3px">2</div><div style="font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:4px">Tap Back</div><div style="font-size:11px;color:var(--muted)">Price returns to the zone. Drop to 5 min. Watch for candle 3.</div></div>
-          <div class="rule-card clickable" style="text-align:center" onclick="setVPhase('buy',3)"><div style="font-size:18px;font-weight:900;color:var(--green);margin-bottom:3px">3</div><div style="font-size:10px;font-weight:800;color:var(--green);text-transform:uppercase;margin-bottom:4px">Continue</div><div style="font-size:11px;color:var(--muted)">Price pushes up. TP1 then TP2.</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="info-box" style="background:rgba(0,229,160,0.05);border-color:rgba(0,229,160,0.25);margin-bottom:10px">
-          <div class="info-title" style="color:var(--green)">Buy Setup</div>
-          <div class="info-text">After the break, wait for price to tap back into the zone. Drop to the <strong>5 minute</strong> and watch for the 3 candle confirmation. When candle 3 is clearly forming green and pushing up — enter. Stop below the zone. TP1 halfway. TP2 at the last high.</div>
-        </div>
-        <div class="info-box" style="background:rgba(251,191,36,0.05);border-color:rgba(251,191,36,0.2);margin-bottom:10px">
-          <div class="info-title" style="color:var(--gold)">The Tap Back Feels Scary</div>
-          <div class="info-text">When price returns to the zone it looks like it is going against you. <strong>This is the setup working exactly as it should.</strong> Close the 1 minute. Stay in it.</div>
-        </div>
-        <div class="info-box" style="background:rgba(176,107,255,0.05);border-color:rgba(176,107,255,0.25)">
-          <div class="info-title" style="color:var(--purple)">Two Contracts</div>
-          <div class="info-text">Enter 2 contracts. TP1 closes one automatically at halfway. Move stop to breakeven. Let TP2 run to the last high. Close manually.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="subpage" id="visual-sell">
-    <div class="two-col">
-      <div>
-        <div class="chart-box"><canvas id="cVSell" height="300"></canvas></div>
-        <div class="tap-hint"><span>👆 Tap each phase to highlight it on the chart</span></div>
-        <div class="three-col">
-          <div class="rule-card clickable" style="text-align:center" onclick="setVPhase('sell',1)"><div style="font-size:18px;font-weight:900;color:var(--pink);margin-bottom:3px">1</div><div style="font-size:10px;font-weight:800;color:var(--pink);text-transform:uppercase;margin-bottom:4px">Break</div><div style="font-size:11px;color:var(--muted)">Price breaks below a key level. Big drop. Do not chase.</div></div>
-          <div class="rule-card clickable" style="text-align:center" onclick="setVPhase('sell',2)"><div style="font-size:18px;font-weight:900;color:var(--gold);margin-bottom:3px">2</div><div style="font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:4px">Tap Back</div><div style="font-size:11px;color:var(--muted)">Price bounces up into the zone. Drop to 5 min. Watch for candle 3.</div></div>
-          <div class="rule-card clickable" style="text-align:center" onclick="setVPhase('sell',3)"><div style="font-size:18px;font-weight:900;color:var(--purple);margin-bottom:3px">3</div><div style="font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;margin-bottom:4px">Continue</div><div style="font-size:11px;color:var(--muted)">Price drops. TP1 then TP2.</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="info-box" style="background:rgba(255,107,157,0.05);border-color:rgba(255,107,157,0.25);margin-bottom:10px">
-          <div class="info-title" style="color:var(--pink)">Sell Setup</div>
-          <div class="info-text">After the break down, wait for price to tap back up into the zone. Drop to the <strong>5 minute</strong> and watch for the 3 candle confirmation. When candle 3 is clearly forming pink and pushing down — enter. Stop above the zone. TP1 halfway. TP2 at the last low.</div>
-        </div>
-        <div class="info-box" style="background:rgba(251,191,36,0.05);border-color:rgba(251,191,36,0.2)">
-          <div class="info-title" style="color:var(--gold)">The Tap Back Feels Scary</div>
-          <div class="info-text">Price bouncing up against your sell looks like a reversal. <strong>The higher timeframe has not changed. Close the 1 minute. Stay in it.</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="subpage" id="visual-range">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cVRange" height="300"></canvas></div></div>
-      <div>
-        <div class="info-box" style="background:rgba(176,107,255,0.05);border-color:rgba(176,107,255,0.25);margin-bottom:10px">
-          <div class="info-title" style="color:var(--purple)">No Trade Zone</div>
-          <div class="info-text">Price is floating in the <strong>middle of the range.</strong> Not at a key level. Nothing to trade. Watch and wait for price to reach one of the walls.</div>
-        </div>
-        <div class="rule-card">
-          <div class="rule-label" style="color:var(--purple)">The Rule</div>
-          <div class="rule-title">Trade the walls. Not the middle.</div>
-          <div class="rule-text">Only enter when price reaches a key level — your order block zone, a double high, a double low, or a trendline. <strong>Waiting is a position.</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ENTRY — 3 CANDLE -->
-<div class="page" id="page-entry">
-  <div class="page-title">The <span>3 Candle Entry</span></div>
-  <div class="page-sub">This is exactly what you are watching for on the 5 minute inside your zone</div>
-  <div class="inner-tabs">
-    <div class="inner-tab green active" onclick="switchEntry('buy',this)">Buy Entry</div>
-    <div class="inner-tab pink" onclick="switchEntry('sell',this)">Sell Entry</div>
-    <div class="inner-tab gold" onclick="switchEntry('body',this)">What is Clearly Going Up or Down</div>
-  </div>
-
-  <div class="subpage active" id="entry-buy">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cEntry3Buy" height="340"></canvas></div></div>
-      <div>
-        <div class="rule-card" style="margin-bottom:10px;border-color:rgba(255,107,157,0.3)">
-          <div class="rule-label" style="color:var(--pink)">Candle 1 — The Break</div>
-          <div class="rule-title">Price pushes out of your zone going up</div>
-          <div class="rule-text">A strong green candle breaks above your order block zone. This is the first signal. <strong>Do not enter here.</strong> You are just watching.</div>
-        </div>
-        <div class="rule-card" style="margin-bottom:10px;border-color:rgba(251,191,36,0.3)">
-          <div class="rule-label" style="color:var(--gold)">Candle 2 — The Tap Back</div>
-          <div class="rule-title">Price comes back down into your zone</div>
-          <div class="rule-text">A pink candle pulls price back into the zone. This feels like it is reversing. <strong>Do not enter here either.</strong> This is the correction. You are still just watching.</div>
-        </div>
-        <div class="rule-card" style="border-color:rgba(0,229,160,0.3)">
-          <div class="rule-label" style="color:var(--green)">Candle 3 — The Confirmation</div>
-          <div class="rule-title">A green candle forms and pushes up out of the zone</div>
-          <div class="rule-text">This is your entry candle. You do not wait for it to fully close. When you can <strong>clearly see the body is green and growing upward</strong> — that is your signal. Enter while it is forming.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="subpage" id="entry-sell">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cEntry3Sell" height="340"></canvas></div></div>
-      <div>
-        <div class="rule-card" style="margin-bottom:10px;border-color:rgba(255,107,157,0.3)">
-          <div class="rule-label" style="color:var(--pink)">Candle 1 — The Break</div>
-          <div class="rule-title">Price pushes down out of your zone</div>
-          <div class="rule-text">A strong pink candle breaks below your order block zone. <strong>Do not enter here.</strong> You are just watching.</div>
-        </div>
-        <div class="rule-card" style="margin-bottom:10px;border-color:rgba(251,191,36,0.3)">
-          <div class="rule-label" style="color:var(--gold)">Candle 2 — The Tap Back</div>
-          <div class="rule-title">Price bounces back up into your zone</div>
-          <div class="rule-text">A green candle pushes price back up into the zone. Looks like it is going up. <strong>Do not enter here.</strong> This is the correction. Still watching.</div>
-        </div>
-        <div class="rule-card" style="border-color:rgba(176,107,255,0.3)">
-          <div class="rule-label" style="color:var(--purple)">Candle 3 — The Confirmation</div>
-          <div class="rule-title">A pink candle forms and pushes down out of the zone</div>
-          <div class="rule-text">This is your entry candle. When you can <strong>clearly see the body is pink and growing downward</strong> — enter while it is forming. Do not wait for it to fully close.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="subpage" id="entry-body">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cEntryBody" height="340"></canvas></div></div>
-      <div>
-        <div class="info-box" style="background:rgba(0,229,160,0.05);border-color:rgba(0,229,160,0.25);margin-bottom:10px">
-          <div class="info-title" style="color:var(--green)">Clearly Going Up</div>
-          <div class="info-text">The candle opened and the <strong>body is growing upward.</strong> Not a small wick — the actual body of the candle is solid green and getting taller. If you covered the right half of that candle and asked which way is it going — the answer is obvious. That is your buy confirmation.</div>
-        </div>
-        <div class="info-box" style="background:rgba(255,107,157,0.05);border-color:rgba(255,107,157,0.25);margin-bottom:10px">
-          <div class="info-title" style="color:var(--pink)">Clearly Going Down</div>
-          <div class="info-text">The candle opened and the <strong>body is growing downward.</strong> Solid pink body getting taller going down. No confusion about which way it is heading. That is your sell confirmation.</div>
-        </div>
-        <div class="info-box" style="background:rgba(251,191,36,0.05);border-color:rgba(251,191,36,0.2)">
-          <div class="info-title" style="color:var(--gold)">Not Your Candle — Wait</div>
-          <div class="info-text">If the candle is going up a little then down a little, sideways, or has a tiny body with big wicks — <strong>that is indecision. That is not your entry.</strong> Wait for the next candle. A real confirmation candle has conviction. You will know it when you see it.</div>
-        </div>
-        <div class="rule-card">
-          <div class="rule-label" style="color:var(--gold)">The Risk of Waiting Too Long</div>
-          <div class="rule-title">Do not wait for candle 3 to fully close</div>
-          <div class="rule-text">If candle 3 is so strong that you wait for it to close — by the time it closes the next candle is already flying and you missed the entry. Enter <strong>while candle 3 is forming</strong> when the direction is clear. Not after.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ZONES -->
-<div class="page" id="page-zones">
-  <div class="page-title">Zone <span>Management</span></div>
-  <div class="page-sub">Which zones to keep, which to delete, and how to find them across timeframes</div>
-  <div class="inner-tabs">
-    <div class="inner-tab green active" onclick="switchZones('manage',this)">Keep or Delete</div>
-    <div class="inner-tab purple" onclick="switchZones('timeframe',this)">Across Timeframes</div>
-  </div>
-  <div class="subpage active" id="zones-manage">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cZoneManage" height="300"></canvas></div></div>
-      <div>
-        <div class="rule-card" style="margin-bottom:10px;border-color:rgba(255,107,157,0.3)">
-          <div class="rule-label" style="color:var(--pink)">Delete This Zone</div>
-          <div class="rule-title">Price fully passed through it and moved on</div>
-          <div class="rule-text">If price broke through your zone, kept going, and never looked back — that zone is done. Delete it. Keep your chart clean.</div>
-        </div>
-        <div class="rule-card" style="margin-bottom:10px;border-color:rgba(0,229,160,0.3)">
-          <div class="rule-label" style="color:var(--green)">Keep This Zone</div>
-          <div class="rule-title">Price has not come back to test it yet</div>
-          <div class="rule-text">If price broke away from a zone and has not returned yet — keep it. It is still live. That could be your next entry when price comes back.</div>
-        </div>
-        <div class="info-box" style="background:rgba(251,191,36,0.05);border-color:rgba(251,191,36,0.2)">
-          <div class="info-title" style="color:var(--gold)">Every Morning Ask</div>
-          <div class="info-text">Is this zone still close to where price is right now? Yes — keep it. Price is far away and not coming back — delete it. <strong>Your chart is your workspace. Keep it clean.</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="subpage" id="zones-timeframe">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cZoneTF" height="300"></canvas></div></div>
-      <div>
-        <div class="info-box" style="background:rgba(176,107,255,0.05);border-color:rgba(176,107,255,0.25);margin-bottom:10px">
-          <div class="info-title" style="color:var(--purple)">The Concept</div>
-          <div class="info-text">You are not looking for the exact same candle shape on the 15 minute as on the 1 hour. You are looking at the <strong>same price range</strong> on a different timeframe. The zone is defined by the price levels — not the candle.</div>
-        </div>
-        <div class="rule-card" style="margin-bottom:10px">
-          <div class="rule-label" style="color:var(--green)">How to Do It</div>
-          <div class="rule-title">Copy the price range to the lower timeframe</div>
-          <div class="rule-text">The 1 hour shows your order block candle went from 20,200 to 20,250. Go to the 15 minute. Draw a box at <strong>those exact same prices.</strong> Done. The 15 minute will show multiple small candles in that range — the whole area is your zone.</div>
-        </div>
-        <div class="info-box" style="background:rgba(0,229,160,0.05);border-color:rgba(0,229,160,0.25)">
-          <div class="info-title" style="color:var(--green)">Simple Rule</div>
-          <div class="info-text">The zone is a <strong>price range</strong> not a candle. Copy the top and bottom price of the order block from the higher timeframe. Draw that same box on the lower timeframe.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- EXIT -->
-<div class="page" id="page-exit">
-  <div class="page-title">Exit <span>Strategy</span></div>
-  <div class="page-sub">Two targets. One automatic. One manual.</div>
-  <div class="two-col">
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:3px">Your Two Target System</div>
-        <div class="card-sub">Set both before you enter. Do not change them after.</div>
-        <div class="step"><div class="step-num" style="background:linear-gradient(135deg,rgba(0,229,160,0.2),rgba(0,229,160,0.1));color:var(--green);border-color:rgba(0,229,160,0.3)">1</div><div><div class="step-title">TP1 — Halfway to the Last High</div><div class="step-text">Distance from entry to last high divided by 2. <strong>Tradovate automatically closes 1 contract when this hits.</strong></div></div></div>
-        <div class="step"><div class="step-num" style="background:linear-gradient(135deg,rgba(176,107,255,0.2),rgba(176,107,255,0.1));color:var(--purple);border-color:rgba(176,107,255,0.3)">2</div><div><div class="step-title">Move Stop to Breakeven When TP1 Hits</div><div class="step-text"><strong>Drag your stop line to your entry price immediately.</strong> Second contract is now risk free.</div></div></div>
-        <div class="step"><div class="step-num" style="background:linear-gradient(135deg,rgba(255,107,157,0.2),rgba(255,107,157,0.1));color:var(--pink);border-color:rgba(255,107,157,0.3)">3</div><div><div class="step-title">TP2 — The Last High</div><div class="step-text">When price reaches the last high — <strong>click flatten</strong> to manually close the remaining contract.</div></div></div>
-        <div class="step"><div class="step-num" style="background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(251,191,36,0.1));color:var(--gold);border-color:rgba(251,191,36,0.3)">4</div><div><div class="step-title">Stop Loss — If You Are Wrong</div><div class="step-text"><strong>Both contracts close automatically.</strong> Take the loss. Move on. Do not move the stop hoping it comes back.</div></div></div>
-      </div>
-    </div>
-    <div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="card-title" style="margin-bottom:12px">How to Set Up on TradingView</div>
-        <div class="markup-step"><div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">01</div><div><div class="markup-title">Change Quantity to 2 Contracts</div><div class="markup-text">Click the quantity number at the top of the trading panel. <strong>Change it to 2.</strong></div></div></div>
-        <div class="markup-step"><div class="markup-badge" style="background:rgba(0,229,160,0.12);color:var(--green);border:1px solid rgba(0,229,160,0.25)">02</div><div><div class="markup-title">Enter the Trade</div><div class="markup-text">Click Buy or Sell. You are now in 2 contracts.</div></div></div>
-        <div class="markup-step"><div class="markup-badge" style="background:rgba(251,191,36,0.12);color:var(--gold);border:1px solid rgba(251,191,36,0.25)">03</div><div><div class="markup-title">Set Stop and TP1</div><div class="markup-text">Stop 10–15 points beyond the zone. TP1 at halfway to the last high.</div></div></div>
-        <div class="markup-step"><div class="markup-badge" style="background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.3)">04</div><div><div class="markup-title">When TP1 Hits — Move Stop to Entry</div><div class="markup-text">Position drops from 2 to 1 contract. <strong>Drag stop line to entry price immediately.</strong></div></div></div>
-        <div class="markup-step"><div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">05</div><div><div class="markup-title">Close at TP2</div><div class="markup-text">When price hits the last high — <strong>click flatten.</strong></div></div></div>
-      </div>
-      
-      </div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:4px">
-    <div class="card-title" style="margin-bottom:12px">How to Calculate TP1 and TP2</div>
-    <div class="two-col" style="margin-bottom:0">
-      <div style="background:var(--surface2);border-radius:10px;padding:16px;border:1px solid rgba(0,229,160,0.2)">
-        <div style="font-size:11px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">TP1 — Halfway Point</div>
-        <div style="font-size:12px;color:#8a93b0;line-height:1.7">Entry 20,000 · Last high 20,100 · Distance = 100 points · Half = 50 · <strong style="color:var(--text)">TP1 = 20,050</strong></div>
-      </div>
-      <div style="background:var(--surface2);border-radius:10px;padding:16px;border:1px solid rgba(176,107,255,0.2)">
-        <div style="font-size:11px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">TP2 — The Last High</div>
-        <div style="font-size:12px;color:#8a93b0;line-height:1.7">The last highest high you marked on your 15 minute during morning markup. Entry 20,000 · <strong style="color:var(--text)">TP2 = 20,100</strong></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STOP LOSS -->
-<div class="page" id="page-stoploss">
-  <div class="page-title">Stop Loss <span>+ Risk Reward</span></div>
-  <div class="page-sub">Where to place your stop and how to size the trade</div>
-  <div class="inner-tabs">
-    <div class="inner-tab green active" onclick="switchSL('buy',this)">On a Buy</div>
-    <div class="inner-tab pink" onclick="switchSL('sell',this)">On a Sell</div>
-    <div class="inner-tab purple" onclick="switchSL('calc',this)">Calculator</div>
-  </div>
-  <div class="subpage active" id="sl-buy">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cSLBuy" height="300"></canvas></div></div>
-      <div>
-        <div class="rule-card" style="margin-bottom:10px">
-          <div class="rule-label" style="color:var(--green)">The Rule</div>
-          <div class="rule-title">10–15 points below the zone</div>
-          <div class="rule-text">Trade is only valid while price stays above your order block zone. Give 10–15 points of room so a small fake dip does not take you out before the real move starts.</div>
-        </div>
-        <div class="example-box">
-          <div class="example-title">Example</div>
-          <div class="example-row"><span class="example-label">Zone bottom</span><span class="example-val">20,000</span></div>
-          <div class="example-row"><span class="example-label">Stop goes at</span><span class="example-val" style="color:var(--pink)">19,985 – 19,990</span></div>
-          <div class="example-row"><span class="example-label">Not right at</span><span class="example-val" style="color:var(--muted)">20,000 ✕</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="subpage" id="sl-sell">
-    <div class="two-col">
-      <div><div class="chart-box"><canvas id="cSLSell" height="300"></canvas></div></div>
-      <div>
-        <div class="rule-card" style="margin-bottom:10px">
-          <div class="rule-label" style="color:var(--pink)">The Rule</div>
-          <div class="rule-title">10–15 points above the zone</div>
-          <div class="rule-text">Trade is only valid while price stays below your order block zone. Give 10–15 points of room so a fake push does not take you out before the real drop starts.</div>
-        </div>
-        <div class="example-box">
-          <div class="example-title">Example</div>
-          <div class="example-row"><span class="example-label">Zone top</span><span class="example-val">20,000</span></div>
-          <div class="example-row"><span class="example-label">Stop goes at</span><span class="example-val" style="color:var(--pink)">20,010 – 20,015</span></div>
-          <div class="example-row"><span class="example-label">Not right at</span><span class="example-val" style="color:var(--muted)">20,000 ✕</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="subpage" id="sl-calc">
-    <div class="two-col">
-      <div>
-        <div class="rr-calc">
-          <div class="rr-calc-title">Risk / Reward Calculator</div>
-          <div class="rr-calc-sub">Target must be at least 2x your stop distance</div>
-          <div class="rr-inputs">
-            <div class="input-group"><label>Entry</label><input type="number" id="rrEntry" placeholder="00000" oninput="calcSLRR()"></div>
-            <div class="input-group"><label>Last High (TP2)</label><input type="number" id="rrTarget" placeholder="00000" oninput="calcSLRR()"></div>
-            <div class="input-group"><label>Stop</label><input type="number" id="rrStop" placeholder="00000" oninput="calcSLRR()"></div>
-          </div>
-          <div class="rr-result" id="rrResult"><div class="rr-sub-t">Enter your prices above</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="rule-card" style="margin-bottom:10px">
-          <div class="rule-label" style="color:var(--purple)">Why 2 to 1 Matters</div>
-          <div class="rule-title">Win half your trades and still make money</div>
-          <div class="rule-text">If your target is always at least twice your stop — even if you lose 5 and win 5 you still come out ahead. One winner pays for two losers.</div>
-        </div>
-        <div class="example-box">
-          <div class="example-title">On MNQ</div>
-          <div class="example-row"><span class="example-label">Stop = 20 points</span><span class="example-val" style="color:var(--pink)">Risk $40</span></div>
-          <div class="example-row"><span class="example-label">Target = 40 points</span><span class="example-val" style="color:var(--green)">Make $80</span></div>
-          <div class="example-row"><span class="example-label">Win 5 Lose 5</span><span class="example-val" style="color:var(--green)">+$200 profit</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- JOURNAL -->
-<div class="page" id="page-journal">
-  <div class="page-title">Trade <span>Journal</span></div>
-  <div class="page-sub">Log every trade. See your patterns. Get better.</div>
-
-  <div class="stats-row" id="statsRow">
-    <div class="stat-box"><div class="stat-num" id="statTotal" style="color:var(--text)">0</div><div class="stat-label">Total Trades</div></div>
-    <div class="stat-box"><div class="stat-num" id="statWins" style="color:var(--green)">0</div><div class="stat-label">TP2 Hit</div></div>
-    <div class="stat-box"><div class="stat-num" id="statLosses" style="color:var(--pink)">0</div><div class="stat-label">Stopped Out</div></div>
-    <div class="stat-box"><div class="stat-num" id="statWinRate" style="color:var(--purple)">0%</div><div class="stat-label">Win Rate</div></div>
-  </div>
-
-  <div class="two-col">
-    <div>
-      <div class="journal-form">
-        <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:14px">Log a Trade</div>
-        <div class="journal-row">
-          <div class="journal-field"><label>Date</label><input type="date" id="jDate"></div>
-          <div class="journal-field"><label>Direction</label><select id="jDir"><option value="buy">Buy (Long)</option><option value="sell">Sell (Short)</option></select></div>
-          <div class="journal-field"><label>Entry Price</label><input type="number" id="jEntry" placeholder="00000"></div>
-          <div class="journal-field"><label>Result</label><select id="jResult"><option value="tp2">Hit TP2 ✓</option><option value="tp1">Hit TP1 only</option><option value="be">Breakeven</option><option value="loss">Stopped Out</option></select></div>
-        </div>
-        <div class="journal-row-2">
-          <div class="journal-field"><label>Profit / Loss ($)</label><input type="number" id="jPnl" placeholder="0.00"></div>
-          <div class="journal-field"><label>Setup was clean?</label><select id="jSetup"><option value="yes">Yes — full A++ setup</option><option value="partial">Partial setup</option><option value="no">Forced trade</option></select></div>
-        </div>
-        <div class="journal-field" style="margin-bottom:10px"><label>Notes (optional)</label><textarea id="jNotes" placeholder="What happened? What did you learn?"></textarea></div>
-        <button class="save-btn" onclick="saveTrade()">Save Trade</button>
-      </div>
-    </div>
-
-    <div>
-      <div class="trade-log">
-        <div class="trade-log-title">Your Trade History</div>
-        <div id="tradeList"><div class="empty-state">No trades logged yet. Your history will appear here.</div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SWING -->
-<div class="page" id="page-swing">
-  <div class="page-title">Swing <span>Trading</span></div>
-  <div class="page-sub">Same A++ Setup. Bigger timeframe. Bigger moves. Master day trading first.</div>
-  <div class="two-col">
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:3px">Same Strategy Zoomed Out</div>
-        
-        <div class="swing-step"><div class="swing-num">1</div><div><div class="swing-title">Mark Your Zone on the 4 Hour or 1 Hour</div><div class="swing-text">Same process. Find the order block zone on the higher timeframe. The move could be 200 to 500+ points.</div></div></div>
-        <div class="swing-step"><div class="swing-num">2</div><div><div class="swing-title">Set a Price Alert at Your Zone on TradingView</div><div class="swing-text">Right click on your zone line and set an alert. Your phone buzzes when price gets close. You do not have to watch all day.</div></div></div>
-        <div class="swing-step"><div class="swing-num">3</div><div><div class="swing-title">Drop to 15 Minute When Alerted</div><div class="swing-text">When the alert fires switch to the 15 minute. Wait for the tap back and your 3 candle confirmation on the 5 minute. Same entry process.</div></div></div>
-        <div class="swing-step"><div class="swing-num">4</div><div><div class="swing-title">Set All Levels and Walk Away</div><div class="swing-text">Enter 2 contracts. Set stop, TP1, and TP2. The target is far away. Set it and let it work — possibly overnight.</div></div></div>
-      </div>
-    </div>
-    <div>
-      <div class="rule-card" style="margin-bottom:10px">
-        <div class="rule-label" style="color:var(--purple)">The Difference</div>
-        <div class="rule-title">Bigger moves, bigger stops, more patience</div>
-        <div class="rule-text">A 4 hour swing might run 300 points but your stop might be 60 points wide. Same 2 to 1 ratio — just larger dollar amounts. You may hold overnight.</div>
-      </div>
-      
-      <div class="example-box">
-        <div class="example-title">Day vs Swing — Same Setup</div>
-        <div class="example-row"><span class="example-label">Day trade target</span><span class="example-val" style="color:var(--green)">40–100 points</span></div>
-        <div class="example-row"><span class="example-label">Swing trade target</span><span class="example-val" style="color:var(--green)">200–500+ points</span></div>
-        <div class="example-row"><span class="example-label">Strategy</span><span class="example-val" style="color:var(--purple)">Exact same A++ Setup</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <!-- SESSIONS -->
-<div class="page" id="page-sessions">
-  <div class="page-title">Trading <span>Sessions</span></div>
-  <div class="page-sub">Know what session you are in before you trade</div>
-
-  <!-- LIVE CLOCK -->
-  <div class="card" style="margin-bottom:20px;text-align:center">
-    <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Current Time — New York (Eastern)</div>
-    <div id="liveClock" style="font-size:42px;font-weight:900;color:var(--text);margin-bottom:8px;letter-spacing:2px">--:--:--</div>
-    <div id="liveSession" style="font-size:16px;font-weight:800;padding:8px 24px;border-radius:20px;display:inline-block">Loading...</div>
-    <div id="sessionDesc" style="font-size:13px;color:#8a93b0;margin-top:10px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6"></div>
+<div class="pg" id="pg-ses">
+  <div class="ptitle">Trading <em>Sessions</em></div>
+  <div class="psub">Volume drives ICC setups. Know your window.</div>
+  <div class="ses-clock">
+    <div class="ses-label">New York time (Eastern)</div>
+    <div class="ses-time" id="clk">--:--:--</div>
+    <div class="ses-badge" id="sbadge">Loading...</div>
+    <div class="ses-desc" id="sdesc"></div>
   </div>
-
-  <div class="two-col">
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px">MNQ Session Guide</div>
-
-        <div class="markup-step" id="sess-asia">
-          <div class="markup-badge" style="background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.3)">ASIA</div>
-          <div>
-            <div class="markup-title">Asia Session — 6PM to 3AM Eastern</div>
-            <div class="markup-text">Lower volume. Price tends to drift or make slow moves. Can set up zones for the next day. <strong>Trades are valid but moves are less clean.</strong> Only take the setup if it is very clear.</div>
-          </div>
-        </div>
-
-        <div class="markup-step" id="sess-london">
-          <div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">LON</div>
-          <div>
-            <div class="markup-title">London Session — 3AM to 9:30AM Eastern</div>
-            <div class="markup-text">Volume picks up. Price starts making bigger moves. <strong>Good setups can form here.</strong> This is where the overnight direction often gets established before New York opens.</div>
-          </div>
-        </div>
-
-        <div class="markup-step" id="sess-ny">
-          <div class="markup-badge" style="background:rgba(0,229,160,0.15);color:var(--green);border:1px solid rgba(0,229,160,0.3)">NY</div>
-          <div>
-            <div class="markup-title">New York Open — 9:30AM to 11AM Eastern</div>
-            <div class="markup-text"><strong>Highest volume of the day. Your best trading window.</strong> Cleanest moves, strongest trends. This is where the A++ Setup works best. Be ready at the charts before 9:30.</div>
-          </div>
-        </div>
-
-        <div class="markup-step" id="sess-lunch">
-          <div class="markup-badge" style="background:rgba(251,191,36,0.15);color:var(--gold);border:1px solid rgba(251,191,36,0.3)">LUNCH</div>
-          <div>
-            <div class="markup-title">Lunch Hour — 11AM to 1PM Eastern</div>
-            <div class="markup-text"><strong>Avoid trading here.</strong> Volume drops off, price chops sideways and fakes out. Even clean setups tend to fail during this window. Step away from the screen.</div>
-          </div>
-        </div>
-
-        <div class="markup-step" id="sess-afternoon">
-          <div class="markup-badge" style="background:rgba(0,229,160,0.15);color:var(--green);border:1px solid rgba(0,229,160,0.3)">PM</div>
-          <div>
-            <div class="markup-title">Afternoon Session — 1PM to 3:30PM Eastern</div>
-            <div class="markup-text"><strong>Second best window of the day.</strong> Volume returns. Often a continuation or reversal of the morning trend. Good setups appear here. Stay alert.</div>
-          </div>
-        </div>
-
-        <div class="markup-step" id="sess-close">
-          <div class="markup-badge" style="background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.3)">CLOSE</div>
-          <div>
-            <div class="markup-title">Market Close — 3:30PM to 6PM Eastern</div>
-            <div class="markup-text">End of day profit taking. Moves can be erratic. <strong>Be cautious.</strong> This is a good time to close positions and review your trades rather than opening new ones.</div>
-          </div>
-        </div>
-      </div>
+  <div class="ses-grid">
+    <div class="ses-item best">
+      <div class="si-time" style="color:var(--gn)">9:30AM &mdash; 11AM ET</div>
+      <div class="si-name">&#128293; NY Open &mdash; Best window</div>
+      <div class="si-desc">Highest volume. Cleanest ICC setups. Be at the charts before 9:30.</div>
     </div>
-
-    <div>
-      
+    <div class="ses-item best">
+      <div class="si-time" style="color:var(--gn)">1PM &mdash; 3:30PM ET</div>
+      <div class="si-name">Afternoon &mdash; Second best</div>
+      <div class="si-desc">Volume returns after lunch. Good ICC continuation setups appear here.</div>
+    </div>
+    <div class="ses-item">
+      <div class="si-time" style="color:var(--pk)">3AM &mdash; 9:30AM ET</div>
+      <div class="si-name">London session</div>
+      <div class="si-desc">Volume picking up. Good ICC indications can form here.</div>
+    </div>
+    <div class="ses-item">
+      <div class="si-time" style="color:var(--pu)">6PM &mdash; 3AM ET</div>
+      <div class="si-name">Asia session</div>
+      <div class="si-desc">Lower volume. Only trade if the ICC setup is very clean.</div>
+    </div>
+    <div class="ses-item avoid" style="grid-column:1 / -1">
+      <div class="si-time" style="color:var(--go)">11AM &mdash; 1PM &nbsp;&bull;&nbsp; 3:30PM &mdash; 6PM ET</div>
+      <div class="si-name">&#9888; Lunch &amp; Close &mdash; Avoid</div>
+      <div class="si-desc">Volume drops. Price chops and fakes out. Any indication here is likely noise. Step away. Review your trades at close, do not open new positions.</div>
     </div>
   </div>
 </div>
-
-
-
-<!-- TICKS & POINTS -->
-<div class="page" id="page-ticks">
-  <div class="page-title">Ticks <span>& Points</span></div>
-  <div class="page-sub">What they mean and what they are worth on MNQ</div>
-
-  <div class="two-col">
-    <div>
-      <div class="card" style="margin-bottom:16px">
-        <div class="card-title" style="margin-bottom:14px">What is a Tick?</div>
-
-        <div class="step" style="padding:12px 0">
-          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(255,107,157,0.15);color:var(--pink);border:1px solid rgba(255,107,157,0.25)">1</div>
-          <div>
-            <div class="step-title">A Tick is the Smallest Move Price Can Make</div>
-            <div class="step-text">On MNQ price moves in increments of <strong>0.25 points.</strong> That smallest increment is called one tick. Price cannot move by 0.1 or 0.15 — it jumps by 0.25 at a time.</div>
-          </div>
-        </div>
-
-        <div class="step" style="padding:12px 0">
-          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(0,229,160,0.15);color:var(--green);border:1px solid rgba(0,229,160,0.25)">2</div>
-          <div>
-            <div class="step-title">Each Tick is Worth $0.50</div>
-            <div class="step-text">Every time MNQ moves 0.25 points in your direction — you make <strong>$0.50 per contract.</strong> Every time it moves against you by 0.25 — you lose $0.50 per contract.</div>
-          </div>
-        </div>
-
-        <div class="step" style="padding:12px 0">
-          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(176,107,255,0.15);color:var(--purple);border:1px solid rgba(176,107,255,0.25)">3</div>
-          <div>
-            <div class="step-title">A Point = 4 Ticks = $2.00</div>
-            <div class="step-text">One full point on MNQ is made up of 4 ticks. So 1 point = 4 x $0.50 = <strong>$2.00 per contract.</strong> When you say price moved 50 points — that means you made or lost $100 per contract.</div>
-          </div>
-        </div>
-
-        <div class="step" style="padding:12px 0;border-bottom:none">
-          <div style="width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:rgba(251,191,36,0.15);color:var(--gold);border:1px solid rgba(251,191,36,0.25)">4</div>
-          <div>
-            <div class="step-title">More Contracts = More Per Tick</div>
-            <div class="step-text">If you are trading 2 contracts — each tick is worth $1.00, each point is worth $4.00. If you are trading 3 contracts — each tick is $1.50, each point is $6.00.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="example-box">
-        <div class="example-title">Quick Reference — 1 Contract</div>
-        <div class="example-row"><span class="example-label">1 Tick (0.25 points)</span><span class="example-val" style="color:var(--green)">$0.50</span></div>
-        <div class="example-row"><span class="example-label">1 Point (4 ticks)</span><span class="example-val" style="color:var(--green)">$2.00</span></div>
-        <div class="example-row"><span class="example-label">10 Points</span><span class="example-val" style="color:var(--green)">$20.00</span></div>
-        <div class="example-row"><span class="example-label">50 Points</span><span class="example-val" style="color:var(--green)">$100.00</span></div>
-        <div class="example-row"><span class="example-label">100 Points</span><span class="example-val" style="color:var(--green)">$200.00</span></div>
-      </div>
-    </div>
-
-    <div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:4px">Tick & Point Calculator</div>
-        <div class="card-sub">Type in your numbers and see the dollar value instantly</div>
-
-        <div style="margin-bottom:16px">
-          <div class="input-group" style="margin-bottom:10px">
-            <label>Number of Contracts</label>
-            <input type="number" id="calcContracts" placeholder="1" value="1" oninput="calcTicks()">
-          </div>
-          <div class="input-group" style="margin-bottom:10px">
-            <label>Points Moved</label>
-            <input type="number" id="calcPoints" placeholder="0" oninput="calcTicks()">
-          </div>
-          <div class="input-group" style="margin-bottom:10px">
-            <label>Ticks Moved (optional)</label>
-            <input type="number" id="calcTicksInput" placeholder="0" oninput="calcTicks()">
-          </div>
-        </div>
-
-        <div id="tickResult" style="background:var(--bg);border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center">
-          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Dollar Value</div>
-          <div style="font-size:13px;color:var(--muted)">Fill in your numbers above</div>
-        </div>
-
-        <div style="margin-top:16px">
-          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Per Contract Value</div>
-          <div style="background:var(--bg);border-radius:10px;padding:14px;border:1px solid var(--border)">
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">1 Tick</span><span style="font-weight:800;color:var(--text)">$0.50</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">1 Point</span><span style="font-weight:800;color:var(--text)">$2.00</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">4 Ticks = 1 Point</span><span style="font-weight:800;color:var(--text)">$2.00</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px"><span style="color:var(--muted)">Tick Size</span><span style="font-weight:800;color:var(--text)">0.25 points</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- PROJECTION -->
-<div class="page" id="page-projection">
-  <div class="page-title">Projection <span>Calculator</span></div>
-  <div class="page-sub">Know your numbers before you sit down at the charts</div>
-
-  <div class="three-col" style="margin-bottom:24px">
-
-    <!-- DAILY GOAL -->
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title" style="margin-bottom:4px">Daily Goal</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">How many trades to hit your target</div>
-
-      <div class="input-group" style="margin-bottom:10px">
-        <label>Daily Goal ($)</label>
-        <input type="number" id="dgGoal" placeholder="500" oninput="calcDailyGoal()">
-      </div>
-      <div class="input-group" style="margin-bottom:10px">
-        <label>Average Win Per Trade ($)</label>
-        <input type="number" id="dgWin" placeholder="200" oninput="calcDailyGoal()">
-      </div>
-      <div class="input-group" style="margin-bottom:14px">
-        <label>Win Rate (%)</label>
-        <input type="number" id="dgWinRate" placeholder="60" oninput="calcDailyGoal()">
-      </div>
-
-      <div id="dgResult" style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Trades Needed</div>
-        <div style="font-size:13px;color:var(--muted)">Fill in above</div>
-      </div>
-    </div>
-
-    <!-- ACCOUNT GROWTH -->
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title" style="margin-bottom:4px">Account Growth</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Where your account goes over time</div>
-
-      <div class="input-group" style="margin-bottom:10px">
-        <label>Starting Balance ($)</label>
-        <input type="number" id="agBalance" placeholder="5000" oninput="calcGrowth()">
-      </div>
-      <div class="input-group" style="margin-bottom:10px">
-        <label>Daily Profit ($)</label>
-        <input type="number" id="agDaily" placeholder="300" oninput="calcGrowth()">
-      </div>
-      <div class="input-group" style="margin-bottom:14px">
-        <label>Trading Days Per Week</label>
-        <input type="number" id="agDays" placeholder="5" oninput="calcGrowth()">
-      </div>
-
-      <div id="agResult" style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Projected Balance</div>
-        <div style="font-size:13px;color:var(--muted)">Fill in above</div>
-      </div>
-    </div>
-
-    <!-- POSITION SIZING -->
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title" style="margin-bottom:4px">Position Sizing</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">How many contracts to trade</div>
-
-      <div class="input-group" style="margin-bottom:10px">
-        <label>Account Balance ($)</label>
-        <input type="number" id="psBalance" placeholder="5000" oninput="calcPosition()">
-      </div>
-      <div class="input-group" style="margin-bottom:10px">
-        <label>Risk Per Trade (%)</label>
-        <input type="number" id="psRisk" placeholder="2" oninput="calcPosition()">
-      </div>
-      <div class="input-group" style="margin-bottom:14px">
-        <label>Stop Loss (Points)</label>
-        <input type="number" id="psStop" placeholder="20" oninput="calcPosition()">
-      </div>
-
-      <div id="psResult" style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Contracts to Trade</div>
-        <div style="font-size:13px;color:var(--muted)">Fill in above</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GROWTH TABLE -->
-  <div class="card">
-    <div class="card-title" style="margin-bottom:4px">Growth Projection Table</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Based on your account growth inputs above</div>
-    <div id="growthTable">
-      <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Fill in the Account Growth calculator above to see your projection table</div>
-    </div>
-  </div>
-</div>
-
 
 <script>
-// QUOTES
-const quotes = [
-  "You did not come here to survive. You came here to live.",
-  "Freedom is not given. It is built — one intentional decision at a time.",
-  "The most radical thing you can do is decide your life belongs to you.",
-  "Abundance is not something you chase. It is something you step into when you stop believing in scarcity.",
-  "Rest is not a reward. It is a requirement for a life that actually works.",
-  "A calm nervous system is the foundation of everything you want to create.",
-  "Wealth is not just money. It is time, peace, health, love, and the freedom to choose.",
-  "The version of you that shows up with a plan is always more powerful than the version that shows up with hope.",
-  "You are not lucky. You are aligned. There is a difference.",
-  "Building something that works while you rest is not a dream. It is a skill. You are learning it.",
-  "Discipline is not punishment. It is the highest form of self love.",
-  "Your beliefs created the life you are in. Your beliefs can create the life you want.",
-  "You left the comfortable thing because you knew there was more. That took courage. Keep going.",
-  "Healed people build differently. They build with intention, with joy, with enough.",
-  "The market does not care about your background or where you came from. It only cares about what you see.",
-  "A life with no ceiling is available. You just have to stop living in someone else's architecture.",
-  "You do not need permission to want more. You never did.",
-  "Energy flows where intention goes. Set yours before the charts open.",
-  "The plan made with a clear head always beats the decision made with a scared one.",
-  "Joy is not something you earn after the work. It is the energy you bring to the work.",
-  "Connection, growth, love — these are not rewards for success. They are the reason for it.",
-  "You are not grinding. You are building. There is a difference in how it feels in your body.",
-  "A rested mind sees setups that a depleted one misses.",
-  "Sweetness in life is not a luxury. It is a signal that you are on the right path.",
-  "The first of the month is always a new canvas. What you paint on it is up to you.",
-  "You are not waiting for your life to begin. It is happening right now in every choice you make.",
-  "Purpose is not found. It is built — brick by brick, trade by trade, day by day.",
-  "The goal is not just money. It is a life that feels as good on the inside as it looks on the outside.",
-  "Trust what you built when you were calm. It is smarter than what fear tells you in the moment.",
-  "You are building generational freedom. Not just for you. For everyone watching you do it.",
-  "Liberated. Abundant. Joyful. Rested. Healed. That is the life you are building toward."
-];
+function go(id,el){document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));el.classList.add('on');document.getElementById('pg-'+id).classList.add('on');}
 
-function setQuote(){
-  const d=new Date();
-  const day=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
-  document.getElementById('quoteText').textContent=quotes[day%quotes.length];
-}
-setQuote();
+let ckd=0;
+function tick(el){const b=el.querySelector('.cbox');if(el.classList.contains('dn')){el.classList.remove('dn');b.classList.remove('on');ckd=Math.max(0,ckd-1);}else{el.classList.add('dn');b.classList.add('on');ckd++;}const p=Math.round(ckd/8*100);document.getElementById('progbar').style.width=p+'%';document.getElementById('plabel').textContent=ckd+' of 8 complete';document.getElementById('rdy').classList.toggle('on',ckd>=8);}
+function setD(d,e){if(e)e.stopPropagation();document.getElementById('dbuy').className='dp'+(d==='buy'?' long':'');document.getElementById('dsell').className='dp'+(d==='sell'?' short':'');}
+function rstChk(){document.querySelectorAll('.chk').forEach(el=>{el.classList.remove('dn');el.querySelector('.cbox').classList.remove('on');});ckd=0;document.getElementById('progbar').style.width='0%';document.getElementById('plabel').textContent='0 of 8 complete';document.getElementById('rdy').classList.remove('on');document.getElementById('dbuy').className='dp';document.getElementById('dsell').className='dp';}
 
-// NAV
-function switchPage(page,el){
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('page-'+page).classList.add('active');
-  setTimeout(drawAll,80);
-}
-
-// CHECKLIST
-let checked=0;
-function toggle(el){
-  const box=el.querySelector('.checkbox');
-  if(el.classList.contains('done')){el.classList.remove('done');box.classList.remove('checked');checked=Math.max(0,checked-1);}
-  else{el.classList.add('done');box.classList.add('checked');checked++;}
-  const pct=Math.round(checked/12*100);
-  document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=checked+' of 12 complete';
-  document.getElementById('readyBanner').classList.toggle('show',checked>=12);
-}
-function setDir(dir,e){
-  if(e)e.stopPropagation();
-  document.getElementById('longBtn').className='dir-btn'+(dir==='long'?' active-long':'');
-  document.getElementById('shortBtn').className='dir-btn'+(dir==='short'?' active-short':'');
-}
-function calcRR(){
-  const e=parseFloat(document.getElementById('entryPrice').value);
-  const t=parseFloat(document.getElementById('targetPrice').value);
-  const s=parseFloat(document.getElementById('stopPrice').value);
-  const el=document.getElementById('rrDisplay');
-  if(!e||!t||!s){el.innerHTML='<div class="rr-label">Risk / Reward</div><div class="rr-note">Fill in entry, stop, and last high</div>';return;}
-  const risk=Math.abs(e-s),reward=Math.abs(t-e);
-  if(!risk)return;
-  const r=(reward/risk).toFixed(1);
-  const cls=r>=2?'rr-good':r>=1.5?'rr-warn':'rr-bad';
-  const msg=r>=2?'Good — take this trade':r>=1.5?'Tight but acceptable':'Do not take this trade';
-  el.innerHTML=`<div class="rr-label">Risk / Reward</div><div class="rr-value ${cls}">${r} : 1</div><div class="rr-note">${msg}</div>`;
-}
-function calcSLRR(){
-  const e=parseFloat(document.getElementById('rrEntry').value);
-  const t=parseFloat(document.getElementById('rrTarget').value);
-  const s=parseFloat(document.getElementById('rrStop').value);
-  const el=document.getElementById('rrResult');
-  if(!e||!t||!s){el.innerHTML='<div class="rr-sub-t">Enter your prices above</div>';return;}
-  const risk=Math.abs(e-s),reward=Math.abs(t-e);
-  if(!risk)return;
-  const r=(reward/risk).toFixed(1);
-  const rd=(risk*2).toFixed(0),rw=(reward*2).toFixed(0);
-  const cls=r>=2?'rr-good':r>=1.5?'rr-warn':'rr-bad';
-  const vc=r>=2?'var(--green)':r>=1.5?'var(--gold)':'var(--pink)';
-  const msg=r>=2?'✓ Take this trade':r>=1.5?'⚠ Tight but acceptable':'✕ Do not take this trade';
-  el.innerHTML=`<div class="rr-big ${cls}">${r} : 1</div><div class="rr-sub-t">Risk $${rd} · Make $${rw} per contract</div><div class="rr-verdict" style="color:${vc}">${msg}</div>`;
-}
-function resetAll(){
-  document.querySelectorAll('.check-item').forEach(el=>{el.classList.remove('done');el.querySelector('.checkbox').classList.remove('checked');});
-  ['entryPrice','targetPrice','stopPrice','tp1','tp2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('longBtn').className='dir-btn';
-  document.getElementById('shortBtn').className='dir-btn';
-  document.getElementById('rrDisplay').innerHTML='<div class="rr-label">Risk / Reward</div><div class="rr-note">Fill in entry, stop, and last high</div>';
-  checked=0;
-  document.getElementById('progressBar').style.width='0%';
-  document.getElementById('progressLabel').textContent='0 of 12 complete';
-  document.getElementById('readyBanner').classList.remove('show');
-}
-
-// TABS
-let activeVisual='buy',vPhase={buy:1,sell:1};
-function switchVisual(tab,el){
-  document.querySelectorAll('#page-visual .inner-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('#page-visual .subpage').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');document.getElementById('visual-'+tab).classList.add('active');
-  activeVisual=tab;setTimeout(drawAll,60);
-}
-function setVPhase(chart,phase){vPhase[chart]=phase;drawAll();}
-
-let activeEntry='buy';
-function switchEntry(tab,el){
-  document.querySelectorAll('#page-entry .inner-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('#page-entry .subpage').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');document.getElementById('entry-'+tab).classList.add('active');
-  activeEntry=tab;setTimeout(drawAll,60);
-}
-
-let activeZones='manage';
-function switchZones(tab,el){
-  document.querySelectorAll('#page-zones .inner-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('#page-zones .subpage').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');document.getElementById('zones-'+tab).classList.add('active');
-  activeZones=tab;setTimeout(drawAll,60);
-}
-
-let activeSL='buy';
-function switchSL(tab,el){
-  document.querySelectorAll('#page-stoploss .inner-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('#page-stoploss .subpage').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');document.getElementById('sl-'+tab).classList.add('active');
-  activeSL=tab;setTimeout(drawAll,60);
-}
-
-// JOURNAL
-let trades=[];
-function saveTrade(){
-  const date=document.getElementById('jDate').value;
-  const dir=document.getElementById('jDir').value;
-  const entry=document.getElementById('jEntry').value;
-  const result=document.getElementById('jResult').value;
-  const pnl=parseFloat(document.getElementById('jPnl').value)||0;
-  const setup=document.getElementById('jSetup').value;
-  const notes=document.getElementById('jNotes').value;
-  if(!date||!entry){alert('Please fill in date and entry price');return;}
-  trades.unshift({id:Date.now(),date,dir,entry,result,pnl,setup,notes});
-  renderTrades();
-  updateStats();
-  document.getElementById('jDate').value='';
-  document.getElementById('jEntry').value='';
-  document.getElementById('jPnl').value='';
-  document.getElementById('jNotes').value='';
-}
-function deleteTrade(id){
-  trades=trades.filter(t=>t.id!==id);
-  renderTrades();updateStats();
-}
-function renderTrades(){
-  const el=document.getElementById('tradeList');
-  if(trades.length===0){el.innerHTML='<div class="empty-state">No trades logged yet. Your history will appear here.</div>';return;}
-  el.innerHTML=trades.map(t=>{
-    const dirClass=t.dir==='buy'?'long':'short';
-    const dirLabel=t.dir==='buy'?'BUY':'SELL';
-    const resLabels={tp2:'Hit TP2',tp1:'Hit TP1',be:'Breakeven',loss:'Stopped Out'};
-    const resClass=t.result==='tp2'||t.result==='tp1'?'win':t.result==='be'?'be':'loss';
-    const pnlStr=(t.pnl>=0?'+':'')+t.pnl.toFixed(2);
-    return `<div class="trade-entry">
-      <div class="trade-dir ${dirClass}">${dirLabel}</div>
-      <div class="trade-info">
-        <div class="trade-date">${t.date} · Entry ${t.entry} · ${resLabels[t.result]}</div>
-        <div class="trade-detail">${t.setup==='yes'?'Full A++ setup':t.setup==='partial'?'Partial setup':'Forced trade'}${t.notes?' · '+t.notes:''}</div>
-      </div>
-      <div class="trade-result ${resClass}">$${pnlStr}</div>
-      <button class="delete-btn" onclick="deleteTrade(${t.id})">×</button>
-    </div>`;
-  }).join('');
-}
-function updateStats(){
-  const total=trades.length;
-  const wins=trades.filter(t=>t.result==='tp2'||t.result==='tp1').length;
-  const losses=trades.filter(t=>t.result==='loss').length;
-  const wr=total>0?Math.round(wins/total*100):0;
-  document.getElementById('statTotal').textContent=total;
-  document.getElementById('statWins').textContent=wins;
-  document.getElementById('statLosses').textContent=losses;
-  document.getElementById('statWinRate').textContent=wr+'%';
-}
-
-// CANVAS
-function sc(id,h){
-  const c=document.getElementById(id);
-  if(!c||!c.parentElement)return null;
-  const dpr=window.devicePixelRatio||1;
-  const w=c.parentElement.clientWidth-32;
-  if(w<=0)return null;
-  c.width=w*dpr;c.height=h*dpr;
-  c.style.width=w+'px';c.style.height=h+'px';
-  const ctx=c.getContext('2d');ctx.scale(dpr,dpr);
-  return{ctx,w,h};
-}
-function cdl(ctx,list,x0,cw,gap){
-  list.forEach((c,i)=>{
-    const x=x0+i*(cw+gap);const bull=c.c<=c.o;
-    ctx.strokeStyle=bull?'#00e5a0':'#ff6b9d';ctx.fillStyle=bull?'#00e5a0':'#ff6b9d';
-    ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x+cw/2,c.h);ctx.lineTo(x+cw/2,c.l);ctx.stroke();
-    ctx.fillRect(x,Math.min(c.o,c.c),cw,Math.max(2,Math.abs(c.c-c.o)));
-  });
-}
-function cdlOB(ctx,c,x,cw){
-  const top=Math.min(c.o,c.c)-4,ht=Math.abs(c.c-c.o)+8;
-  ctx.fillStyle='rgba(251,191,36,0.1)';ctx.fillRect(x-3,top,cw+6,ht);
-  ctx.strokeStyle='#fbbf24';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
-  ctx.strokeRect(x-3,top,cw+6,ht);ctx.setLineDash([]);
-  ctx.strokeStyle=c.c<=c.o?'#00e5a0':'#ff6b9d';ctx.fillStyle=c.c<=c.o?'#00e5a0':'#ff6b9d';
-  ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x+cw/2,c.h);ctx.lineTo(x+cw/2,c.l);ctx.stroke();
-  ctx.fillRect(x,Math.min(c.o,c.c),cw,Math.max(2,Math.abs(c.c-c.o)));
-}
-function hl(ctx,y,w,color,dash){
-  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.5;
-  ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(18,y);ctx.lineTo(w-18,y);ctx.stroke();ctx.restore();
-}
-function lbl(ctx,text,x,y,color,align){
-  ctx.font='bold 10px Segoe UI,system-ui';ctx.fillStyle=color;ctx.textAlign=align||'center';ctx.fillText(text,x,y);
-}
-
-// BUY VISUAL
-function drawVBuy(){
-  const s=sc('cVBuy',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const ph=vPhase.buy,BL=h*0.50,TL=h*0.14,BY=h-18,cw=12,gap=4;let x=18;
-  if(ph>=2){ctx.fillStyle='rgba(251,191,36,0.06)';ctx.fillRect(18,BL-12,w-36,24);}
-  hl(ctx,BL,w,ph>=2?'#fbbf24':'#1e2535',[5,4]);
-  lbl(ctx,'ORDER BLOCK ZONE',w-22,BL-16,'#fbbf24','right');
-  if(ph===3){hl(ctx,TL,w,'#b06bff',[5,4]);lbl(ctx,'TARGET',w-22,TL-8,'#b06bff','right');}
-  const pre=[{o:BY-8,c:BY-18,h:BY-16,l:BY-10},{o:BY-18,c:BY-10,h:BY-8,l:BY-22}];
-  ctx.globalAlpha=0.3;cdl(ctx,pre,x,cw,gap);ctx.globalAlpha=1;x+=pre.length*(cw+gap);
-  const obC={o:BY-10,c:BY-2,h:BY-1,l:BY-24};cdlOB(ctx,obC,x,cw);
-  if(ph===1)lbl(ctx,'ORDER BLOCK',x+cw/2,BY-28,'#fbbf24');
-  x+=cw+gap;
-  const imp=[{o:BY-2,c:BY-42,h:BY-40,l:BY-4},{o:BY-42,c:BY-82,h:BY-80,l:BY-44},{o:BY-82,c:BL-28,h:BL-26,l:BY-84},{o:BL-28,c:BL-50,h:BL-48,l:BL-30}];
-  ctx.globalAlpha=ph===1?1:0.35;cdl(ctx,imp,x,cw,gap);ctx.globalAlpha=1;
-  if(ph===1)lbl(ctx,'1. BREAK ↑ — DO NOT CHASE',x+imp.length*(cw+gap)/2,h-4,'#ff6b9d');
-  x+=imp.length*(cw+gap);
-  const pull=[{o:BL-50,c:BL-28,h:BL-26,l:BL-52},{o:BL-28,c:BL+8,h:BL+12,l:BL-30},{o:BL+8,c:BL-4,h:BL+12,l:BL-7},{o:BL-4,c:BL+4,h:BL+8,l:BL-8}];
-  ctx.globalAlpha=ph>=2?1:0.15;cdl(ctx,pull,x,cw,gap);ctx.globalAlpha=1;
-  if(ph===2)lbl(ctx,'2. TAPS BACK — WATCH 5 MIN',x+pull.length*(cw+gap)/2,h-4,'#fbbf24');
-  x+=pull.length*(cw+gap);
-  const cont=[{o:BL+4,c:BL-32,h:BL-30,l:BL+6},{o:BL-32,c:BL-70,h:BL-68,l:BL-34},{o:BL-70,c:BL-108,h:BL-106,l:BL-72},{o:BL-108,c:TL+22,h:TL+20,l:BL-110}];
-  ctx.globalAlpha=ph===3?1:0.15;cdl(ctx,cont,x,cw,gap);ctx.globalAlpha=1;
-  if(ph===3){
-    lbl(ctx,'3. CONTINUE ↑ = PROFIT',x+cont.length*(cw+gap)/2,h-4,'#00e5a0');
-    hl(ctx,BL-42,w,'rgba(0,229,160,0.4)',[3,3]);lbl(ctx,'TP1',w-22,BL-50,'#00e5a0','right');
-    hl(ctx,TL+22,w,'rgba(176,107,255,0.4)',[3,3]);lbl(ctx,'TP2',w-22,TL+14,'#b06bff','right');
-  }
-}
-
-// SELL VISUAL
-function drawVSell(){
-  const s=sc('cVSell',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const ph=vPhase.sell,BL=h*0.40,TL=h-20,TY=20,cw=12,gap=4;let x=18;
-  if(ph>=2){ctx.fillStyle='rgba(251,191,36,0.06)';ctx.fillRect(18,BL-12,w-36,24);}
-  hl(ctx,BL,w,ph>=2?'#fbbf24':'#1e2535',[5,4]);
-  lbl(ctx,'ORDER BLOCK ZONE',w-22,BL-16,'#fbbf24','right');
-  if(ph===3){hl(ctx,TL,w,'#b06bff',[5,4]);lbl(ctx,'TARGET',w-22,TL-8,'#b06bff','right');}
-  const pre=[{o:TY+8,c:TY+18,h:TY+5,l:TY+20},{o:TY+18,c:TY+10,h:TY+7,l:TY+22}];
-  ctx.globalAlpha=0.3;cdl(ctx,pre,x,cw,gap);ctx.globalAlpha=1;x+=pre.length*(cw+gap);
-  const obC={o:TY+10,c:TY+2,h:TY+1,l:TY+22};cdlOB(ctx,obC,x,cw);
-  if(ph===1)lbl(ctx,'ORDER BLOCK',x+cw/2,TY+36,'#fbbf24');
-  x+=cw+gap;
-  const imp=[{o:TY+2,c:TY+42,h:TY+1,l:TY+44},{o:TY+42,c:TY+82,h:TY+40,l:TY+84},{o:TY+82,c:BL+28,h:TY+80,l:BL+30},{o:BL+28,c:BL+50,h:BL+26,l:BL+52}];
-  ctx.globalAlpha=ph===1?1:0.35;cdl(ctx,imp,x,cw,gap);ctx.globalAlpha=1;
-  if(ph===1)lbl(ctx,'1. BREAK ↓ — DO NOT CHASE',x+imp.length*(cw+gap)/2,h-4,'#ff6b9d');
-  x+=imp.length*(cw+gap);
-  const bounce=[{o:BL+50,c:BL+26,h:BL+24,l:BL+52},{o:BL+26,c:BL-6,h:BL-10,l:BL+28},{o:BL-6,c:BL+8,h:BL-9,l:BL+11},{o:BL+8,c:BL-2,h:BL-4,l:BL+12}];
-  ctx.globalAlpha=ph>=2?1:0.15;cdl(ctx,bounce,x,cw,gap);ctx.globalAlpha=1;
-  if(ph===2)lbl(ctx,'2. TAPS BACK — WATCH 5 MIN',x+bounce.length*(cw+gap)/2,h-4,'#fbbf24');
-  x+=bounce.length*(cw+gap);
-  const cont=[{o:BL-2,c:BL+32,h:BL-4,l:BL+34},{o:BL+32,c:BL+70,h:BL+30,l:BL+72},{o:BL+70,c:BL+108,h:BL+68,l:BL+110},{o:BL+108,c:TL-14,h:BL+106,l:TL-12}];
-  ctx.globalAlpha=ph===3?1:0.15;cdl(ctx,cont,x,cw,gap);ctx.globalAlpha=1;
-  if(ph===3){
-    lbl(ctx,'3. CONTINUE ↓ = PROFIT',x+cont.length*(cw+gap)/2,h-4,'#b06bff');
-    hl(ctx,BL+42,w,'rgba(0,229,160,0.4)',[3,3]);lbl(ctx,'TP1',w-22,BL+34,'#00e5a0','right');
-    hl(ctx,TL-14,w,'rgba(176,107,255,0.4)',[3,3]);lbl(ctx,'TP2',w-22,TL-22,'#b06bff','right');
-  }
-}
-
-// RANGE
-function drawVRange(){
-  const s=sc('cVRange',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const HL=h*0.12,LL=h-26,MID=(HL+LL)/2,cw=12,gap=4;
-  ctx.fillStyle='rgba(255,107,157,0.06)';ctx.fillRect(18,HL,w-36,28);
-  ctx.fillStyle='rgba(0,229,160,0.06)';ctx.fillRect(18,LL-28,w-36,28);
-  ctx.fillStyle='rgba(176,107,255,0.025)';ctx.fillRect(18,HL+28,w-36,LL-HL-56);
-  hl(ctx,HL,w,'#ff6b9d');hl(ctx,LL,w,'#00e5a0');
-  lbl(ctx,'RESISTANCE',w-22,HL-8,'#ff6b9d','right');
-  lbl(ctx,'SUPPORT',w-22,LL+16,'#00e5a0','right');
-  ctx.font='bold 12px Segoe UI';ctx.fillStyle='#1e2535';ctx.textAlign='center';
-  ctx.fillText('NO TRADE ZONE',w/2,MID-6);
-  ctx.fillText('WAIT FOR THE WALLS',w/2,MID+10);
-  ctx.font='bold 30px Segoe UI';ctx.fillStyle='#161b24';ctx.fillText('?',w/2,MID+38);
-  const cs=[{o:MID-6,c:MID-18,h:MID-16,l:MID-8},{o:MID-18,c:MID-10,h:MID-8,l:MID-22},{o:MID-10,c:MID-22,h:MID-20,l:MID-12},{o:MID-22,c:MID-12,h:MID-10,l:MID-26}];
-  cdl(ctx,cs,26,cw,gap);
-}
-
-// 3 CANDLE BUY ENTRY
-function drawEntry3Buy(){
-  const s=sc('cEntry3Buy',340);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const zoneY=h*0.55,cw=18,gap=8;let x=24;
-
-  // Zone
-  ctx.fillStyle='rgba(251,191,36,0.07)';ctx.fillRect(18,zoneY-14,w-36,28);
-  hl(ctx,zoneY,w,'#fbbf24',[4,3]);hl(ctx,zoneY-14,w,'rgba(251,191,36,0.3)',[4,3]);
-  lbl(ctx,'ORDER BLOCK ZONE',w-22,zoneY-18,'#fbbf24','right');
-
-  // Pre candles
-  const pre=[{o:zoneY+50,c:zoneY+32,h:zoneY+30,l:zoneY+52},{o:zoneY+32,c:zoneY+18,h:zoneY+16,l:zoneY+34}];
-  ctx.globalAlpha=0.4;cdl(ctx,pre,x,cw,gap);ctx.globalAlpha=1;
-  x+=pre.length*(cw+gap)+8;
-
-  // CANDLE 1 — Break up out of zone
-  const c1={o:zoneY+8,c:zoneY-38,h:zoneY-40,l:zoneY+10};
-  cdl(ctx,[c1],x,cw,gap);
-  // Label
-  ctx.fillStyle='rgba(255,107,157,0.12)';ctx.fillRect(x-4,zoneY-52,cw+8,18);
-  lbl(ctx,'CANDLE 1',x+cw/2,zoneY-43,'#ff6b9d');
-  lbl(ctx,'BREAK OUT',x+cw/2,h-30,'#ff6b9d');
-  lbl(ctx,'Do not enter',x+cw/2,h-18,'#5a6480');
-  x+=cw+gap+16;
-
-  // CANDLE 2 — Tap back into zone
-  const c2={o:zoneY-38,c:zoneY+4,h:zoneY-40,l:zoneY+8};
-  cdl(ctx,[c2],x,cw,gap);
-  ctx.fillStyle='rgba(251,191,36,0.12)';ctx.fillRect(x-4,zoneY-10,cw+8,18);
-  lbl(ctx,'CANDLE 2',x+cw/2,zoneY-43,'#fbbf24');
-  lbl(ctx,'TAP BACK',x+cw/2,h-30,'#fbbf24');
-  lbl(ctx,'Still watching',x+cw/2,h-18,'#5a6480');
-  x+=cw+gap+16;
-
-  // CANDLE 3 — Confirmation — green body growing up, glowing
-  const c3={o:zoneY+4,c:zoneY-52,h:zoneY-55,l:zoneY+6};
-  ctx.fillStyle='rgba(0,229,160,0.15)';ctx.fillRect(x-6,zoneY-60,cw+12,70);
-  cdl(ctx,[c3],x,cw,gap);
-  // Arrow
-  ctx.fillStyle='#00e5a0';
-  ctx.beginPath();ctx.moveTo(x+cw/2,zoneY-62);ctx.lineTo(x+cw/2-8,zoneY-50);ctx.lineTo(x+cw/2+8,zoneY-50);ctx.closePath();ctx.fill();
-  lbl(ctx,'CANDLE 3',x+cw/2,zoneY-43,'#00e5a0');
-  lbl(ctx,'ENTER HERE',x+cw/2,h-30,'#00e5a0');
-  lbl(ctx,'While forming ↑',x+cw/2,h-18,'#00e5a0');
-
-  // Continuation
-  x+=cw+gap+16;
-  const cont=[{o:zoneY-52,c:zoneY-88,h:zoneY-90,l:zoneY-50},{o:zoneY-88,c:zoneY-124,h:zoneY-126,l:zoneY-86}];
-  ctx.globalAlpha=0.6;cdl(ctx,cont,x,cw,gap);ctx.globalAlpha=1;
-}
-
-// 3 CANDLE SELL ENTRY
-function drawEntry3Sell(){
-  const s=sc('cEntry3Sell',340);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const zoneY=h*0.42,cw=18,gap=8;let x=24;
-
-  ctx.fillStyle='rgba(251,191,36,0.07)';ctx.fillRect(18,zoneY-14,w-36,28);
-  hl(ctx,zoneY,w,'#fbbf24',[4,3]);hl(ctx,zoneY-14,w,'rgba(251,191,36,0.3)',[4,3]);
-  lbl(ctx,'ORDER BLOCK ZONE',w-22,zoneY-18,'#fbbf24','right');
-
-  const pre=[{o:zoneY-50,c:zoneY-32,h:zoneY-30,l:zoneY-52},{o:zoneY-32,c:zoneY-18,h:zoneY-16,l:zoneY-34}];
-  ctx.globalAlpha=0.4;cdl(ctx,pre,x,cw,gap);ctx.globalAlpha=1;
-  x+=pre.length*(cw+gap)+8;
-
-  // CANDLE 1 — Break down
-  const c1={o:zoneY-8,c:zoneY+40,h:zoneY-10,l:zoneY+42};
-  cdl(ctx,[c1],x,cw,gap);
-  ctx.fillStyle='rgba(255,107,157,0.12)';ctx.fillRect(x-4,zoneY-8,cw+8,18);
-  lbl(ctx,'CANDLE 1',x+cw/2,zoneY-18,'#ff6b9d');
-  lbl(ctx,'BREAK DOWN',x+cw/2,h-30,'#ff6b9d');
-  lbl(ctx,'Do not enter',x+cw/2,h-18,'#5a6480');
-  x+=cw+gap+16;
-
-  // CANDLE 2 — Tap back up
-  const c2={o:zoneY+40,c:zoneY-4,h:zoneY-8,l:zoneY+42};
-  cdl(ctx,[c2],x,cw,gap);
-  ctx.fillStyle='rgba(251,191,36,0.12)';ctx.fillRect(x-4,zoneY-8,cw+8,18);
-  lbl(ctx,'CANDLE 2',x+cw/2,zoneY-18,'#fbbf24');
-  lbl(ctx,'TAP BACK',x+cw/2,h-30,'#fbbf24');
-  lbl(ctx,'Still watching',x+cw/2,h-18,'#5a6480');
-  x+=cw+gap+16;
-
-  // CANDLE 3 — Pink confirmation
-  const c3={o:zoneY-4,c:zoneY+52,h:zoneY-6,l:zoneY+55};
-  ctx.fillStyle='rgba(255,107,157,0.15)';ctx.fillRect(x-6,zoneY-8,cw+12,70);
-  cdl(ctx,[c3],x,cw,gap);
-  ctx.fillStyle='#ff6b9d';
-  ctx.beginPath();ctx.moveTo(x+cw/2,zoneY+58);ctx.lineTo(x+cw/2-8,zoneY+46);ctx.lineTo(x+cw/2+8,zoneY+46);ctx.closePath();ctx.fill();
-  lbl(ctx,'CANDLE 3',x+cw/2,zoneY-18,'#ff6b9d');
-  lbl(ctx,'ENTER HERE',x+cw/2,h-30,'#ff6b9d');
-  lbl(ctx,'While forming ↓',x+cw/2,h-18,'#ff6b9d');
-
-  x+=cw+gap+16;
-  const cont=[{o:zoneY+52,c:zoneY+88,h:zoneY+50,l:zoneY+90},{o:zoneY+88,c:zoneY+124,h:zoneY+86,l:zoneY+126}];
-  ctx.globalAlpha=0.6;cdl(ctx,cont,x,cw,gap);ctx.globalAlpha=1;
-}
-
-// CANDLE BODY VISUAL
-function drawEntryBody(){
-  const s=sc('cEntryBody',340);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const third=w/3,cw=22,gap=0;
-
-  // Labels
-  lbl(ctx,'CLEARLY GOING UP',third/2,16,'#00e5a0');
-  lbl(ctx,'CLEARLY GOING DOWN',third+third/2,16,'#ff6b9d');
-  lbl(ctx,'NOT YOUR CANDLE — WAIT',third*2+third/2,16,'#fbbf24');
-
-  // Dividers
-  ctx.strokeStyle='#1e2535';ctx.lineWidth=1;ctx.setLineDash([]);
-  ctx.beginPath();ctx.moveTo(third,24);ctx.lineTo(third,h-10);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(third*2,24);ctx.lineTo(third*2,h-10);ctx.stroke();
-
-  const mid=h/2+10;
-
-  // Strong green candle
-  const gx=third/2-cw/2;
-  ctx.fillStyle='rgba(0,229,160,0.12)';ctx.fillRect(gx-8,mid-70,cw+16,80);
-  ctx.strokeStyle='#00e5a0';ctx.lineWidth=2;ctx.setLineDash([3,3]);
-  ctx.strokeRect(gx-8,mid-70,cw+16,80);ctx.setLineDash([]);
-  const gc={o:mid+8,c:mid-62,h:mid-66,l:mid+12};
-  cdl(ctx,[gc],gx,cw,0);
-  lbl(ctx,'Big solid body',third/2,mid+28,'#00e5a0');
-  lbl(ctx,'growing upward',third/2,mid+40,'#00e5a0');
-  lbl(ctx,'This is your candle',third/2,h-10,'#8a93b0');
-
-  // Strong pink candle
-  const px=third+third/2-cw/2;
-  ctx.fillStyle='rgba(255,107,157,0.12)';ctx.fillRect(px-8,mid-10,cw+16,80);
-  ctx.strokeStyle='#ff6b9d';ctx.lineWidth=2;ctx.setLineDash([3,3]);
-  ctx.strokeRect(px-8,mid-10,cw+16,80);ctx.setLineDash([]);
-  const pc={o:mid-8,c:mid+62,h:mid-12,l:mid+66};
-  cdl(ctx,[pc],px,cw,0);
-  lbl(ctx,'Big solid body',third+third/2,mid-26,'#ff6b9d');
-  lbl(ctx,'growing downward',third+third/2,mid-14,'#ff6b9d');
-  lbl(ctx,'This is your candle',third+third/2,h-10,'#8a93b0');
-
-  // Indecision candle — small body big wicks
-  const ix=third*2+third/2-cw/2;
-  const ic={o:mid+4,c:mid-4,h:mid-40,l:mid+40};
-  cdl(ctx,[ic],ix,cw,0);
-  lbl(ctx,'Tiny body',third*2+third/2,mid+52,'#fbbf24');
-  lbl(ctx,'big wicks both ways',third*2+third/2,mid+64,'#fbbf24');
-  lbl(ctx,'Not your candle — wait',third*2+third/2,h-10,'#8a93b0');
-}
-
-// ZONE MANAGE
-function drawZoneManage(){
-  const s=sc('cZoneManage',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const zone1Y=h*0.35,zone2Y=h*0.68,cw=12,gap=4;
-
-  ctx.fillStyle='rgba(255,107,157,0.05)';ctx.fillRect(18,zone1Y-10,w-36,20);
-  hl(ctx,zone1Y,w,'rgba(255,107,157,0.3)',[5,4]);
-  lbl(ctx,'DELETE — price passed through',w-22,zone1Y-14,'#ff6b9d','right');
-
-  const thru=[{o:h-14,c:h-40,h:h-38,l:h-16},{o:h-40,c:h-74,h:h-72,l:h-42},{o:h-74,c:zone1Y+18,h:zone1Y+16,l:h-76},{o:zone1Y+18,c:zone1Y-22,h:zone1Y-20,l:zone1Y+20},{o:zone1Y-22,c:zone1Y-55,h:zone1Y-53,l:zone1Y-24},{o:zone1Y-55,c:zone2Y+28,h:zone2Y+26,l:zone1Y-57}];
-  cdl(ctx,thru,22,cw,gap);
-
-  ctx.strokeStyle='rgba(255,107,157,0.5)';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(w/2-16,zone1Y-8);ctx.lineTo(w/2+16,zone1Y+8);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(w/2+16,zone1Y-8);ctx.lineTo(w/2-16,zone1Y+8);ctx.stroke();
-
-  ctx.fillStyle='rgba(0,229,160,0.06)';ctx.fillRect(18,zone2Y-10,w-36,20);
-  hl(ctx,zone2Y,w,'rgba(0,229,160,0.5)',[5,4]);
-  lbl(ctx,'KEEP — price has not returned yet',w-22,zone2Y-14,'#00e5a0','right');
-  ctx.strokeStyle='rgba(0,229,160,0.4)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
-  ctx.beginPath();ctx.moveTo(w-36,zone2Y+28);ctx.lineTo(w-36,zone2Y+4);ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle='rgba(0,229,160,0.4)';
-  ctx.beginPath();ctx.moveTo(w-36,zone2Y+2);ctx.lineTo(w-42,zone2Y+12);ctx.lineTo(w-30,zone2Y+12);ctx.closePath();ctx.fill();
-}
-
-// ZONE TF
-function drawZoneTF(){
-  const s=sc('cZoneTF',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const half=Math.floor(w/2)-8,pad=18;
-  const z1Top=h*0.36,z1Bot=h*0.52;
-
-  ctx.fillStyle='rgba(176,107,255,0.04)';ctx.fillRect(pad,pad,half-pad,h-pad*2);
-  ctx.strokeStyle='#1e2535';ctx.lineWidth=1;ctx.strokeRect(pad,pad,half-pad,h-pad*2);
-  lbl(ctx,'1 HOUR',pad+(half-pad)/2,pad+14,'#b06bff');
-
-  ctx.fillStyle='rgba(251,191,36,0.1)';ctx.fillRect(pad+6,z1Top,half-pad-12,z1Bot-z1Top);
-  ctx.strokeStyle='#fbbf24';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
-  ctx.strokeRect(pad+6,z1Top,half-pad-12,z1Bot-z1Top);ctx.setLineDash([]);
-  lbl(ctx,'20,250',pad+(half-pad)/2,z1Top+12,'#fbbf24');
-  lbl(ctx,'20,200',pad+(half-pad)/2,z1Bot+12,'#fbbf24');
-  const cX=pad+(half-pad)/2-6;
-  ctx.fillStyle='#ff6b9d';ctx.strokeStyle='#ff6b9d';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(cX+6,z1Top-6);ctx.lineTo(cX+6,z1Bot+6);ctx.stroke();
-  ctx.fillRect(cX,z1Top+3,12,z1Bot-z1Top-6);
-
-  const rx=half+16;
-  ctx.fillStyle='rgba(0,229,160,0.03)';ctx.fillRect(rx,pad,w-rx-pad,h-pad*2);
-  ctx.strokeStyle='#1e2535';ctx.lineWidth=1;ctx.strokeRect(rx,pad,w-rx-pad,h-pad*2);
-  lbl(ctx,'15 MINUTE',rx+(w-rx-pad)/2,pad+14,'#00e5a0');
-
-  ctx.fillStyle='rgba(251,191,36,0.1)';ctx.fillRect(rx+6,z1Top,w-rx-pad-12,z1Bot-z1Top);
-  ctx.strokeStyle='#fbbf24';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
-  ctx.strokeRect(rx+6,z1Top,w-rx-pad-12,z1Bot-z1Top);ctx.setLineDash([]);
-  lbl(ctx,'SAME PRICES',rx+(w-rx-pad)/2,z1Top-6,'#fbbf24');
-  lbl(ctx,'20,250',rx+(w-rx-pad)/2,z1Top+12,'#fbbf24');
-  lbl(ctx,'20,200',rx+(w-rx-pad)/2,z1Bot+12,'#fbbf24');
-
-  const smalls=[{o:z1Bot-4,c:z1Bot-14,h:z1Bot-12,l:z1Bot-2},{o:z1Bot-14,c:z1Top+16,h:z1Top+14,l:z1Bot-16},{o:z1Top+16,c:z1Top+6,h:z1Top+3,l:z1Top+18}];
-  cdl(ctx,smalls,rx+10,8,3);
-
-  ctx.strokeStyle='rgba(251,191,36,0.5)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
-  ctx.beginPath();ctx.moveTo(half-2,(z1Top+z1Bot)/2);ctx.lineTo(rx+2,(z1Top+z1Bot)/2);ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle='rgba(251,191,36,0.5)';
-  ctx.beginPath();ctx.moveTo(rx+2,(z1Top+z1Bot)/2);ctx.lineTo(rx-6,(z1Top+z1Bot)/2-5);ctx.lineTo(rx-6,(z1Top+z1Bot)/2+5);ctx.closePath();ctx.fill();
-}
-
-// SL BUY
-function drawSLBuy(){
-  const s=sc('cSLBuy',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const EY=h*0.32,SY=h*0.72,ZB=h*0.56,ZT=h*0.46,TY=h*0.10,cw=12,gap=4;let x=18;
-  hl(ctx,TY,w,'#b06bff');lbl(ctx,'TARGET',w-22,TY-8,'#b06bff','right');
-  hl(ctx,EY,w,'#00e5a0');lbl(ctx,'ENTRY',w-22,EY-8,'#00e5a0','right');
-  ctx.fillStyle='rgba(251,191,36,0.08)';ctx.fillRect(18,ZT,w-36,ZB-ZT);
-  hl(ctx,ZT,w,'#fbbf24',[5,4]);hl(ctx,ZB,w,'#fbbf24',[5,4]);
-  lbl(ctx,'ZONE',w-22,ZT-8,'#fbbf24','right');
-  hl(ctx,SY,w,'#ff6b9d',[5,4]);lbl(ctx,'STOP 10-15pts below',w-22,SY+14,'#ff6b9d','right');
-  ctx.fillStyle='rgba(255,107,157,0.04)';ctx.fillRect(18,ZB,w-36,SY-ZB);
-  const app=[{o:h-14,c:h-38,h:h-36,l:h-16},{o:h-38,c:h-72,h:h-70,l:h-40},{o:h-72,c:ZB+16,h:ZB+14,l:h-74},{o:ZB+16,c:ZT-4,h:ZT-2,l:ZB+18},{o:ZT-4,c:EY+16,h:EY+14,l:ZT-6},{o:EY+16,c:EY-6,h:EY-4,l:EY+18}];
-  cdl(ctx,app,x,cw,gap);x+=app.length*(cw+gap);
-  const up=[{o:EY-6,c:EY-36,h:EY-34,l:EY-8},{o:EY-36,c:EY-72,h:EY-70,l:EY-38},{o:EY-72,c:TY+18,h:TY+16,l:EY-74}];
-  ctx.fillStyle='rgba(0,229,160,0.04)';ctx.fillRect(x-2,TY,up.length*(cw+gap)+4,EY-TY);
-  cdl(ctx,up,x,cw,gap);
-  lbl(ctx,'↑ PROFIT',x+up.length*(cw+gap)/2,(TY+EY)/2,'#00e5a0');
-}
-
-// SL SELL
-function drawSLSell(){
-  const s=sc('cSLSell',300);if(!s)return;
-  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
-  const EY=h*0.65,SY=h*0.22,ZT=h*0.38,ZB=h*0.46,TY=h-20,cw=12,gap=4;let x=18;
-  hl(ctx,SY,w,'#ff6b9d',[5,4]);lbl(ctx,'STOP 10-15pts above',w-22,SY-8,'#ff6b9d','right');
-  ctx.fillStyle='rgba(255,107,157,0.04)';ctx.fillRect(18,SY,w-36,ZT-SY);
-  ctx.fillStyle='rgba(251,191,36,0.08)';ctx.fillRect(18,ZT,w-36,ZB-ZT);
-  hl(ctx,ZT,w,'#fbbf24',[5,4]);hl(ctx,ZB,w,'#fbbf24',[5,4]);
-  lbl(ctx,'ZONE',w-22,ZT-8,'#fbbf24','right');
-  hl(ctx,EY,w,'#b06bff');lbl(ctx,'ENTRY',w-22,EY-8,'#b06bff','right');
-  hl(ctx,TY,w,'#00e5a0');lbl(ctx,'TARGET',w-22,TY-8,'#00e5a0','right');
-  const app=[{o:16,c:42,h:13,l:44},{o:42,c:76,h:40,l:78},{o:76,c:ZB+12,h:74,l:ZB+14},{o:ZB+12,c:ZT-4,h:ZB+10,l:ZT-2},{o:ZT-4,c:EY-16,h:ZT-6,l:EY-14},{o:EY-16,c:EY+8,h:EY-18,l:EY+10}];
-  cdl(ctx,app,x,cw,gap);x+=app.length*(cw+gap);
-  const down=[{o:EY+8,c:EY+42,h:EY+6,l:EY+44},{o:EY+42,c:EY+78,h:EY+40,l:EY+80},{o:EY+78,c:TY-12,h:EY+76,l:TY-10}];
-  ctx.fillStyle='rgba(176,107,255,0.04)';ctx.fillRect(x-2,EY,down.length*(cw+gap)+4,TY-EY);
-  cdl(ctx,down,x,cw,gap);
-  lbl(ctx,'↓ PROFIT',x+down.length*(cw+gap)/2,(EY+TY)/2,'#b06bff');
-}
-
-function drawAll(){
-  const active=document.querySelector('.page.active');
-  if(!active)return;
-  const id=active.id;
-  if(id==='page-visual'){
-    if(activeVisual==='buy')drawVBuy();
-    else if(activeVisual==='sell')drawVSell();
-    else drawVRange();
-  } else if(id==='page-entry'){
-    if(activeEntry==='buy')drawEntry3Buy();
-    else if(activeEntry==='sell')drawEntry3Sell();
-    else drawEntryBody();
-  } else if(id==='page-zones'){
-    if(activeZones==='manage')drawZoneManage();
-    else drawZoneTF();
-  } else if(id==='page-stoploss'){
-    if(activeSL==='buy')drawSLBuy();
-    else if(activeSL==='sell')drawSLSell();
-  }
-}
-
-window.addEventListener('resize',drawAll);
-setTimeout(drawAll,150);
-
-// DAILY GOAL
-function calcDailyGoal(){
-  const goal = parseFloat(document.getElementById('dgGoal').value);
-  const win = parseFloat(document.getElementById('dgWin').value);
-  const wr = parseFloat(document.getElementById('dgWinRate').value) / 100;
-  const el = document.getElementById('dgResult');
-  if(!goal||!win||!wr){
-    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Trades Needed</div><div style="font-size:13px;color:var(--muted)">Fill in above</div>';
-    return;
-  }
-  const avgLoss = win * 0.5;
-  const netPerTrade = (win * wr) - (avgLoss * (1 - wr));
-  if(netPerTrade <= 0){
-    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Trades Needed</div><div style="font-size:13px;color:var(--pink)">Adjust your win rate or average win</div>';
-    return;
-  }
-  const trades = Math.ceil(goal / netPerTrade);
-  const winTrades = Math.ceil(trades * wr);
-  const lossTrades = trades - winTrades;
-  el.innerHTML=`
-    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Trades Needed</div>
-    <div style="font-size:36px;font-weight:900;color:var(--green)">${trades}</div>
-    <div style="font-size:11px;color:var(--muted)">${winTrades} wins · ${lossTrades} losses · $${netPerTrade.toFixed(0)} avg net/trade</div>
-  `;
-}
-
-// ACCOUNT GROWTH
-function calcGrowth(){
-  const balance = parseFloat(document.getElementById('agBalance').value);
-  const daily = parseFloat(document.getElementById('agDaily').value);
-  const days = parseFloat(document.getElementById('agDays').value) || 5;
-  const el = document.getElementById('agResult');
-  const tableEl = document.getElementById('growthTable');
-  if(!balance||!daily){
-    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Projected Balance</div><div style="font-size:13px;color:var(--muted)">Fill in above</div>';
-    tableEl.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Fill in the Account Growth calculator above to see your projection table</div>';
-    return;
-  }
-  const monthly = daily * days * 4.33;
-  const m1 = balance + monthly;
-  const m3 = balance + monthly * 3;
-  const m6 = balance + monthly * 6;
-  const m12 = balance + monthly * 12;
-
-  el.innerHTML=`
-    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Monthly Projection</div>
-    <div style="font-size:32px;font-weight:900;color:var(--green)">+$${monthly.toFixed(0)}</div>
-    <div style="font-size:11px;color:var(--muted)">${days} days/week · $${daily}/day</div>
-  `;
-
-  tableEl.innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
-      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">1 Month</div>
-        <div style="font-size:20px;font-weight:900;color:var(--green)">$${m1.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${monthly.toFixed(0)}</div>
-      </div>
-      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">3 Months</div>
-        <div style="font-size:20px;font-weight:900;color:var(--green)">$${m3.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${(monthly*3).toFixed(0)}</div>
-      </div>
-      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">6 Months</div>
-        <div style="font-size:20px;font-weight:900;color:var(--purple)">$${m6.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${(monthly*6).toFixed(0)}</div>
-      </div>
-      <div style="background:var(--surface2);border-radius:10px;padding:14px;border:1px solid var(--border);text-align:center">
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">12 Months</div>
-        <div style="font-size:20px;font-weight:900;color:var(--pink)">$${m12.toLocaleString('en-US',{maximumFractionDigits:0})}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:3px">+$${(monthly*12).toFixed(0)}</div>
-      </div>
-    </div>
-  `;
-}
-
-// POSITION SIZING
-function calcPosition(){
-  const balance = parseFloat(document.getElementById('psBalance').value);
-  const riskPct = parseFloat(document.getElementById('psRisk').value) / 100;
-  const stopPoints = parseFloat(document.getElementById('psStop').value);
-  const el = document.getElementById('psResult');
-  if(!balance||!riskPct||!stopPoints){
-    el.innerHTML='<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Contracts to Trade</div><div style="font-size:13px;color:var(--muted)">Fill in above</div>';
-    return;
-  }
-  const riskDollars = balance * riskPct;
-  const stopValuePerContract = stopPoints * 2;
-  const contracts = Math.floor(riskDollars / stopValuePerContract);
-  const actualRisk = contracts * stopValuePerContract;
-  const safeContracts = Math.max(1, contracts);
-  el.innerHTML=`
-    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Contracts to Trade</div>
-    <div style="font-size:36px;font-weight:900;color:var(--purple)">${safeContracts}</div>
-    <div style="font-size:11px;color:var(--muted)">Risk $${actualRisk.toFixed(0)} · ${riskPct*100}% of $${balance.toLocaleString()}</div>
-  `;
-}
-
-// TICK CALCULATOR
-function calcTicks(){
-  const contracts = parseFloat(document.getElementById('calcContracts').value) || 1;
-  const points = parseFloat(document.getElementById('calcPoints').value) || 0;
-  const ticks = parseFloat(document.getElementById('calcTicksInput').value) || 0;
-  const totalPoints = points + (ticks * 0.25);
-  const dollarValue = totalPoints * 2 * contracts;
-  const el = document.getElementById('tickResult');
-  if(totalPoints === 0){
-    el.innerHTML = '<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Dollar Value</div><div style="font-size:13px;color:var(--muted)">Fill in your numbers above</div>';
-    return;
-  }
-  const color = dollarValue >= 0 ? 'var(--green)' : 'var(--pink)';
-  el.innerHTML = `
-    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Dollar Value</div>
-    <div style="font-size:40px;font-weight:900;color:${color};margin-bottom:6px">$${Math.abs(dollarValue).toFixed(2)}</div>
-    <div style="font-size:12px;color:var(--muted)">${contracts} contract${contracts>1?'s':''} · ${totalPoints} points · ${totalPoints*4} ticks</div>
-  `;
-}
-
-// LIVE SESSION CLOCK
-function getEasternTime() {
-  const now = new Date();
-  const et = new Date(now.toLocaleString('en-US', {timeZone: 'America/New_York'}));
-  return et;
-}
-
-function getSession(et) {
-  const h = et.getHours();
-  const m = et.getMinutes();
-  const total = h * 60 + m;
-
-  if (total >= 18*60 || total < 3*60) return {
-    name: 'Asia Session', color: '#b06bff',
-    bg: 'rgba(176,107,255,0.12)', border: 'rgba(176,107,255,0.3)',
-    desc: 'Lower volume. Slower moves. Only trade if the setup is very clean.'
-  };
-  if (total >= 3*60 && total < 9*60+30) return {
-    name: 'London Session', color: '#ff6b9d',
-    bg: 'rgba(255,107,157,0.12)', border: 'rgba(255,107,157,0.3)',
-    desc: 'Volume picking up. Bigger moves forming. Good setups can appear here.'
-  };
-  if (total >= 9*60+30 && total < 11*60) return {
-    name: '🔥 New York Open — Best Window', color: '#00e5a0',
-    bg: 'rgba(0,229,160,0.12)', border: 'rgba(0,229,160,0.3)',
-    desc: 'Highest volume of the day. Cleanest moves. Be at the charts. This is your best trading window.'
-  };
-  if (total >= 11*60 && total < 13*60) return {
-    name: '⚠ Lunch Hour — Avoid Trading', color: '#fbbf24',
-    bg: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.3)',
-    desc: 'Volume drops. Price chops and fakes out. Step away from the screen until 1PM.'
-  };
-  if (total >= 13*60 && total < 15*60+30) return {
-    name: 'Afternoon Session', color: '#00e5a0',
-    bg: 'rgba(0,229,160,0.12)', border: 'rgba(0,229,160,0.3)',
-    desc: 'Second best window. Volume returns. Good setups appear. Stay alert.'
-  };
-  return {
-    name: 'Market Close — Be Cautious', color: '#ff6b9d',
-    bg: 'rgba(255,107,157,0.12)', border: 'rgba(255,107,157,0.3)',
-    desc: 'End of day. Erratic moves. Good time to review trades rather than open new ones.'
-  };
-}
-
-function updateClock() {
-  const et = getEasternTime();
-  const h = String(et.getHours()).padStart(2,'0');
-  const m = String(et.getMinutes()).padStart(2,'0');
-  const s = String(et.getSeconds()).padStart(2,'0');
-  const clockEl = document.getElementById('liveClock');
-  const sessEl = document.getElementById('liveSession');
-  const descEl = document.getElementById('sessionDesc');
-  if (!clockEl) return;
-  clockEl.textContent = h+':'+m+':'+s;
-  const sess = getSession(et);
-  sessEl.textContent = sess.name;
-  sessEl.style.background = sess.bg;
-  sessEl.style.border = '1px solid '+sess.border;
-  sessEl.style.color = sess.color;
-  descEl.textContent = sess.desc;
-}
-
-setInterval(updateClock, 1000);
-updateClock();
+function getET(){return new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));}
+function getSes(et){const t=et.getHours()*60+et.getMinutes();if(t>=18*60||t<3*60)return{n:'Asia Session',c:'#b06bff',bg:'rgba(176,107,255,.15)',bo:'rgba(176,107,255,.4)',d:'Lower volume. Only trade a very clean ICC setup.'};if(t<9*60+30)return{n:'London Session',c:'#ff6b9d',bg:'rgba(255,107,157,.15)',bo:'rgba(255,107,157,.4)',d:'Volume picking up. ICC indications can form here.'};if(t<11*60)return{n:'\uD83D\uDD25 NY Open \u2014 Best Window',c:'#00e5a0',bg:'rgba(0,229,160,.15)',bo:'rgba(0,229,160,.4)',d:'Best ICC session. Cleanest setups. Be at the charts.'};if(t<13*60)return{n:'\u26A0 Lunch \u2014 Avoid',c:'#fbbf24',bg:'rgba(251,191,36,.15)',bo:'rgba(251,191,36,.4)',d:'Volume drops. Fakeouts common. Step away from the charts.'};if(t<15*60+30)return{n:'Afternoon \u2014 Second Best',c:'#00e5a0',bg:'rgba(0,229,160,.15)',bo:'rgba(0,229,160,.4)',d:'Volume returns. ICC continuations appear here.'};return{n:'Market Close \u2014 Review Only',c:'#ff6b9d',bg:'rgba(255,107,157,.15)',bo:'rgba(255,107,157,.4)',d:'Do not open new positions. Review what played out today.'};}
+function updClk(){const et=getET(),h=String(et.getHours()).padStart(2,'0'),m=String(et.getMinutes()).padStart(2,'0'),s=String(et.getSeconds()).padStart(2,'0');const cEl=document.getElementById('clk'),sEl=document.getElementById('sbadge'),dEl=document.getElementById('sdesc');if(!cEl)return;cEl.textContent=h+':'+m+':'+s;const ses=getSes(et);sEl.textContent=ses.n;sEl.style.background=ses.bg;sEl.style.border='1px solid '+ses.bo;sEl.style.color=ses.c;dEl.textContent=ses.d;}
+setInterval(updClk,1000);updClk();
 </script>
 </body>
 </html>
