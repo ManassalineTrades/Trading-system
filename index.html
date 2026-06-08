@@ -16,24 +16,23 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 .nb{flex:1;min-width:60px;padding:13px 4px;text-align:center;font-size:10px;font-weight:800;color:var(--mt);cursor:pointer;border-bottom:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;user-select:none;transition:all .15s}
 .nb:hover{color:var(--tx)}
 .nb.on{color:var(--tx);border-bottom-color:var(--pk);background:rgba(255,107,157,.04)}
-.pg{display:none;padding:20px 20px 60px;max-width:900px;margin:0 auto}
+.pg{display:none;padding:20px 20px 60px;max-width:960px;margin:0 auto}
 .pg.on{display:block}
 .ptitle{font-size:22px;font-weight:900;margin-bottom:4px}
 .ptitle em{background:linear-gradient(135deg,var(--pk),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
-.psub{font-size:13px;color:var(--mt);margin-bottom:22px;line-height:1.5}
-
-/* PHASE CHECKER */
-.phase-checker{background:var(--s);border-radius:16px;padding:22px;border:1px solid var(--bd);margin-bottom:22px}
+.psub{font-size:13px;color:var(--mt);margin-bottom:20px;line-height:1.5}
+.chart-wrap{background:var(--s2);border-radius:14px;border:1px solid var(--bd);padding:16px;margin-bottom:14px}
+.chart-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+canvas{display:block;width:100%;border-radius:8px}
+.two-charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.chart-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;margin-bottom:10px}
+.chart-label.real{background:rgba(0,229,160,.12);color:var(--gn);border:1px solid rgba(0,229,160,.3)}
+.chart-label.fake{background:rgba(255,107,157,.12);color:var(--pk);border:1px solid rgba(255,107,157,.3)}
+.phase-checker{background:var(--s);border-radius:16px;padding:20px;border:1px solid var(--bd);margin-bottom:20px}
 .pc-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-bottom:14px;text-align:center}
-.pc-buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:0}
+.pc-buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .pc-btn{border-radius:12px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid var(--bd);background:var(--s2);transition:all .2s;user-select:none}
 .pc-btn:hover{transform:translateY(-2px)}
-.pc-btn.i{border-color:rgba(56,189,248,.3)}
-.pc-btn.i:hover{border-color:rgba(56,189,248,.6);background:rgba(56,189,248,.06)}
-.pc-btn.c{border-color:rgba(251,191,36,.3)}
-.pc-btn.c:hover{border-color:rgba(251,191,36,.6);background:rgba(251,191,36,.06)}
-.pc-btn.k{border-color:rgba(0,229,160,.3)}
-.pc-btn.k:hover{border-color:rgba(0,229,160,.6);background:rgba(0,229,160,.06)}
 .pc-btn.active-i{border-color:var(--bl);background:rgba(56,189,248,.1)}
 .pc-btn.active-c{border-color:var(--go);background:rgba(251,191,36,.1)}
 .pc-btn.active-k{border-color:var(--gn);background:rgba(0,229,160,.1)}
@@ -41,8 +40,6 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 .pc-name{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .pc-btn.i .pc-name{color:var(--bl)}.pc-btn.c .pc-name{color:var(--go)}.pc-btn.k .pc-name{color:var(--gn)}
 .pc-desc{font-size:11px;color:var(--mt);line-height:1.4}
-
-/* PHASE ANSWER */
 .pc-answer{margin-top:14px;border-radius:14px;padding:20px;display:none;animation:fadeIn .25s ease}
 .pc-answer.show{display:block}
 .pc-answer.stop{background:rgba(255,107,157,.07);border:2px solid var(--pk)}
@@ -65,106 +62,101 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 .pc-answer.go .pa-dot{background:var(--gn)}
 .pa-step-text{font-size:12px;color:#8a93b0;line-height:1.5}
 .pa-step-text strong{color:var(--tx)}
-
-/* BIG WARNING — shown at top of indication page */
-.ind-warning{background:rgba(255,107,157,.08);border:3px solid var(--pk);border-radius:16px;padding:24px;margin-bottom:22px;text-align:center}
-.iw-icon{font-size:48px;margin-bottom:10px}
-.iw-title{font-size:26px;font-weight:900;color:var(--pk);margin-bottom:8px;letter-spacing:1px}
-.iw-body{font-size:14px;color:#8a93b0;line-height:1.7;max-width:560px;margin:0 auto}
+.ind-warning{background:rgba(255,107,157,.08);border:3px solid var(--pk);border-radius:16px;padding:22px;margin-bottom:20px;text-align:center}
+.iw-icon{font-size:44px;margin-bottom:8px}
+.iw-title{font-size:24px;font-weight:900;color:var(--pk);margin-bottom:6px;letter-spacing:1px}
+.iw-body{font-size:13px;color:#8a93b0;line-height:1.6;max-width:520px;margin:0 auto}
 .iw-body strong{color:var(--tx)}
-
-.phase-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px}
-.phase{border-radius:14px;padding:20px;text-align:center}
+.phase-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
+.phase{border-radius:14px;padding:18px;text-align:center}
 .phase.i{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25)}
 .phase.c{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25)}
 .phase.k{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.25)}
-.phase-letter{font-size:44px;font-weight:900;margin-bottom:6px;line-height:1}
+.phase-letter{font-size:40px;font-weight:900;margin-bottom:5px;line-height:1}
 .phase.i .phase-letter{color:var(--bl)}.phase.c .phase-letter{color:var(--go)}.phase.k .phase-letter{color:var(--gn)}
-.phase-name{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.phase-name{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
 .phase.i .phase-name{color:var(--bl)}.phase.c .phase-name{color:var(--go)}.phase.k .phase-name{color:var(--gn)}
-.phase-desc{font-size:12px;color:#8a93b0;line-height:1.6}
+.phase-desc{font-size:11px;color:#8a93b0;line-height:1.5}
 .phase-desc strong{color:var(--tx)}
-.arrow-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
-.ap-box{border-radius:10px;padding:10px 16px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.arrow-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.ap-box{border-radius:10px;padding:9px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
 .ap-box.i{background:rgba(56,189,248,.1);color:var(--bl);border:1px solid rgba(56,189,248,.3)}
 .ap-box.c{background:rgba(251,191,36,.1);color:var(--go);border:1px solid rgba(251,191,36,.3)}
 .ap-box.k{background:rgba(0,229,160,.1);color:var(--gn);border:1px solid rgba(0,229,160,.3)}
-.arr{font-size:20px;color:var(--mt)}
-.loop-badge{background:rgba(176,107,255,.1);color:var(--pu);border:1px solid rgba(176,107,255,.3);border-radius:10px;padding:8px 14px;font-size:11px;font-weight:800}
-.rule-list{background:var(--s2);border-radius:12px;padding:16px;border:1px solid var(--bd);margin-bottom:14px}
-.rule{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px;color:#8a93b0;line-height:1.5}
+.arr{font-size:18px;color:var(--mt)}
+.loop-badge{background:rgba(176,107,255,.1);color:var(--pu);border:1px solid rgba(176,107,255,.3);border-radius:10px;padding:7px 13px;font-size:11px;font-weight:800}
+.rule-list{background:var(--s2);border-radius:12px;padding:14px;border:1px solid var(--bd);margin-bottom:14px}
+.rule{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--bd);font-size:12px;color:#8a93b0;line-height:1.5}
 .rule:last-child{border-bottom:none;padding-bottom:0}
 .rule:first-child{padding-top:0}
 .rule strong{color:var(--tx)}
-.rdot{font-size:16px;font-weight:900;flex-shrink:0;margin-top:1px}
+.rdot{font-size:14px;font-weight:900;flex-shrink:0;margin-top:1px}
 .rdot.bl{color:var(--bl)}.rdot.go{color:var(--go)}.rdot.gn{color:var(--gn)}.rdot.pk{color:var(--pk)}.rdot.pu{color:var(--pu)}
-.big-rule{border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
+.big-rule{border-radius:14px;padding:16px 18px;margin-bottom:14px;text-align:center}
 .big-rule.warn{background:rgba(255,107,157,.07);border:2px solid rgba(255,107,157,.4)}
 .big-rule.info{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.25)}
 .big-rule.success{background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.25)}
 .big-rule.gold{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25)}
-.brt{font-size:16px;font-weight:900;margin-bottom:6px}
+.brt{font-size:15px;font-weight:900;margin-bottom:5px}
 .big-rule.warn .brt{color:var(--pk)}.big-rule.info .brt{color:var(--bl)}.big-rule.success .brt{color:var(--gn)}.big-rule.gold .brt{color:var(--go)}
-.brs{font-size:13px;color:#8a93b0;line-height:1.6}
+.brs{font-size:12px;color:#8a93b0;line-height:1.6}
 .brs strong{color:var(--tx)}
-.tf-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.tf{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.tf-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.tf{display:inline-block;padding:5px 12px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
 .tf.h4{background:rgba(176,107,255,.15);color:var(--pu);border:1px solid rgba(176,107,255,.3)}
 .tf.h1{background:rgba(255,107,157,.15);color:var(--pk);border:1px solid rgba(255,107,157,.3)}
 .tf.m15{background:rgba(251,191,36,.12);color:var(--go);border:1px solid rgba(251,191,36,.25)}
 .tf.m5{background:rgba(0,229,160,.1);color:var(--gn);border:1px solid rgba(0,229,160,.25)}
-.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-.step{display:flex;gap:14px;align-items:flex-start;background:var(--s2);border-radius:12px;padding:14px;border:1px solid var(--bd)}
-.step-n{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0}
-.step-title{font-size:13px;font-weight:800;color:var(--tx);margin-bottom:3px}
-.step-text{font-size:12px;color:#8a93b0;line-height:1.6}
+.steps{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.step{display:flex;gap:12px;align-items:flex-start;background:var(--s2);border-radius:11px;padding:13px;border:1px solid var(--bd)}
+.step-n{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0}
+.step-title{font-size:12px;font-weight:800;color:var(--tx);margin-bottom:2px}
+.step-text{font-size:11px;color:#8a93b0;line-height:1.5}
 .step-text strong{color:var(--tx)}
-.chk-list{display:flex;flex-direction:column;gap:0}
-.chk{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.chk-list{display:flex;flex-direction:column}
+.chk{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
 .chk:last-child{border-bottom:none;padding-bottom:0}
 .chk:first-child{padding-top:0}
-.cbox{width:24px;height:24px;border-radius:7px;border:2px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s;background:var(--bg)}
+.cbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s;background:var(--bg)}
 .cbox svg{display:none}
 .cbox.on{border-color:transparent;background:linear-gradient(135deg,var(--pk),var(--pu))}
 .cbox.on svg{display:block}
 .chk.dn .clabel{color:var(--mt);text-decoration:line-through}
-.clabel{font-size:13px;line-height:1.5;color:#8a93b0}
+.clabel{font-size:12px;line-height:1.5;color:#8a93b0}
 .clabel strong{color:var(--tx)}
-.cnote{font-size:11px;color:var(--mt);margin-top:3px}
-.prog-wrap{background:var(--bd);border-radius:100px;height:6px;overflow:hidden;margin-bottom:6px}
+.cnote{font-size:10px;color:var(--mt);margin-top:2px}
+.prog-wrap{background:var(--bd);border-radius:100px;height:6px;overflow:hidden;margin-bottom:5px}
 .prog{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--pk),var(--pu),var(--gn));transition:width .4s;width:0%}
-.prog-label{font-size:12px;color:var(--mt);margin-bottom:18px}
-.ready{display:none;background:linear-gradient(135deg,rgba(0,229,160,.07),rgba(176,107,255,.07));border:1px solid var(--gn);border-radius:12px;padding:16px;text-align:center;margin-bottom:18px}
+.prog-label{font-size:11px;color:var(--mt);margin-bottom:16px}
+.ready{display:none;background:linear-gradient(135deg,rgba(0,229,160,.07),rgba(176,107,255,.07));border:1px solid var(--gn);border-radius:12px;padding:14px;text-align:center;margin-bottom:16px}
 .ready.on{display:block}
-.ready h3{font-size:17px;font-weight:900;background:linear-gradient(135deg,var(--gn),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px}
-.ready p{color:var(--mt);font-size:12px}
-.dir-pick{display:flex;gap:10px;margin-top:8px}
-.dp{flex:1;padding:10px;border-radius:10px;border:2px solid var(--bd);background:var(--bg);color:var(--mt);font-size:13px;font-weight:800;cursor:pointer;text-align:center;user-select:none;transition:all .2s}
+.ready h3{font-size:16px;font-weight:900;background:linear-gradient(135deg,var(--gn),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:2px}
+.ready p{color:var(--mt);font-size:11px}
+.dir-pick{display:flex;gap:9px;margin-top:7px}
+.dp{flex:1;padding:9px;border-radius:9px;border:2px solid var(--bd);background:var(--bg);color:var(--mt);font-size:12px;font-weight:800;cursor:pointer;text-align:center;user-select:none;transition:all .2s}
 .dp.long{border-color:var(--gn);background:rgba(0,229,160,.08);color:var(--gn)}
 .dp.short{border-color:var(--pk);background:rgba(255,107,157,.08);color:var(--pk)}
-.rst-btn{display:block;width:100%;margin-top:16px;padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:10px;color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.rst-btn{display:block;width:100%;margin-top:14px;padding:11px;background:var(--s2);border:1px solid var(--bd);border-radius:9px;color:var(--mt);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
 .rst-btn:hover{border-color:var(--pk);color:var(--tx)}
-.ses-clock{background:var(--s);border-radius:16px;padding:24px;border:1px solid var(--bd);text-align:center;margin-bottom:18px}
-.ses-label{font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.ses-time{font-size:52px;font-weight:900;color:var(--tx);letter-spacing:3px;margin-bottom:10px;font-variant-numeric:tabular-nums}
-.ses-badge{font-size:15px;font-weight:800;padding:8px 24px;border-radius:30px;display:inline-block;margin-bottom:10px}
-.ses-desc{font-size:13px;color:#8a93b0;max-width:400px;margin:0 auto;line-height:1.6}
-.ses-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.ses-item{background:var(--s2);border-radius:12px;padding:14px;border:1px solid var(--bd)}
+.ses-clock{background:var(--s);border-radius:16px;padding:22px;border:1px solid var(--bd);text-align:center;margin-bottom:16px}
+.ses-label{font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.ses-time{font-size:50px;font-weight:900;color:var(--tx);letter-spacing:3px;margin-bottom:9px;font-variant-numeric:tabular-nums}
+.ses-badge{font-size:14px;font-weight:800;padding:7px 22px;border-radius:30px;display:inline-block;margin-bottom:9px}
+.ses-desc{font-size:12px;color:#8a93b0;max-width:400px;margin:0 auto;line-height:1.5}
+.ses-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.ses-item{background:var(--s2);border-radius:11px;padding:13px;border:1px solid var(--bd)}
 .ses-item.best{border-color:rgba(0,229,160,.35)}
 .ses-item.avoid{border-color:rgba(251,191,36,.3)}
-.si-time{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.si-name{font-size:14px;font-weight:800;color:var(--tx);margin-bottom:4px}
-.si-desc{font-size:12px;color:#8a93b0;line-height:1.5}
+.si-time{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.si-name{font-size:13px;font-weight:800;color:var(--tx);margin-bottom:3px}
+.si-desc{font-size:11px;color:#8a93b0;line-height:1.5}
 </style>
 </head>
 <body>
-
 <div class="hdr">
   <div class="logo">ICC Trading System</div>
   <div class="tagline">MNQ &middot; Indication &middot; Correction &middot; Continuation</div>
 </div>
-
 <div class="nav">
   <div class="nb on" onclick="go('icc',this)">ICC</div>
   <div class="nb" onclick="go('ind',this)">Indication</div>
@@ -174,111 +166,68 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
   <div class="nb" onclick="go('ses',this)">Sessions</div>
 </div>
 
-<!-- ICC OVERVIEW -->
+<!-- ICC -->
 <div class="pg on" id="pg-icc">
   <div class="ptitle">The <em>ICC</em> System</div>
   <div class="psub">Three steps. In order. Every time. You do not skip ahead.</div>
-
-  <!-- PHASE CHECKER -->
   <div class="phase-checker">
     <div class="pc-label">&#128073; What is happening on your chart right now?</div>
     <div class="pc-buttons">
-      <div class="pc-btn i" onclick="showAnswer('i',this)">
-        <div class="pc-icon">&#128200;</div>
-        <div class="pc-name">I see a break</div>
-        <div class="pc-desc">Price just broke a swing high or low</div>
-      </div>
-      <div class="pc-btn c" onclick="showAnswer('c',this)">
-        <div class="pc-icon">&#8617;</div>
-        <div class="pc-name">Price is pulling back</div>
-        <div class="pc-desc">Price is retracing after the break</div>
-      </div>
-      <div class="pc-btn k" onclick="showAnswer('k',this)">
-        <div class="pc-icon">&#127919;</div>
-        <div class="pc-name">Price is back at the level</div>
-        <div class="pc-desc">Price returned to where the break happened</div>
-      </div>
+      <div class="pc-btn i" onclick="showAnswer('i',this)"><div class="pc-icon">&#128200;</div><div class="pc-name">I see a break</div><div class="pc-desc">Price just broke a swing high or low</div></div>
+      <div class="pc-btn c" onclick="showAnswer('c',this)"><div class="pc-icon">&#8617;</div><div class="pc-name">Price pulling back</div><div class="pc-desc">Price retracing after the break</div></div>
+      <div class="pc-btn k" onclick="showAnswer('k',this)"><div class="pc-icon">&#127919;</div><div class="pc-name">Back at the level</div><div class="pc-desc">Price returned to where the break happened</div></div>
     </div>
-
-    <!-- ANSWER: INDICATION -->
     <div class="pc-answer stop" id="ans-i">
-      <div class="pa-top">
-        <div class="pa-icon">&#128683;</div>
-        <div class="pa-title">DO NOT ENTER</div>
-      </div>
-      <div class="pa-sub">This is the <strong>indication</strong>. You are watching the break happen right now. This is exactly the moment FOMO traders get in &mdash; and exactly the moment you <strong>do not.</strong> The market is about to grab all of them before the real move starts.</div>
+      <div class="pa-top"><div class="pa-icon">&#128683;</div><div class="pa-title">DO NOT ENTER</div></div>
+      <div class="pa-sub">This is the <strong>indication</strong>. Everyone FOMOing in right now is about to get wiped. The market will grab their stop losses before the real move. <strong>You are not one of those people.</strong></div>
       <div class="pa-steps">
         <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Do not enter.</strong> I know it looks like it is going. That is the trap.</div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Set a price alert</strong> at this level. This level is your future entry zone.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Set a price alert</strong> at this level. This is your future entry zone.</div></div>
         <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Note where the indication started.</strong> That level is your TP when continuation comes.</div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Walk away.</strong> Come back when price returns to this level after the correction.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Walk away.</strong> Come back when price returns after the correction.</div></div>
       </div>
     </div>
-
-    <!-- ANSWER: CORRECTION -->
     <div class="pc-answer wait" id="ans-c">
-      <div class="pa-top">
-        <div class="pa-icon">&#9203;</div>
-        <div class="pa-title">WAIT. WATCH THE 15M.</div>
-      </div>
-      <div class="pa-sub">This is the <strong>correction</strong>. The market is grabbing liquidity from the FOMO traders who entered on the break. <strong>Do not enter yet.</strong> This is not over.</div>
+      <div class="pa-top"><div class="pa-icon">&#9203;</div><div class="pa-title">WAIT. WATCH THE 15M.</div></div>
+      <div class="pa-sub">This is the <strong>correction</strong>. The market is grabbing liquidity from FOMO traders. <strong>Do not enter yet.</strong> This is not over.</div>
       <div class="pa-steps">
         <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Switch to 15M.</strong> Track the highs and lows forming during this pullback.</div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">If it is still building higher highs and higher lows on 15M &mdash; <strong>the correction is not over.</strong></div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">When the correction structure breaks on 15M &mdash; drop to 5M and <strong>start watching for the continuation.</strong></div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Do not enter during the correction.</strong> Your entry is on the other side of it.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">Still building higher highs + higher lows on 15M? <strong>The correction is not over.</strong></div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">When correction structure breaks on 15M &mdash; drop to 5M and <strong>watch for the continuation.</strong></div></div>
       </div>
     </div>
-
-    <!-- ANSWER: CONTINUATION -->
     <div class="pc-answer go" id="ans-k">
-      <div class="pa-top">
-        <div class="pa-icon">&#128640;</div>
-        <div class="pa-title">THIS IS YOUR ENTRY ZONE</div>
-      </div>
-      <div class="pa-sub">Price is back at the 1H indication level. This is the <strong>second time around.</strong> The FOMO traders are gone. Now you look for your continuation entry on the 5M.</div>
+      <div class="pa-top"><div class="pa-icon">&#128640;</div><div class="pa-title">THIS IS YOUR ENTRY ZONE</div></div>
+      <div class="pa-sub">Price is back at the 1H indication level. <strong>Second time around.</strong> FOMO traders are gone. Look for your continuation entry on the 5M.</div>
       <div class="pa-steps">
         <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Drop to 5M.</strong> Watch for a lower high to form near this level.</div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">When price <strong>pushes through that lower high</strong> in the direction of your trend &mdash; that is your entry.</div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Set your stop</strong> behind the 1H level with room. Set your <strong>TP at the indication origin.</strong></div></div>
-        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">Enter. Set levels. <strong>Do not touch it.</strong></div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">Price <strong>pushes through that lower high</strong> in your trend direction &mdash; that is your entry.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Set stop</strong> behind the 1H level. <strong>Set TP</strong> at the indication origin. Enter. Do not touch it.</div></div>
       </div>
     </div>
+  </div>
+
+  <!-- ICC OVERVIEW CHART -->
+  <div class="chart-wrap">
+    <div class="chart-title" style="color:var(--gn)">&#9650; The Full ICC Pattern &mdash; What You Are Looking For</div>
+    <canvas id="cICC" height="220"></canvas>
   </div>
 
   <div class="phase-row">
-    <div class="phase i">
-      <div class="phase-letter">I</div>
-      <div class="phase-name">Indication</div>
-      <div class="phase-desc">Price breaks a swing high or low on <strong>1H or 4H</strong>. Creates a new high or new low. <strong>Blueprint, not your entry.</strong> Set alert. Walk away.</div>
-    </div>
-    <div class="phase c">
-      <div class="phase-letter">C</div>
-      <div class="phase-name">Correction</div>
-      <div class="phase-desc">Price pulls back. Grabs liquidity from FOMO traders. Watch on <strong>15M.</strong> Track highs and lows. <strong>Do not enter.</strong> Wait for it to end.</div>
-    </div>
-    <div class="phase k">
-      <div class="phase-letter">C</div>
-      <div class="phase-name">Continuation</div>
-      <div class="phase-desc">Price returns to 1H level. On <strong>5M</strong> a lower high forms and price pushes through. <strong>That is your entry.</strong> Stop behind level. TP at indication origin.</div>
-    </div>
+    <div class="phase i"><div class="phase-letter">I</div><div class="phase-name">Indication</div><div class="phase-desc">Breaks swing H/L on <strong>1H/4H</strong>. New high or new low. <strong>Blueprint only. Not your entry.</strong></div></div>
+    <div class="phase c"><div class="phase-letter">C</div><div class="phase-name">Correction</div><div class="phase-desc">Price pulls back. Grabs FOMO liquidity. Watch on <strong>15M.</strong> <strong>Do not enter.</strong> Wait.</div></div>
+    <div class="phase k"><div class="phase-letter">C</div><div class="phase-name">Continuation</div><div class="phase-desc">Returns to 1H level. Lower high on <strong>5M</strong> breaks. <strong>That is your entry.</strong></div></div>
   </div>
-
   <div class="arrow-row">
-    <div class="ap-box i">Indication</div>
-    <div class="arr">&rarr;</div>
-    <div class="ap-box c">Correction</div>
-    <div class="arr">&rarr;</div>
-    <div class="ap-box k">Continuation</div>
-    <div class="arr">&rarr;</div>
+    <div class="ap-box i">Indication</div><div class="arr">&rarr;</div>
+    <div class="ap-box c">Correction</div><div class="arr">&rarr;</div>
+    <div class="ap-box k">Continuation</div><div class="arr">&rarr;</div>
     <div class="loop-badge">&#8635; Repeats</div>
   </div>
-
   <div class="rule-list">
     <div class="rule"><div class="rdot bl">&rarr;</div><div>Indications can <strong>only</strong> happen when price breaks a swing high or swing low. No swing break = no indication = no trade.</div></div>
-    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not trade consolidation. Price ranging with no new highs or lows = wait. Nothing to trade yet.</div></div>
-    <div class="rule"><div class="rdot gn">&rarr;</div><div>Mark levels on <span style="background:rgba(255,107,157,.15);color:var(--pk);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">1H</span> or <span style="background:rgba(176,107,255,.15);color:var(--pu);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">4H</span>. Find entries on <span style="background:rgba(0,229,160,.1);color:var(--gn);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">5M</span> or <span style="background:rgba(251,191,36,.12);color:var(--go);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">15M</span>.</div></div>
-    <div class="rule"><div class="rdot pu">&rarr;</div><div>Only look back <strong>3&ndash;4 days</strong> for swing levels.</div></div>
+    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not trade consolidation. No new highs or lows = wait.</div></div>
+    <div class="rule"><div class="rdot gn">&rarr;</div><div>Mark levels on <span style="background:rgba(255,107,157,.15);color:var(--pk);padding:1px 5px;border-radius:8px;font-size:10px;font-weight:800">1H</span> / <span style="background:rgba(176,107,255,.15);color:var(--pu);padding:1px 5px;border-radius:8px;font-size:10px;font-weight:800">4H</span>. Find entries on <span style="background:rgba(0,229,160,.1);color:var(--gn);padding:1px 5px;border-radius:8px;font-size:10px;font-weight:800">5M</span> / <span style="background:rgba(251,191,36,.12);color:var(--go);padding:1px 5px;border-radius:8px;font-size:10px;font-weight:800">15M</span>.</div></div>
     <div class="rule"><div class="rdot pk">&rarr;</div><div>If price is trending it will <strong>not break structure.</strong> Hold as long as structure holds.</div></div>
   </div>
 </div>
@@ -287,78 +236,66 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 <div class="pg" id="pg-ind">
   <div class="ptitle"><em>Indication</em></div>
   <div class="psub">The blueprint. Not your entry. Information only.</div>
-
   <div class="ind-warning">
     <div class="iw-icon">&#9888;&#65039;</div>
     <div class="iw-title">THIS IS NOT YOUR ENTRY</div>
-    <div class="iw-body">When you see the indication fire &mdash; <strong>do not enter.</strong> Everyone FOMOing in right now is about to get wiped. The market will grab their stop losses before the real move starts. <strong>Set your alert. Walk away. Come back for the continuation.</strong></div>
+    <div class="iw-body">When you see the indication fire &mdash; <strong>do not enter.</strong> FOMO traders entering right now are about to get wiped. <strong>Set your alert. Walk away. Come back for the continuation.</strong></div>
   </div>
 
-  <div class="big-rule info">
-    <div class="brt">What is an indication?</div>
-    <div class="brs">Price breaks a <strong>swing high or swing low</strong> on the 1H or 4H. Creates a new high or new low. This answers the question: <strong>which direction is price headed?</strong> It also gives you your entry zone and your TP level &mdash; before you ever enter the trade.</div>
-  </div>
-
-  <div class="tf-row">
-    <div class="tf h1">1H &mdash; primary</div>
-    <div class="tf h4">4H &mdash; if 1H is choppy</div>
-  </div>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">1</div>
-      <div><div class="step-title">You are in consolidation &mdash; no swing levels broken</div><div class="step-text">Price is ranging. Highs and lows are equal. <strong>You do not trade this.</strong> Wait. Watch for a swing to break.</div></div>
+  <!-- INDICATION CHARTS -->
+  <div class="two-charts">
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-label real">&#10003; Real Indication &mdash; Trade This Later</div>
+      <canvas id="cIndReal" height="200"></canvas>
+      <div style="font-size:11px;color:#8a93b0;margin-top:8px;line-height:1.5">Price was consolidating. Swings were equal. Then it <strong style="color:var(--gn)">broke a swing high</strong> with momentum. New high created. This is your blueprint &mdash; set alert, wait for correction + continuation.</div>
     </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">2</div>
-      <div><div class="step-title">Price breaks a swing high or low &mdash; indication fires</div><div class="step-text">A new high or new low is created. <strong>Do not enter here.</strong> Set a price alert at this level. This level is now your entry zone and your future TP origin.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">3</div>
-      <div><div class="step-title">The indication gives you two things immediately</div><div class="step-text"><strong>Entry zone</strong> &mdash; when continuation comes, price returns to this level. That is where you enter.<br><br><strong>TP level</strong> &mdash; the level where the indication started is your take profit. You know your whole trade plan before you ever enter.</div></div>
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-label fake">&#10005; Fakeout &mdash; Do Not Trade</div>
+      <canvas id="cIndFake" height="200"></canvas>
+      <div style="font-size:11px;color:#8a93b0;margin-top:8px;line-height:1.5">Price broke above the level but <strong style="color:var(--pk)">came straight back below it.</strong> No momentum. No new high held. This is a liquidity grab. If you entered on the break you just got wiped.</div>
     </div>
   </div>
 
+  <div class="big-rule info" style="margin-top:14px">
+    <div class="brt">What makes it a real indication</div>
+    <div class="brs">Price breaks a <strong>swing high or swing low</strong> on the 1H or 4H with momentum behind it. It creates a clear new high or new low. Your entry zone and TP are now set. Wait for the correction to finish.</div>
+  </div>
+  <div class="tf-row"><div class="tf h1">1H &mdash; primary</div><div class="tf h4">4H &mdash; if 1H is choppy</div></div>
   <div class="rule-list">
-    <div class="rule"><div class="rdot bl">&rarr;</div><div>Swings getting higher? <strong>Bullish.</strong> Getting lower? <strong>Bearish.</strong> Not moving? Consolidation. No trade.</div></div>
-    <div class="rule"><div class="rdot bl">&rarr;</div><div>The 1H is your primary. If it is too choppy &mdash; move to the <strong>4H.</strong></div></div>
-    <div class="rule"><div class="rdot bl">&rarr;</div><div>These levels cost money to break. That is why they hold so strong. Once broken they have <strong>real momentum behind them.</strong></div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>Swings getting higher = <strong>bullish.</strong> Getting lower = <strong>bearish.</strong> Not moving = consolidation. No trade.</div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>Only look back <strong>3&ndash;4 days</strong> for your swing levels. You do not need years of history.</div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>The indication gives you: <strong>entry zone</strong> (where it broke) and <strong>TP</strong> (where the break started). Both known before you enter.</div></div>
   </div>
 </div>
 
 <!-- CORRECTION -->
 <div class="pg" id="pg-cor">
   <div class="ptitle"><em>Correction</em></div>
-  <div class="psub">Price grabs liquidity. FOMO traders get wiped. You watch on 15M and wait.</div>
+  <div class="psub">Price grabs liquidity. FOMO traders get wiped. Watch on 15M. Wait.</div>
 
-  <div class="big-rule gold">
+  <!-- CORRECTION CHARTS -->
+  <div class="two-charts">
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-label real">&#10003; Real Correction &mdash; Wait for It to End</div>
+      <canvas id="cCorReal" height="200"></canvas>
+      <div style="font-size:11px;color:#8a93b0;margin-top:8px;line-height:1.5">After the indication, price pulls back in an orderly way. On 15M you can see it <strong style="color:var(--go)">building structure</strong> going up. It is still correcting. Do not enter until this structure breaks.</div>
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-label fake">&#10005; Fakeout &mdash; Looks Like Continuation But Is Not</div>
+      <canvas id="cCorFake" height="200"></canvas>
+      <div style="font-size:11px;color:#8a93b0;margin-top:8px;line-height:1.5">Price pulls back and looks like it is reversing at the level. <strong style="color:var(--pk)">But it is still in correction.</strong> No lower high confirmed on 5M. Entering here gets you trapped in the middle of the pullback.</div>
+    </div>
+  </div>
+
+  <div class="big-rule gold" style="margin-top:14px">
     <div class="brt">Why corrections happen</div>
-    <div class="brs">After the indication everyone FOMOs in. They have positions. They have stop losses. The market sees all that money stacked up. <strong>It goes to grab it.</strong> Price pulls back, hits their stops, takes their money. Then the real move starts.</div>
+    <div class="brs">After the indication everyone FOMOs in. The market sees all that money stacked up. <strong>It goes to grab it.</strong> Price pulls back, hits their stops, takes their money. Then the real move starts.</div>
   </div>
-
-  <div class="tf-row">
-    <div class="tf m15">Monitor on 15M</div>
-  </div>
-
+  <div class="tf-row"><div class="tf m15">Monitor on 15M</div></div>
   <div class="steps">
-    <div class="step">
-      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">1</div>
-      <div><div class="step-title">Switch to 15M when the correction starts</div><div class="step-text">On the 1H the correction looks like one or two candles. The <strong>15M shows you the structure inside</strong> so you know when it actually ends.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">2</div>
-      <div><div class="step-title">Track the highs and lows on 15M</div><div class="step-text">Mark them as they form. If it is still building <strong>higher highs and higher lows</strong> (on a bearish pullback) &mdash; <strong>the correction is not over.</strong> Do not enter.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">3</div>
-      <div><div class="step-title">Watch for structure to break on 15M</div><div class="step-text">When the correction structure breaks &mdash; when price stops making those correction highs and lows &mdash; <strong>drop to 5M and start watching for the continuation.</strong></div></div>
-    </div>
-  </div>
-
-  <div class="rule-list">
-    <div class="rule"><div class="rdot go">&rarr;</div><div>The correction does not always go far. Sometimes it is subtle. <strong>What matters is whether structure has broken.</strong></div></div>
-    <div class="rule"><div class="rdot go">&rarr;</div><div>The correction is <strong>not a reversal.</strong> The 1H level has not changed. The trend is still intact.</div></div>
-    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not trade the correction itself. Watch it. Track it. <strong>Wait for it to end.</strong></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">1</div><div><div class="step-title">Switch to 15M when the correction starts</div><div class="step-text">The 15M shows you the structure inside the correction so you know when it actually ends.</div></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">2</div><div><div class="step-title">Track the highs and lows on 15M</div><div class="step-text">Still building higher highs + higher lows (on a bearish pullback)? <strong>The correction is not over.</strong> Do not enter.</div></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">3</div><div><div class="step-title">When correction structure breaks &mdash; drop to 5M</div><div class="step-text">This is when you start watching for the continuation entry. <strong>Not before.</strong></div></div></div>
   </div>
 </div>
 
@@ -367,42 +304,35 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
   <div class="ptitle"><em>Continuation</em></div>
   <div class="psub">Your entry. The second time around. This is where the money is.</div>
 
-  <div class="big-rule warn">
+  <!-- CONTINUATION CHARTS -->
+  <div class="two-charts">
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-label real">&#10003; Real Continuation &mdash; This Is Your Entry</div>
+      <canvas id="cConReal" height="200"></canvas>
+      <div style="font-size:11px;color:#8a93b0;margin-top:8px;line-height:1.5">Price returns to the 1H level. On 5M a <strong style="color:var(--gn)">lower high forms</strong> near that level. Price then pushes through the lower high in the trend direction. <strong style="color:var(--gn)">That push through is your entry.</strong></div>
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-label fake">&#10005; Fakeout &mdash; Looks Like Entry But Is Not</div>
+      <canvas id="cConFake" height="200"></canvas>
+      <div style="font-size:11px;color:#8a93b0;margin-top:8px;line-height:1.5">Price comes back to the level but <strong style="color:var(--pk)">no lower high forms on 5M.</strong> It just shoots straight through. Or it taps the level and bounces without structure. <strong style="color:var(--pk)">No lower high = no entry.</strong> Wait.</div>
+    </div>
+  </div>
+
+  <div class="big-rule warn" style="margin-top:14px">
     <div class="brt">The second time around &mdash; every single time</div>
-    <div class="brs">The first break was the indication. FOMO traders got in. They got wiped. Now price comes back to that same level a <strong>second time.</strong> The weak hands are gone. This is your entry.</div>
+    <div class="brs">First break = indication. FOMO traders in, get wiped. Second push = continuation. <strong>Weak hands gone. This is your entry.</strong></div>
   </div>
-
-  <div class="tf-row">
-    <div class="tf h1">1H &mdash; your entry zone</div>
-    <div class="tf m5">5M &mdash; entry trigger</div>
-  </div>
-
+  <div class="tf-row"><div class="tf h1">1H &mdash; entry zone</div><div class="tf m5">5M &mdash; entry trigger</div></div>
   <div class="steps">
-    <div class="step">
-      <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">1</div>
-      <div><div class="step-title">Price returns to the 1H indication level</div><div class="step-text">The same level that caused the new high or low. <strong>Strongest momentum here</strong> because it is what started the move in the first place.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">2</div>
-      <div><div class="step-title">Drop to 5M &mdash; watch for a lower high to form</div><div class="step-text">Near the 1H level on 5M watch for a <strong>lower high to form.</strong> This tells you the correction bounce is done and price is trying to resume.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">3</div>
-      <div><div class="step-title">Price pushes through that lower high &mdash; enter</div><div class="step-text">When price breaks through the lower high in your trend direction &mdash; <strong>that is your entry.</strong> No candle close needed. When direction is clear, enter.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(255,107,157,.15);color:var(--pk);border:1px solid rgba(255,107,157,.3)">SL</div>
-      <div><div class="step-title">Stop loss &mdash; behind the 1H level</div><div class="step-text">Above the level on a sell, below on a buy. <strong>Give it room.</strong> If wrong, take the loss and move on.</div></div>
-    </div>
-    <div class="step">
-      <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">TP</div>
-      <div><div class="step-title">Take profit &mdash; where the indication started</div><div class="step-text">The 1H level that created the new high or low is your TP. <strong>If price blows through it &mdash; new indication. You can hold longer.</strong></div></div>
-    </div>
+    <div class="step"><div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">1</div><div><div class="step-title">Price returns to the 1H indication level</div><div class="step-text">Strongest momentum here because this is what started the move.</div></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">2</div><div><div class="step-title">Drop to 5M &mdash; lower high forms near the level</div><div class="step-text">This tells you the correction bounce is done. Price is trying to resume.</div></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">3</div><div><div class="step-title">Price pushes through that lower high &mdash; enter</div><div class="step-text"><strong>No candle close needed.</strong> When direction is clear, enter.</div></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(255,107,157,.15);color:var(--pk);border:1px solid rgba(255,107,157,.3)">SL</div><div><div class="step-title">Stop behind the 1H level with room</div><div class="step-text">Above level on a sell, below on a buy. Give it room.</div></div></div>
+    <div class="step"><div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">TP</div><div><div class="step-title">TP at where the indication started</div><div class="step-text">If price blows through it &mdash; <strong>new indication. Hold longer.</strong></div></div></div>
   </div>
-
   <div class="big-rule success">
     <div class="brt">Set it. Do not touch it.</div>
-    <div class="brs">Set stop and TP before you enter. <strong>Then put your hands in your lap.</strong> The plan you made with a clear head is smarter than the fear you feel while in the trade.</div>
+    <div class="brs">Set stop and TP before you enter. <strong>Then put your hands in your lap.</strong></div>
   </div>
 </div>
 
@@ -413,7 +343,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
   <div class="prog-label" id="plabel">0 of 8 complete</div>
   <div class="prog-wrap"><div class="prog" id="progbar"></div></div>
   <div class="ready" id="rdy"><h3>All phases confirmed. Enter the trade.</h3><p>Stop set. TP set. Hands in your lap.</p></div>
-  <div style="background:var(--s);border-radius:14px;padding:18px;border:1px solid var(--bd)">
+  <div style="background:var(--s);border-radius:14px;padding:16px;border:1px solid var(--bd)">
     <div class="chk-list">
       <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Indication:</strong> A new high or new low was made on the 1H or 4H</div></div></div>
       <div class="chk" onclick="tick(this)"><div class="cbox"><svg width="12" height="10" viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div><div class="clabel"><strong>Correction:</strong> Price pulled back and grabbed liquidity</div></div></div>
@@ -439,53 +369,464 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
     <div class="ses-desc" id="sdesc"></div>
   </div>
   <div class="ses-grid">
-    <div class="ses-item best">
-      <div class="si-time" style="color:var(--gn)">9:30AM &mdash; 11AM ET</div>
-      <div class="si-name">&#128293; NY Open &mdash; Best window</div>
-      <div class="si-desc">Highest volume. Cleanest ICC setups. Be at the charts before 9:30.</div>
-    </div>
-    <div class="ses-item best">
-      <div class="si-time" style="color:var(--gn)">1PM &mdash; 3:30PM ET</div>
-      <div class="si-name">Afternoon &mdash; Second best</div>
-      <div class="si-desc">Volume returns after lunch. Good ICC continuation setups appear here.</div>
-    </div>
-    <div class="ses-item">
-      <div class="si-time" style="color:var(--pk)">3AM &mdash; 9:30AM ET</div>
-      <div class="si-name">London session</div>
-      <div class="si-desc">Volume picking up. Good ICC indications can form here.</div>
-    </div>
-    <div class="ses-item">
-      <div class="si-time" style="color:var(--pu)">6PM &mdash; 3AM ET</div>
-      <div class="si-name">Asia session</div>
-      <div class="si-desc">Lower volume. Only trade if the ICC setup is very clean.</div>
-    </div>
-    <div class="ses-item avoid" style="grid-column:1 / -1">
-      <div class="si-time" style="color:var(--go)">11AM &mdash; 1PM &nbsp;&bull;&nbsp; 3:30PM &mdash; 6PM ET</div>
-      <div class="si-name">&#9888; Lunch &amp; Close &mdash; Avoid</div>
-      <div class="si-desc">Volume drops. Price chops and fakes out. Any indication here is likely noise. Step away. Review your trades at close, do not open new positions.</div>
-    </div>
+    <div class="ses-item best"><div class="si-time" style="color:var(--gn)">9:30AM &mdash; 11AM ET</div><div class="si-name">&#128293; NY Open &mdash; Best window</div><div class="si-desc">Highest volume. Cleanest ICC setups. Be at the charts before 9:30.</div></div>
+    <div class="ses-item best"><div class="si-time" style="color:var(--gn)">1PM &mdash; 3:30PM ET</div><div class="si-name">Afternoon &mdash; Second best</div><div class="si-desc">Volume returns after lunch. Good ICC continuation setups appear here.</div></div>
+    <div class="ses-item"><div class="si-time" style="color:var(--pk)">3AM &mdash; 9:30AM ET</div><div class="si-name">London session</div><div class="si-desc">Volume picking up. Good ICC indications can form here.</div></div>
+    <div class="ses-item"><div class="si-time" style="color:var(--pu)">6PM &mdash; 3AM ET</div><div class="si-name">Asia session</div><div class="si-desc">Lower volume. Only trade if the ICC setup is very clean.</div></div>
+    <div class="ses-item avoid" style="grid-column:1 / -1"><div class="si-time" style="color:var(--go)">11AM &mdash; 1PM &nbsp;&bull;&nbsp; 3:30PM &mdash; 6PM ET</div><div class="si-name">&#9888; Lunch &amp; Close &mdash; Avoid</div><div class="si-desc">Volume drops. Price chops and fakes out. Any indication here is likely noise. Step away. Review at close, do not open new positions.</div></div>
   </div>
 </div>
 
 <script>
-function go(id,el){document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));el.classList.add('on');document.getElementById('pg-'+id).classList.add('on');}
+// NAV
+function go(id,el){document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));el.classList.add('on');document.getElementById('pg-'+id).classList.add('on');drawCharts();}
 
-function showAnswer(type,btn){
-  document.querySelectorAll('.pc-btn').forEach(b=>b.classList.remove('active-i','active-c','active-k'));
-  document.querySelectorAll('.pc-answer').forEach(a=>{a.classList.remove('show');});
-  btn.classList.add('active-'+type);
-  document.getElementById('ans-'+type).classList.add('show');
-}
+// PHASE CHECKER
+function showAnswer(type,btn){document.querySelectorAll('.pc-btn').forEach(b=>b.classList.remove('active-i','active-c','active-k'));document.querySelectorAll('.pc-answer').forEach(a=>a.classList.remove('show'));btn.classList.add('active-'+type);document.getElementById('ans-'+type).classList.add('show');}
 
+// CHECKLIST
 let ckd=0;
 function tick(el){const b=el.querySelector('.cbox');if(el.classList.contains('dn')){el.classList.remove('dn');b.classList.remove('on');ckd=Math.max(0,ckd-1);}else{el.classList.add('dn');b.classList.add('on');ckd++;}const p=Math.round(ckd/8*100);document.getElementById('progbar').style.width=p+'%';document.getElementById('plabel').textContent=ckd+' of 8 complete';document.getElementById('rdy').classList.toggle('on',ckd>=8);}
 function setD(d,e){if(e)e.stopPropagation();document.getElementById('dbuy').className='dp'+(d==='buy'?' long':'');document.getElementById('dsell').className='dp'+(d==='sell'?' short':'');}
 function rstChk(){document.querySelectorAll('.chk').forEach(el=>{el.classList.remove('dn');el.querySelector('.cbox').classList.remove('on');});ckd=0;document.getElementById('progbar').style.width='0%';document.getElementById('plabel').textContent='0 of 8 complete';document.getElementById('rdy').classList.remove('on');document.getElementById('dbuy').className='dp';document.getElementById('dsell').className='dp';}
 
+// SESSIONS
 function getET(){return new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));}
 function getSes(et){const t=et.getHours()*60+et.getMinutes();if(t>=18*60||t<3*60)return{n:'Asia Session',c:'#b06bff',bg:'rgba(176,107,255,.15)',bo:'rgba(176,107,255,.4)',d:'Lower volume. Only trade a very clean ICC setup.'};if(t<9*60+30)return{n:'London Session',c:'#ff6b9d',bg:'rgba(255,107,157,.15)',bo:'rgba(255,107,157,.4)',d:'Volume picking up. ICC indications can form here.'};if(t<11*60)return{n:'\uD83D\uDD25 NY Open \u2014 Best Window',c:'#00e5a0',bg:'rgba(0,229,160,.15)',bo:'rgba(0,229,160,.4)',d:'Best ICC session. Cleanest setups. Be at the charts.'};if(t<13*60)return{n:'\u26A0 Lunch \u2014 Avoid',c:'#fbbf24',bg:'rgba(251,191,36,.15)',bo:'rgba(251,191,36,.4)',d:'Volume drops. Fakeouts common. Step away from the charts.'};if(t<15*60+30)return{n:'Afternoon \u2014 Second Best',c:'#00e5a0',bg:'rgba(0,229,160,.15)',bo:'rgba(0,229,160,.4)',d:'Volume returns. ICC continuations appear here.'};return{n:'Market Close \u2014 Review Only',c:'#ff6b9d',bg:'rgba(255,107,157,.15)',bo:'rgba(255,107,157,.4)',d:'Do not open new positions. Review what played out today.'};}
 function updClk(){const et=getET(),h=String(et.getHours()).padStart(2,'0'),m=String(et.getMinutes()).padStart(2,'0'),s=String(et.getSeconds()).padStart(2,'0');const cEl=document.getElementById('clk'),sEl=document.getElementById('sbadge'),dEl=document.getElementById('sdesc');if(!cEl)return;cEl.textContent=h+':'+m+':'+s;const ses=getSes(et);sEl.textContent=ses.n;sEl.style.background=ses.bg;sEl.style.border='1px solid '+ses.bo;sEl.style.color=ses.c;dEl.textContent=ses.d;}
 setInterval(updClk,1000);updClk();
+
+// CANVAS HELPERS
+function initCanvas(id,h){
+  const el=document.getElementById(id);if(!el)return null;
+  const dpr=window.devicePixelRatio||1;
+  const w=el.parentElement.clientWidth-32;
+  el.width=w*dpr;el.height=h*dpr;
+  el.style.width=w+'px';el.style.height=h+'px';
+  const ctx=el.getContext('2d');ctx.scale(dpr,dpr);
+  return{ctx,w,h};
+}
+
+function candle(ctx,x,o,c,h,l,cw){
+  const bull=c>=o;
+  const col=bull?'#00e5a0':'#ff6b9d';
+  ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(x+cw/2,h);ctx.lineTo(x+cw/2,l);ctx.stroke();
+  const top=Math.min(o,c),ht=Math.max(2,Math.abs(c-o));
+  ctx.fillRect(x,top,cw,ht);
+}
+
+function hline(ctx,y,w,color,dash){
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.5;
+  ctx.setLineDash(dash||[]);
+  ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
+  ctx.setLineDash([]);ctx.restore();
+}
+
+function label(ctx,txt,x,y,color,align,size){
+  ctx.save();ctx.font=`bold ${size||10}px Segoe UI,system-ui`;
+  ctx.fillStyle=color;ctx.textAlign=align||'center';
+  ctx.fillText(txt,x,y);ctx.restore();
+}
+
+function badge(ctx,txt,x,y,bg,color,w2){
+  ctx.save();
+  const pw=ctx.measureText(txt).width+14;
+  ctx.font='bold 9px Segoe UI,system-ui';
+  const pw2=ctx.measureText(txt).width+14;
+  ctx.fillStyle=bg;
+  roundRect(ctx,x-pw2/2,y-11,pw2,16,4);
+  ctx.fill();
+  ctx.fillStyle=color;ctx.textAlign='center';
+  ctx.fillText(txt,x,y);
+  ctx.restore();
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
+
+function arrow(ctx,x1,y1,x2,y2,color){
+  ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  const ang=Math.atan2(y2-y1,x2-x1);
+  ctx.beginPath();
+  ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-10*Math.cos(ang-0.4),y2-10*Math.sin(ang-0.4));
+  ctx.lineTo(x2-10*Math.cos(ang+0.4),y2-10*Math.sin(ang+0.4));
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
+// ============ ICC OVERVIEW CHART ============
+function drawICC(){
+  const s=initCanvas('cICC',220);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=10,gap=3,pad=14;
+  let x=pad;
+
+  // Consolidation zone
+  const consY=h*0.55;
+  ctx.fillStyle='rgba(90,100,128,.08)';
+  ctx.fillRect(pad,consY-28,w*0.28,56);
+  label(ctx,'CONSOLIDATION',pad+(w*0.28)/2,h-6,'#5a6480','center',9);
+
+  const cons=[
+    {o:consY-8,c:consY+8,h:consY+14,l:consY-14},
+    {o:consY+8,c:consY-5,h:consY+10,l:consY-11},
+    {o:consY-5,c:consY+10,h:consY+16,l:consY-8},
+    {o:consY+10,c:consY-2,h:consY+12,l:consY-8},
+    {o:consY-2,c:consY+6,h:consY+12,l:consY-8},
+  ];
+  cons.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+
+  // Indication — big break up
+  const indLevel=consY-26;
+  hline(ctx,indLevel,w,'rgba(56,189,248,.5)',[5,4]);
+  label(ctx,'1H LEVEL',w-pad,indLevel-6,'#38bdf8','right',9);
+
+  const indCandles=[
+    {o:consY+6,c:consY-35,h:consY-38,l:consY+8},
+    {o:consY-35,c:indLevel-16,h:indLevel-20,l:consY-32},
+  ];
+  indCandles.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  ctx.fillStyle='rgba(56,189,248,.1)';
+  ctx.fillRect(x-indCandles.length*(cw+gap)-4,indLevel-24,indCandles.length*(cw+gap)+8,30);
+  badge(ctx,'INDICATION',x-indCandles.length*(cw+gap)/2-2,indLevel-28,'rgba(56,189,248,.2)','#38bdf8');
+  badge(ctx,'DO NOT ENTER',x-indCandles.length*(cw+gap)/2-2,indLevel-14,'rgba(255,107,157,.25)','#ff6b9d');
+
+  x+=6;
+
+  // Correction — pullback
+  const corrCandles=[
+    {o:indLevel-16,c:indLevel+4,h:indLevel-18,l:indLevel+8},
+    {o:indLevel+4,c:indLevel-8,h:indLevel+2,l:indLevel+16},
+    {o:indLevel-8,c:indLevel+12,h:indLevel-10,l:indLevel+18},
+    {o:indLevel+12,c:indLevel+2,h:indLevel+10,l:indLevel+24},
+  ];
+  corrCandles.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'CORRECTION',x-corrCandles.length*(cw+gap)/2,h-6,'rgba(251,191,36,.2)','#fbbf24');
+
+  x+=4;
+
+  // Back to level — lower high forms
+  const lhCandles=[
+    {o:indLevel+6,c:indLevel-6,h:indLevel+4,l:indLevel+10},
+    {o:indLevel-6,c:indLevel+14,h:indLevel-8,l:indLevel+18},
+  ];
+  lhCandles.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  hline(ctx,indLevel-6,x+2,'rgba(251,191,36,.4)',[3,3]);
+  label(ctx,'LOWER HIGH',x-lhCandles.length*(cw+gap)/2,indLevel-10,'#fbbf24','center',8);
+
+  x+=4;
+
+  // Continuation — push through
+  const contCandles=[
+    {o:indLevel+14,c:indLevel-20,h:indLevel-24,l:indLevel+16},
+    {o:indLevel-20,c:indLevel-50,h:indLevel-54,l:indLevel-16},
+    {o:indLevel-50,c:indLevel-78,h:indLevel-82,l:indLevel-46},
+  ];
+  ctx.fillStyle='rgba(0,229,160,.06)';
+  ctx.fillRect(x-4,indLevel-86,contCandles.length*(cw+gap)+16,90);
+  contCandles.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'ENTRY \u2191',x-contCandles.length*(cw+gap)/2,indLevel-88,'rgba(0,229,160,.25)','#00e5a0');
+  // TP line
+  const tpY=h*0.12;
+  hline(ctx,tpY,w,'rgba(251,191,36,.4)',[4,3]);
+  label(ctx,'TP',w-pad,tpY-5,'#fbbf24','right',9);
+  // SL line
+  hline(ctx,indLevel+28,x+4,'rgba(255,107,157,.35)',[4,3]);
+  label(ctx,'SL',x+8,indLevel+32,'#ff6b9d','left',9);
+}
+
+// ============ INDICATION REAL ============
+function drawIndReal(){
+  const s=initCanvas('cIndReal',200);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=10,gap=3,pad=12;
+  let x=pad;
+  const swH=h*0.35,swL=h*0.65;
+
+  // Swing high line
+  hline(ctx,swH,w,'rgba(0,229,160,.4)',[5,4]);
+  label(ctx,'SWING HIGH',w-pad,swH-7,'#00e5a0','right',9);
+
+  // Consolidation
+  const cons=[
+    {o:swH+26,c:swL-22,h:swH+20,l:swL-16},
+    {o:swL-22,c:swH+20,h:swH+14,l:swL-16},
+    {o:swH+20,c:swL-18,h:swH+15,l:swL-12},
+    {o:swL-18,c:swH+22,h:swH+16,l:swL-12},
+    {o:swH+22,c:swL-20,h:swH+15,l:swL-14},
+  ];
+  cons.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  label(ctx,'CONSOLIDATION',pad+(cons.length*(cw+gap))/2,h-5,'#5a6480','center',9);
+  x+=6;
+
+  // Big break above swing high — indication
+  ctx.fillStyle='rgba(0,229,160,.08)';
+  ctx.fillRect(x-3,swH-40,cw*2+gap+6,44);
+  const ind=[
+    {o:swH+18,c:swH-36,h:swH-40,l:swH+20},
+  ];
+  ind.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'INDICATION \u2191',x-cw-gap/2,swH-44,'rgba(0,229,160,.25)','#00e5a0');
+  badge(ctx,'NEW HIGH',x-cw-gap/2,swH-32,'rgba(56,189,248,.2)','#38bdf8');
+
+  // Arrow showing "set alert"
+  x+=10;
+  ctx.save();ctx.strokeStyle='rgba(255,107,157,.6)';ctx.lineWidth=2;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(x,swH+10);ctx.lineTo(x,h-20);ctx.stroke();
+  ctx.setLineDash([]);ctx.restore();
+  label(ctx,'SET ALERT',x+18,h-10,'#ff6b9d','left',9);
+  label(ctx,'WALK AWAY',x+18,h*0.6,'#ff6b9d','left',9);
+  label(ctx,'DO NOT',x+18,swH+14,'#ff6b9d','left',9);
+  label(ctx,'ENTER',x+18,swH+26,'#ff6b9d','left',9);
+}
+
+// ============ INDICATION FAKEOUT ============
+function drawIndFake(){
+  const s=initCanvas('cIndFake',200);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=10,gap=3,pad=12;
+  let x=pad;
+  const swH=h*0.38;
+
+  hline(ctx,swH,w,'rgba(0,229,160,.35)',[5,4]);
+  label(ctx,'SWING HIGH',w-pad,swH-7,'#00e5a0','right',9);
+
+  const cons=[
+    {o:swH+24,c:swH+8,h:swH+4,l:swH+28},
+    {o:swH+8,c:swH+20,h:swH+4,l:swH+24},
+    {o:swH+20,c:swH+10,h:swH+6,l:swH+24},
+    {o:swH+10,c:swH+16,h:swH+6,l:swH+20},
+  ];
+  cons.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  x+=4;
+
+  // Fake break — spike above then straight back
+  ctx.fillStyle='rgba(255,107,157,.08)';
+  ctx.fillRect(x-3,swH-30,cw+6,34);
+  const fk=[{o:swH+14,c:swH-26,h:swH-30,l:swH+16}];
+  fk.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+
+  // X mark
+  ctx.save();ctx.strokeStyle='rgba(255,107,157,.8)';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(x-cw*1.5-4,swH-28);ctx.lineTo(x-cw*0.5+4,swH-14);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-cw*0.5+4,swH-28);ctx.lineTo(x-cw*1.5-4,swH-14);ctx.stroke();
+  ctx.restore();
+
+  // Falls straight back below
+  const back=[
+    {o:swH-26,c:swH+8,h:swH-24,l:swH+12},
+    {o:swH+8,c:swH+24,h:swH+6,l:swH+28},
+    {o:swH+24,c:swH+40,h:swH+22,l:swH+44},
+    {o:swH+40,c:swH+56,h:swH+38,l:swH+60},
+  ];
+  back.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'FAKEOUT',x-back.length*(cw+gap)/2,swH-44,'rgba(255,107,157,.25)','#ff6b9d');
+  label(ctx,'Back below — FOMO',x-back.length*(cw+gap)/2,h-14,'#ff6b9d','center',9);
+  label(ctx,'traders wiped out',x-back.length*(cw+gap)/2,h-4,'#ff6b9d','center',9);
+}
+
+// ============ CORRECTION REAL ============
+function drawCorReal(){
+  const s=initCanvas('cCorReal',200);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=9,gap=3,pad=12;
+  let x=pad;
+  const lvl=h*0.42;
+
+  hline(ctx,lvl,w,'rgba(56,189,248,.45)',[5,4]);
+  label(ctx,'1H LEVEL',w-pad,lvl-7,'#38bdf8','right',9);
+
+  // Indication move down
+  const ind=[
+    {o:lvl-20,c:lvl+30,h:lvl-22,l:lvl+34},
+    {o:lvl+30,c:lvl+54,h:lvl+28,l:lvl+58},
+  ];
+  ind.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'INDICATION \u2193',x-ind.length*(cw+gap)/2,lvl-12,'rgba(56,189,248,.2)','#38bdf8');
+  x+=4;
+
+  // Correction — pullback up with structure
+  const h1=lvl+52,h2=lvl+44,h3=lvl+36;
+  const corr=[
+    {o:lvl+54,c:lvl+38,h:lvl+32,l:lvl+56},
+    {o:lvl+38,c:lvl+48,h:lvl+28,l:lvl+50},// higher low
+    {o:lvl+48,c:lvl+32,h:lvl+26,l:lvl+50},
+    {o:lvl+32,c:lvl+42,h:lvl+22,l:lvl+44},// higher high
+    {o:lvl+42,c:lvl+28,h:lvl+18,l:lvl+44},
+  ];
+  corr.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  // Mark HH/HL
+  label(ctx,'HH',x-corr.length*(cw+gap)*0.3,lvl+14,'#fbbf24','center',8);
+  label(ctx,'HL',x-corr.length*(cw+gap)*0.7,lvl+40,'#fbbf24','center',8);
+  badge(ctx,'CORRECTION',x-corr.length*(cw+gap)/2,h-5,'rgba(251,191,36,.2)','#fbbf24');
+  label(ctx,'Still correcting \u2014 do not enter yet',x-corr.length*(cw+gap)/2,h-14,'#5a6480','center',8);
+}
+
+// ============ CORRECTION FAKEOUT ============
+function drawCorFake(){
+  const s=initCanvas('cCorFake',200);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=9,gap=3,pad=12;
+  let x=pad;
+  const lvl=h*0.38;
+
+  hline(ctx,lvl,w,'rgba(56,189,248,.45)',[5,4]);
+  label(ctx,'1H LEVEL',w-pad,lvl-7,'#38bdf8','right',9);
+
+  // Indication
+  const ind=[{o:lvl-18,c:lvl+36,h:lvl-20,l:lvl+40}];
+  ind.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  x+=4;
+
+  // Pullback that looks tempting but no structure
+  const corr=[
+    {o:lvl+36,c:lvl+20,h:lvl+14,l:lvl+38},
+    {o:lvl+20,c:lvl+10,h:lvl+4,l:lvl+22},
+  ];
+  corr.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+
+  // Trap entry zone
+  ctx.fillStyle='rgba(255,107,157,.06)';
+  ctx.fillRect(x-2,lvl-2,26,lvl+14-lvl+2);
+  label(ctx,'Looks like',x+10,lvl-10,'#ff6b9d','center',8);
+  label(ctx,'entry ??',x+10,lvl-2,'#ff6b9d','center',8);
+
+  // But actually continues correction
+  const more=[
+    {o:lvl+10,c:lvl+22,h:lvl+6,l:lvl+26},
+    {o:lvl+22,c:lvl+36,h:lvl+18,l:lvl+40},
+    {o:lvl+36,c:lvl+52,h:lvl+32,l:lvl+56},
+  ];
+  more.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+
+  // X mark over fake entry
+  const fakeX=x-more.length*(cw+gap)-corr.length*(cw+gap)/2;
+  ctx.save();ctx.strokeStyle='rgba(255,107,157,.8)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(fakeX-12,lvl-4);ctx.lineTo(fakeX+12,lvl+12);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(fakeX+12,lvl-4);ctx.lineTo(fakeX-12,lvl+12);ctx.stroke();
+  ctx.restore();
+
+  badge(ctx,'NO LOWER HIGH ON 5M',x-more.length*(cw+gap)/2,h-5,'rgba(255,107,157,.2)','#ff6b9d');
+  label(ctx,'Still in correction \u2014 trapped',x-more.length*(cw+gap)/2,h-14,'#5a6480','center',8);
+}
+
+// ============ CONTINUATION REAL ============
+function drawConReal(){
+  const s=initCanvas('cConReal',200);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=9,gap=3,pad=10;
+  let x=pad;
+  const lvl=h*0.45;
+
+  hline(ctx,lvl,w,'rgba(56,189,248,.5)',[5,4]);
+  label(ctx,'1H LEVEL',w-pad,lvl-7,'#38bdf8','right',9);
+
+  // Indication + correction (abbreviated)
+  const setup=[
+    {o:lvl-16,c:lvl+32,h:lvl-18,l:lvl+36},// indication down
+    {o:lvl+32,c:lvl+18,h:lvl+12,l:lvl+34},// correction up
+    {o:lvl+18,c:lvl+26,h:lvl+8,l:lvl+28},
+    {o:lvl+26,c:lvl+14,h:lvl+2,l:lvl+28},
+  ];
+  setup.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'IND + CORRECTION',x-setup.length*(cw+gap)/2,h-5,'rgba(56,189,248,.15)','#38bdf8');
+  x+=6;
+
+  // Price returns to 1H level
+  const ret=[{o:lvl+14,c:lvl+4,h:lvl+10,l:lvl+18}];
+  ret.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+
+  // Lower high forms on 5M
+  const lhY=lvl-8;
+  hline(ctx,lhY,x+20,'rgba(251,191,36,.5)',[3,3]);
+  const lh=[{o:lvl+4,c:lhY+2,h:lhY-2,l:lvl+8}];
+  lh.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  label(ctx,'LOWER HIGH',x-cw,lhY-10,'#fbbf24','center',8);
+
+  // Entry — push through lower high
+  ctx.fillStyle='rgba(0,229,160,.1)';
+  ctx.fillRect(x-3,h*0.06,cw*3+gap*2+6,lhY-h*0.06+2);
+  const entry=[
+    {o:lhY+2,c:lvl-26,h:lvl-30,l:lhY+4},
+    {o:lvl-26,c:lvl-56,h:lvl-60,l:lvl-22},
+  ];
+  entry.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'ENTER HERE \u2193',x-entry.length*(cw+gap)/2,h*0.08,'rgba(0,229,160,.25)','#00e5a0');
+  // SL
+  hline(ctx,lhY+14,pad,'rgba(255,107,157,.4)',[3,3]);
+  label(ctx,'SL',pad+4,lhY+22,'#ff6b9d','left',8);
+}
+
+// ============ CONTINUATION FAKEOUT ============
+function drawConFake(){
+  const s=initCanvas('cConFake',200);if(!s)return;
+  const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);
+  const cw=9,gap=3,pad=10;
+  let x=pad;
+  const lvl=h*0.42;
+
+  hline(ctx,lvl,w,'rgba(56,189,248,.5)',[5,4]);
+  label(ctx,'1H LEVEL',w-pad,lvl-7,'#38bdf8','right',9);
+
+  // Setup
+  const setup=[
+    {o:lvl-14,c:lvl+28,h:lvl-16,l:lvl+32},
+    {o:lvl+28,c:lvl+14,h:lvl+8,l:lvl+30},
+    {o:lvl+14,c:lvl+22,h:lvl+4,l:lvl+24},
+  ];
+  setup.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  x+=4;
+
+  // Price comes back — no lower high, just shoots straight to level
+  const noLH=[
+    {o:lvl+22,c:lvl+8,h:lvl+4,l:lvl+24},
+    {o:lvl+8,c:lvl+2,h:lvl-2,l:lvl+10},
+  ];
+  noLH.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  label(ctx,'No lower high on 5M',x-noLH.length*(cw+gap)/2,h-5,'#ff6b9d','center',8);
+
+  // FOMO entry then reversal
+  ctx.fillStyle='rgba(255,107,157,.07)';
+  ctx.fillRect(x-3,lvl-4,cw+6,20);
+  const entry=[{o:lvl+2,c:lvl-16,h:lvl-20,l:lvl+4}];
+  entry.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+
+  // X
+  ctx.save();ctx.strokeStyle='rgba(255,107,157,.9)';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(x-cw*2,lvl-18);ctx.lineTo(x-cw*0.5,lvl-4);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-cw*0.5,lvl-18);ctx.lineTo(x-cw*2,lvl-4);ctx.stroke();
+  ctx.restore();
+
+  // Reverses hard
+  const rev=[
+    {o:lvl-16,c:lvl+10,h:lvl-18,l:lvl+14},
+    {o:lvl+10,c:lvl+28,h:lvl+8,l:lvl+32},
+    {o:lvl+28,c:lvl+46,h:lvl+26,l:lvl+50},
+  ];
+  rev.forEach(c=>{candle(ctx,x,c.o,c.c,c.h,c.l,cw);x+=cw+gap;});
+  badge(ctx,'STOPPED OUT',x-rev.length*(cw+gap)/2,h-5,'rgba(255,107,157,.2)','#ff6b9d');
+  badge(ctx,'NO LOWER HIGH = NO ENTRY',x-rev.length*(cw+gap)/2,lvl-28,'rgba(255,107,157,.15)','#ff6b9d');
+}
+
+function drawCharts(){
+  const active=document.querySelector('.pg.on');
+  if(!active)return;
+  const id=active.id;
+  if(id==='pg-icc'){setTimeout(()=>{drawICC();},60);}
+  else if(id==='pg-ind'){setTimeout(()=>{drawIndReal();drawIndFake();},60);}
+  else if(id==='pg-cor'){setTimeout(()=>{drawCorReal();drawCorFake();},60);}
+  else if(id==='pg-con'){setTimeout(()=>{drawConReal();drawConFake();},60);}
+}
+
+window.addEventListener('resize',drawCharts);
+setTimeout(()=>{drawICC();},200);
 </script>
 </body>
 </html>
