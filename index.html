@@ -8,7 +8,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#080a10;--s:#0f1218;--s2:#161b24;--bd:#1e2535;--tx:#f0f2f8;--mt:#5a6480;--pk:#ff6b9d;--gn:#00e5a0;--pu:#b06bff;--go:#fbbf24;--bl:#38bdf8}
 body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif}
-.hdr{background:#090c16;padding:14px 20px 12px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.hdr{background:#090c16;padding:14px 20px 12px;border-bottom:1px solid var(--bd)}
 .logo{font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--bl),var(--pu),var(--gn));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .tagline{font-size:10px;color:var(--mt);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
 .nav{display:flex;background:var(--s);border-bottom:1px solid var(--bd);overflow-x:auto}
@@ -21,26 +21,76 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 .ptitle{font-size:22px;font-weight:900;margin-bottom:4px}
 .ptitle em{background:linear-gradient(135deg,var(--pk),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
 .psub{font-size:13px;color:var(--mt);margin-bottom:22px;line-height:1.5}
+
+/* PHASE CHECKER */
+.phase-checker{background:var(--s);border-radius:16px;padding:22px;border:1px solid var(--bd);margin-bottom:22px}
+.pc-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-bottom:14px;text-align:center}
+.pc-buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:0}
+.pc-btn{border-radius:12px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid var(--bd);background:var(--s2);transition:all .2s;user-select:none}
+.pc-btn:hover{transform:translateY(-2px)}
+.pc-btn.i{border-color:rgba(56,189,248,.3)}
+.pc-btn.i:hover{border-color:rgba(56,189,248,.6);background:rgba(56,189,248,.06)}
+.pc-btn.c{border-color:rgba(251,191,36,.3)}
+.pc-btn.c:hover{border-color:rgba(251,191,36,.6);background:rgba(251,191,36,.06)}
+.pc-btn.k{border-color:rgba(0,229,160,.3)}
+.pc-btn.k:hover{border-color:rgba(0,229,160,.6);background:rgba(0,229,160,.06)}
+.pc-btn.active-i{border-color:var(--bl);background:rgba(56,189,248,.1)}
+.pc-btn.active-c{border-color:var(--go);background:rgba(251,191,36,.1)}
+.pc-btn.active-k{border-color:var(--gn);background:rgba(0,229,160,.1)}
+.pc-icon{font-size:28px;margin-bottom:6px}
+.pc-name{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.pc-btn.i .pc-name{color:var(--bl)}.pc-btn.c .pc-name{color:var(--go)}.pc-btn.k .pc-name{color:var(--gn)}
+.pc-desc{font-size:11px;color:var(--mt);line-height:1.4}
+
+/* PHASE ANSWER */
+.pc-answer{margin-top:14px;border-radius:14px;padding:20px;display:none;animation:fadeIn .25s ease}
+.pc-answer.show{display:block}
+.pc-answer.stop{background:rgba(255,107,157,.07);border:2px solid var(--pk)}
+.pc-answer.wait{background:rgba(251,191,36,.07);border:2px solid var(--go)}
+.pc-answer.go{background:rgba(0,229,160,.07);border:2px solid var(--gn)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.pa-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.pa-icon{font-size:42px;flex-shrink:0}
+.pa-title{font-size:22px;font-weight:900}
+.pc-answer.stop .pa-title{color:var(--pk)}
+.pc-answer.wait .pa-title{color:var(--go)}
+.pc-answer.go .pa-title{color:var(--gn)}
+.pa-sub{font-size:13px;color:#8a93b0;line-height:1.6;margin-bottom:14px}
+.pa-sub strong{color:var(--tx)}
+.pa-steps{display:flex;flex-direction:column;gap:8px}
+.pa-step{display:flex;gap:10px;align-items:flex-start;background:rgba(0,0,0,.2);border-radius:10px;padding:12px}
+.pa-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.pc-answer.stop .pa-dot{background:var(--pk)}
+.pc-answer.wait .pa-dot{background:var(--go)}
+.pc-answer.go .pa-dot{background:var(--gn)}
+.pa-step-text{font-size:12px;color:#8a93b0;line-height:1.5}
+.pa-step-text strong{color:var(--tx)}
+
+/* BIG WARNING — shown at top of indication page */
+.ind-warning{background:rgba(255,107,157,.08);border:3px solid var(--pk);border-radius:16px;padding:24px;margin-bottom:22px;text-align:center}
+.iw-icon{font-size:48px;margin-bottom:10px}
+.iw-title{font-size:26px;font-weight:900;color:var(--pk);margin-bottom:8px;letter-spacing:1px}
+.iw-body{font-size:14px;color:#8a93b0;line-height:1.7;max-width:560px;margin:0 auto}
+.iw-body strong{color:var(--tx)}
+
 .phase-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px}
 .phase{border-radius:14px;padding:20px;text-align:center}
 .phase.i{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25)}
 .phase.c{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25)}
 .phase.k{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.25)}
 .phase-letter{font-size:44px;font-weight:900;margin-bottom:6px;line-height:1}
-.phase.i .phase-letter{color:var(--bl)}
-.phase.c .phase-letter{color:var(--go)}
-.phase.k .phase-letter{color:var(--gn)}
+.phase.i .phase-letter{color:var(--bl)}.phase.c .phase-letter{color:var(--go)}.phase.k .phase-letter{color:var(--gn)}
 .phase-name{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 .phase.i .phase-name{color:var(--bl)}.phase.c .phase-name{color:var(--go)}.phase.k .phase-name{color:var(--gn)}
 .phase-desc{font-size:12px;color:#8a93b0;line-height:1.6}
 .phase-desc strong{color:var(--tx)}
-.arrow-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px}
+.arrow-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
 .ap-box{border-radius:10px;padding:10px 16px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
 .ap-box.i{background:rgba(56,189,248,.1);color:var(--bl);border:1px solid rgba(56,189,248,.3)}
 .ap-box.c{background:rgba(251,191,36,.1);color:var(--go);border:1px solid rgba(251,191,36,.3)}
 .ap-box.k{background:rgba(0,229,160,.1);color:var(--gn);border:1px solid rgba(0,229,160,.3)}
 .arr{font-size:20px;color:var(--mt)}
-.loop-badge{background:rgba(176,107,255,.1);color:var(--pu);border:1px solid rgba(176,107,255,.3);border-radius:10px;padding:8px 14px;font-size:11px;font-weight:800;margin-left:6px}
+.loop-badge{background:rgba(176,107,255,.1);color:var(--pu);border:1px solid rgba(176,107,255,.3);border-radius:10px;padding:8px 14px;font-size:11px;font-weight:800}
 .rule-list{background:var(--s2);border-radius:12px;padding:16px;border:1px solid var(--bd);margin-bottom:14px}
 .rule{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px;color:#8a93b0;line-height:1.5}
 .rule:last-child{border-bottom:none;padding-bottom:0}
@@ -111,10 +161,8 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 <body>
 
 <div class="hdr">
-  <div>
-    <div class="logo">ICC Trading System</div>
-    <div class="tagline">MNQ &middot; Indication &middot; Correction &middot; Continuation</div>
-  </div>
+  <div class="logo">ICC Trading System</div>
+  <div class="tagline">MNQ &middot; Indication &middot; Correction &middot; Continuation</div>
 </div>
 
 <div class="nav">
@@ -130,23 +178,92 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 <div class="pg on" id="pg-icc">
   <div class="ptitle">The <em>ICC</em> System</div>
   <div class="psub">Three steps. In order. Every time. You do not skip ahead.</div>
+
+  <!-- PHASE CHECKER -->
+  <div class="phase-checker">
+    <div class="pc-label">&#128073; What is happening on your chart right now?</div>
+    <div class="pc-buttons">
+      <div class="pc-btn i" onclick="showAnswer('i',this)">
+        <div class="pc-icon">&#128200;</div>
+        <div class="pc-name">I see a break</div>
+        <div class="pc-desc">Price just broke a swing high or low</div>
+      </div>
+      <div class="pc-btn c" onclick="showAnswer('c',this)">
+        <div class="pc-icon">&#8617;</div>
+        <div class="pc-name">Price is pulling back</div>
+        <div class="pc-desc">Price is retracing after the break</div>
+      </div>
+      <div class="pc-btn k" onclick="showAnswer('k',this)">
+        <div class="pc-icon">&#127919;</div>
+        <div class="pc-name">Price is back at the level</div>
+        <div class="pc-desc">Price returned to where the break happened</div>
+      </div>
+    </div>
+
+    <!-- ANSWER: INDICATION -->
+    <div class="pc-answer stop" id="ans-i">
+      <div class="pa-top">
+        <div class="pa-icon">&#128683;</div>
+        <div class="pa-title">DO NOT ENTER</div>
+      </div>
+      <div class="pa-sub">This is the <strong>indication</strong>. You are watching the break happen right now. This is exactly the moment FOMO traders get in &mdash; and exactly the moment you <strong>do not.</strong> The market is about to grab all of them before the real move starts.</div>
+      <div class="pa-steps">
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Do not enter.</strong> I know it looks like it is going. That is the trap.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Set a price alert</strong> at this level. This level is your future entry zone.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Note where the indication started.</strong> That level is your TP when continuation comes.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Walk away.</strong> Come back when price returns to this level after the correction.</div></div>
+      </div>
+    </div>
+
+    <!-- ANSWER: CORRECTION -->
+    <div class="pc-answer wait" id="ans-c">
+      <div class="pa-top">
+        <div class="pa-icon">&#9203;</div>
+        <div class="pa-title">WAIT. WATCH THE 15M.</div>
+      </div>
+      <div class="pa-sub">This is the <strong>correction</strong>. The market is grabbing liquidity from the FOMO traders who entered on the break. <strong>Do not enter yet.</strong> This is not over.</div>
+      <div class="pa-steps">
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Switch to 15M.</strong> Track the highs and lows forming during this pullback.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">If it is still building higher highs and higher lows on 15M &mdash; <strong>the correction is not over.</strong></div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">When the correction structure breaks on 15M &mdash; drop to 5M and <strong>start watching for the continuation.</strong></div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Do not enter during the correction.</strong> Your entry is on the other side of it.</div></div>
+      </div>
+    </div>
+
+    <!-- ANSWER: CONTINUATION -->
+    <div class="pc-answer go" id="ans-k">
+      <div class="pa-top">
+        <div class="pa-icon">&#128640;</div>
+        <div class="pa-title">THIS IS YOUR ENTRY ZONE</div>
+      </div>
+      <div class="pa-sub">Price is back at the 1H indication level. This is the <strong>second time around.</strong> The FOMO traders are gone. Now you look for your continuation entry on the 5M.</div>
+      <div class="pa-steps">
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Drop to 5M.</strong> Watch for a lower high to form near this level.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">When price <strong>pushes through that lower high</strong> in the direction of your trend &mdash; that is your entry.</div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text"><strong>Set your stop</strong> behind the 1H level with room. Set your <strong>TP at the indication origin.</strong></div></div>
+        <div class="pa-step"><div class="pa-dot"></div><div class="pa-step-text">Enter. Set levels. <strong>Do not touch it.</strong></div></div>
+      </div>
+    </div>
+  </div>
+
   <div class="phase-row">
     <div class="phase i">
       <div class="phase-letter">I</div>
       <div class="phase-name">Indication</div>
-      <div class="phase-desc">Price breaks a swing high or low on <strong>1H or 4H</strong>. Creates a new high or new low. This is your <strong>blueprint, not your entry.</strong> Set an alert. Walk away.</div>
+      <div class="phase-desc">Price breaks a swing high or low on <strong>1H or 4H</strong>. Creates a new high or new low. <strong>Blueprint, not your entry.</strong> Set alert. Walk away.</div>
     </div>
     <div class="phase c">
       <div class="phase-letter">C</div>
       <div class="phase-name">Correction</div>
-      <div class="phase-desc">Price pulls back. Grabs liquidity from FOMO traders. Watch it on <strong>15M.</strong> Track the highs and lows. <strong>Do not enter.</strong> Wait for it to end.</div>
+      <div class="phase-desc">Price pulls back. Grabs liquidity from FOMO traders. Watch on <strong>15M.</strong> Track highs and lows. <strong>Do not enter.</strong> Wait for it to end.</div>
     </div>
     <div class="phase k">
       <div class="phase-letter">C</div>
       <div class="phase-name">Continuation</div>
-      <div class="phase-desc">Price returns to the 1H level. On <strong>5M</strong> a lower high forms and price pushes through it. <strong>That is your entry.</strong> Stop behind the level. TP at indication origin.</div>
+      <div class="phase-desc">Price returns to 1H level. On <strong>5M</strong> a lower high forms and price pushes through. <strong>That is your entry.</strong> Stop behind level. TP at indication origin.</div>
     </div>
   </div>
+
   <div class="arrow-row">
     <div class="ap-box i">Indication</div>
     <div class="arr">&rarr;</div>
@@ -156,15 +273,12 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
     <div class="arr">&rarr;</div>
     <div class="loop-badge">&#8635; Repeats</div>
   </div>
-  <div class="big-rule warn">
-    <div class="brt">The one rule that saves you every time</div>
-    <div class="brs">Wait for the <strong>second time around.</strong> The first break is the indication &mdash; FOMO traders get in, market takes their money, they get wiped. The second push through the level is yours. Never the first. Always the second.</div>
-  </div>
+
   <div class="rule-list">
     <div class="rule"><div class="rdot bl">&rarr;</div><div>Indications can <strong>only</strong> happen when price breaks a swing high or swing low. No swing break = no indication = no trade.</div></div>
     <div class="rule"><div class="rdot go">&rarr;</div><div>Do not trade consolidation. Price ranging with no new highs or lows = wait. Nothing to trade yet.</div></div>
-    <div class="rule"><div class="rdot gn">&rarr;</div><div>Mark your levels on <span style="background:rgba(255,107,157,.15);color:var(--pk);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">1H</span> or <span style="background:rgba(176,107,255,.15);color:var(--pu);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">4H</span>. Find entries on <span style="background:rgba(0,229,160,.1);color:var(--gn);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">5M</span> or <span style="background:rgba(251,191,36,.12);color:var(--go);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">15M</span>.</div></div>
-    <div class="rule"><div class="rdot pu">&rarr;</div><div>Only look back <strong>3&ndash;4 days</strong> for your swing levels. You do not need years of history.</div></div>
+    <div class="rule"><div class="rdot gn">&rarr;</div><div>Mark levels on <span style="background:rgba(255,107,157,.15);color:var(--pk);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">1H</span> or <span style="background:rgba(176,107,255,.15);color:var(--pu);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">4H</span>. Find entries on <span style="background:rgba(0,229,160,.1);color:var(--gn);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">5M</span> or <span style="background:rgba(251,191,36,.12);color:var(--go);padding:1px 6px;border-radius:10px;font-size:10px;font-weight:800">15M</span>.</div></div>
+    <div class="rule"><div class="rdot pu">&rarr;</div><div>Only look back <strong>3&ndash;4 days</strong> for swing levels.</div></div>
     <div class="rule"><div class="rdot pk">&rarr;</div><div>If price is trending it will <strong>not break structure.</strong> Hold as long as structure holds.</div></div>
   </div>
 </div>
@@ -173,18 +287,27 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 <div class="pg" id="pg-ind">
   <div class="ptitle"><em>Indication</em></div>
   <div class="psub">The blueprint. Not your entry. Information only.</div>
+
+  <div class="ind-warning">
+    <div class="iw-icon">&#9888;&#65039;</div>
+    <div class="iw-title">THIS IS NOT YOUR ENTRY</div>
+    <div class="iw-body">When you see the indication fire &mdash; <strong>do not enter.</strong> Everyone FOMOing in right now is about to get wiped. The market will grab their stop losses before the real move starts. <strong>Set your alert. Walk away. Come back for the continuation.</strong></div>
+  </div>
+
   <div class="big-rule info">
     <div class="brt">What is an indication?</div>
-    <div class="brs">Price breaks a <strong>swing high or swing low</strong> on the 1H or 4H. It creates a new high or a new low. This is the starting point of a trend. It answers the question: <strong>which direction is price headed?</strong></div>
+    <div class="brs">Price breaks a <strong>swing high or swing low</strong> on the 1H or 4H. Creates a new high or new low. This answers the question: <strong>which direction is price headed?</strong> It also gives you your entry zone and your TP level &mdash; before you ever enter the trade.</div>
   </div>
+
   <div class="tf-row">
     <div class="tf h1">1H &mdash; primary</div>
     <div class="tf h4">4H &mdash; if 1H is choppy</div>
   </div>
+
   <div class="steps">
     <div class="step">
       <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">1</div>
-      <div><div class="step-title">You are in consolidation &mdash; no swing levels broken</div><div class="step-text">Price is ranging. Highs and lows are equal. <strong>You do not trade this.</strong> You wait. Watch for a swing to break.</div></div>
+      <div><div class="step-title">You are in consolidation &mdash; no swing levels broken</div><div class="step-text">Price is ranging. Highs and lows are equal. <strong>You do not trade this.</strong> Wait. Watch for a swing to break.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(56,189,248,.15);color:var(--bl);border:1px solid rgba(56,189,248,.3)">2</div>
@@ -195,14 +318,11 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
       <div><div class="step-title">The indication gives you two things immediately</div><div class="step-text"><strong>Entry zone</strong> &mdash; when continuation comes, price returns to this level. That is where you enter.<br><br><strong>TP level</strong> &mdash; the level where the indication started is your take profit. You know your whole trade plan before you ever enter.</div></div>
     </div>
   </div>
-  <div class="big-rule warn">
-    <div class="brt">Do NOT trade the indication</div>
-    <div class="brs">When the indication fires everyone FOMOs in. They buy the top or sell the bottom. The market then grabs all of them. <strong>You are not one of those people.</strong> Use the indication as information only. Set your alert. Walk away. Come back for the continuation.</div>
-  </div>
+
   <div class="rule-list">
-    <div class="rule"><div class="rdot bl">&rarr;</div><div>Swings getting higher? <strong>Bullish.</strong> Getting lower? <strong>Bearish.</strong> Not moving either way? Consolidation. No trade.</div></div>
-    <div class="rule"><div class="rdot bl">&rarr;</div><div>The 1H is your primary. If it is too choppy to see clear swings &mdash; move to the <strong>4H.</strong></div></div>
-    <div class="rule"><div class="rdot bl">&rarr;</div><div>These levels <strong>cost money to break.</strong> That is why they hold so strong on higher timeframes. Once broken they have momentum.</div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>Swings getting higher? <strong>Bullish.</strong> Getting lower? <strong>Bearish.</strong> Not moving? Consolidation. No trade.</div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>The 1H is your primary. If it is too choppy &mdash; move to the <strong>4H.</strong></div></div>
+    <div class="rule"><div class="rdot bl">&rarr;</div><div>These levels cost money to break. That is why they hold so strong. Once broken they have <strong>real momentum behind them.</strong></div></div>
   </div>
 </div>
 
@@ -210,31 +330,35 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 <div class="pg" id="pg-cor">
   <div class="ptitle"><em>Correction</em></div>
   <div class="psub">Price grabs liquidity. FOMO traders get wiped. You watch on 15M and wait.</div>
+
   <div class="big-rule gold">
     <div class="brt">Why corrections happen</div>
-    <div class="brs">After the indication everyone FOMOs in. They have positions. They have stop losses. The market sees all of that money stacked up. <strong>It goes to grab it.</strong> Price pulls back, hits their stops, takes their money. Then the real move starts. That is the correction.</div>
+    <div class="brs">After the indication everyone FOMOs in. They have positions. They have stop losses. The market sees all that money stacked up. <strong>It goes to grab it.</strong> Price pulls back, hits their stops, takes their money. Then the real move starts.</div>
   </div>
+
   <div class="tf-row">
     <div class="tf m15">Monitor on 15M</div>
   </div>
+
   <div class="steps">
     <div class="step">
       <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">1</div>
-      <div><div class="step-title">Switch to 15M when the correction starts</div><div class="step-text">On the 1H the correction looks like one or two candles. The <strong>15M shows you the structure inside</strong> the correction so you actually know when it ends.</div></div>
+      <div><div class="step-title">Switch to 15M when the correction starts</div><div class="step-text">On the 1H the correction looks like one or two candles. The <strong>15M shows you the structure inside</strong> so you know when it actually ends.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">2</div>
-      <div><div class="step-title">Track the highs and lows on 15M</div><div class="step-text">Mark them as they form. If the correction is building <strong>higher highs and higher lows</strong> (on a bearish pullback) &mdash; it is <strong>still correcting. It is not over.</strong> Do not enter.</div></div>
+      <div><div class="step-title">Track the highs and lows on 15M</div><div class="step-text">Mark them as they form. If it is still building <strong>higher highs and higher lows</strong> (on a bearish pullback) &mdash; <strong>the correction is not over.</strong> Do not enter.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">3</div>
-      <div><div class="step-title">Watch for structure to break on the 15M</div><div class="step-text">When the correction structure breaks &mdash; when price stops making those correction highs and lows &mdash; <strong>that is when you start looking for the continuation.</strong> Drop to 5M.</div></div>
+      <div><div class="step-title">Watch for structure to break on 15M</div><div class="step-text">When the correction structure breaks &mdash; when price stops making those correction highs and lows &mdash; <strong>drop to 5M and start watching for the continuation.</strong></div></div>
     </div>
   </div>
+
   <div class="rule-list">
-    <div class="rule"><div class="rdot go">&rarr;</div><div>The correction does not always go far. Sometimes it is subtle. <strong>That does not matter.</strong> What matters is whether the structure has broken.</div></div>
+    <div class="rule"><div class="rdot go">&rarr;</div><div>The correction does not always go far. Sometimes it is subtle. <strong>What matters is whether structure has broken.</strong></div></div>
     <div class="rule"><div class="rdot go">&rarr;</div><div>The correction is <strong>not a reversal.</strong> The 1H level has not changed. The trend is still intact.</div></div>
-    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not try to trade the correction itself. Watch it. Track it. <strong>Wait for it to end.</strong></div></div>
+    <div class="rule"><div class="rdot go">&rarr;</div><div>Do not trade the correction itself. Watch it. Track it. <strong>Wait for it to end.</strong></div></div>
   </div>
 </div>
 
@@ -242,39 +366,43 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 <div class="pg" id="pg-con">
   <div class="ptitle"><em>Continuation</em></div>
   <div class="psub">Your entry. The second time around. This is where the money is.</div>
+
   <div class="big-rule warn">
     <div class="brt">The second time around &mdash; every single time</div>
     <div class="brs">The first break was the indication. FOMO traders got in. They got wiped. Now price comes back to that same level a <strong>second time.</strong> The weak hands are gone. This is your entry.</div>
   </div>
+
   <div class="tf-row">
     <div class="tf h1">1H &mdash; your entry zone</div>
     <div class="tf m5">5M &mdash; entry trigger</div>
   </div>
+
   <div class="steps">
     <div class="step">
       <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">1</div>
-      <div><div class="step-title">Price returns to the 1H indication level</div><div class="step-text">The same level that caused the new high or new low. Your entry zone. <strong>This level has the strongest momentum</strong> because it is what started the move in the first place.</div></div>
+      <div><div class="step-title">Price returns to the 1H indication level</div><div class="step-text">The same level that caused the new high or low. <strong>Strongest momentum here</strong> because it is what started the move in the first place.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">2</div>
-      <div><div class="step-title">Drop to 5M &mdash; watch for a lower high to form</div><div class="step-text">Near the 1H level on the 5M you are watching for a <strong>lower high to form.</strong> This tells you the correction bounce is done. Price is trying to resume the original direction.</div></div>
+      <div><div class="step-title">Drop to 5M &mdash; watch for a lower high to form</div><div class="step-text">Near the 1H level on 5M watch for a <strong>lower high to form.</strong> This tells you the correction bounce is done and price is trying to resume.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(0,229,160,.15);color:var(--gn);border:1px solid rgba(0,229,160,.3)">3</div>
-      <div><div class="step-title">Price pushes through that lower high &mdash; enter</div><div class="step-text">When price breaks through the lower high in the direction of your trend &mdash; <strong>that is your entry.</strong> You do not have to wait for the candle to fully close. When the direction is clear, enter.</div></div>
+      <div><div class="step-title">Price pushes through that lower high &mdash; enter</div><div class="step-text">When price breaks through the lower high in your trend direction &mdash; <strong>that is your entry.</strong> No candle close needed. When direction is clear, enter.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(255,107,157,.15);color:var(--pk);border:1px solid rgba(255,107,157,.3)">SL</div>
-      <div><div class="step-title">Stop loss &mdash; behind the 1H level</div><div class="step-text">Above the 1H level on a sell, below it on a buy. <strong>Give it room.</strong> Do not put it right at the level. If you are wrong, take the loss and move on.</div></div>
+      <div><div class="step-title">Stop loss &mdash; behind the 1H level</div><div class="step-text">Above the level on a sell, below on a buy. <strong>Give it room.</strong> If wrong, take the loss and move on.</div></div>
     </div>
     <div class="step">
       <div class="step-n" style="background:rgba(251,191,36,.15);color:var(--go);border:1px solid rgba(251,191,36,.3)">TP</div>
-      <div><div class="step-title">Take profit &mdash; where the indication started</div><div class="step-text">The 1H level that created the new high or new low is your TP. That is where buyers or sellers are waiting. <strong>If price blows through it &mdash; that is a new indication. You can hold longer.</strong></div></div>
+      <div><div class="step-title">Take profit &mdash; where the indication started</div><div class="step-text">The 1H level that created the new high or low is your TP. <strong>If price blows through it &mdash; new indication. You can hold longer.</strong></div></div>
     </div>
   </div>
+
   <div class="big-rule success">
     <div class="brt">Set it. Do not touch it.</div>
-    <div class="brs">Set your stop and TP before you enter. <strong>Then put your hands in your lap.</strong> The plan you made with a clear head is smarter than the fear you feel while you are in the trade. Every loss came from interfering with the exit.</div>
+    <div class="brs">Set stop and TP before you enter. <strong>Then put your hands in your lap.</strong> The plan you made with a clear head is smarter than the fear you feel while in the trade.</div>
   </div>
 </div>
 
@@ -341,6 +469,13 @@ body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-
 
 <script>
 function go(id,el){document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));el.classList.add('on');document.getElementById('pg-'+id).classList.add('on');}
+
+function showAnswer(type,btn){
+  document.querySelectorAll('.pc-btn').forEach(b=>b.classList.remove('active-i','active-c','active-k'));
+  document.querySelectorAll('.pc-answer').forEach(a=>{a.classList.remove('show');});
+  btn.classList.add('active-'+type);
+  document.getElementById('ans-'+type).classList.add('show');
+}
 
 let ckd=0;
 function tick(el){const b=el.querySelector('.cbox');if(el.classList.contains('dn')){el.classList.remove('dn');b.classList.remove('on');ckd=Math.max(0,ckd-1);}else{el.classList.add('dn');b.classList.add('on');ckd++;}const p=Math.round(ckd/8*100);document.getElementById('progbar').style.width=p+'%';document.getElementById('plabel').textContent=ckd+' of 8 complete';document.getElementById('rdy').classList.toggle('on',ckd>=8);}
